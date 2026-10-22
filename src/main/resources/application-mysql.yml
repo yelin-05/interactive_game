@@ -19,4 +19,6 @@ spring:
       # 全部用 CREATE TABLE IF NOT EXISTS，重复启动不会清数据
       mode: always
       schema-locations: classpath:db/schema-mysql.sql
+      # 演示账号用 INSERT IGNORE，重复启动既不会重复插入也不会报错
+      data-locations: classpath:db/data-mysql.sql
       continue-on-error: false
