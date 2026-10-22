@@ -1,0 +1,22 @@
+# =====================================================================
+#  MySQL 档（正式 / 评分用）
+#  首次使用先建库：见 db/init-mysql.sql
+#  密码通过环境变量注入：set DB_PASSWORD=你的密码
+# =====================================================================
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:minigame}?useUnicode=true&characterEncoding=UTF-8&connectionCollation=utf8mb4_general_ci&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 5000
+      pool-name: MinigameHikariPool
+  sql:
+    init:
+      # 全部用 CREATE TABLE IF NOT EXISTS，重复启动不会清数据
+      mode: always
+      schema-locations: classpath:db/schema-mysql.sql
+      continue-on-error: false

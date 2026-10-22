@@ -1,0 +1,54 @@
+# ===== 构建产物 =====
+target/
+build/
+out/
+bin/
+!.mvn/wrapper/maven-wrapper.jar
+!mvnw
+!mvnw.cmd
+
+# ===== IDE =====
+.idea/
+*.iml
+*.ipr
+*.iws
+# VS Code：只忽略个人化的东西，共享配置要进仓库，队友才有同样的运行/调试入口
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/extensions.json
+.settings/
+.project
+.classpath
+.factorypath
+*.launch
+
+# ===== 本地环境（绝不能提交）=====
+# 真实数据库密码、大模型 API Key 都放这里
+src/main/resources/application-local.yml
+src/main/resources/application-local.yaml
+src/main/resources/application-*.local.yml
+.env
+.env.*
+!.env.example
+
+# ===== 日志与运行时 =====
+logs/
+*.log
+hs_err_pid*
+replay_pid*
+*.h2.db
+*.mv.db
+*.trace.db
+
+# ===== 系统垃圾 =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== 上传/生成的文件（素材、大模型占位产物不要进仓库）=====
+/data/
+/uploads/
+/storage/
+/generated/

@@ -1,0 +1,44 @@
+{
+  // 让 VS Code 的 Java 工具链认识本机的 JDK 21
+  "java.jdt.ls.java.home": "D:\\java\\JDK_21",
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-21",
+      "path": "D:\\java\\JDK_21",
+      "default": true
+    }
+  ],
+
+  // 改代码后自动同步 Maven 依赖（pom.xml 一改就生效）
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.compile.nullAnalysis.mode": "automatic",
+
+  // 构建统一走项目里的 Maven Wrapper，不依赖本机装没装 Maven
+  "maven.executable.preferMavenWrapper": true,
+  "maven.terminal.useJavaHome": true,
+
+  // 保存自动格式化 + 收尾空格
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 4,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.eol": "\n",
+
+  // 别让 IDE 在大目录里瞎搜
+  "files.exclude": {
+    "**/target": true,
+    "**/.git": true
+  },
+  "search.exclude": {
+    "**/target": true
+  },
+
+  "java.saveActions.organizeImports": true,
+
+  // SQL 脚本语法高亮
+  "files.associations": {
+    "*.sql": "sql"
+  },
+  "thymeleaf.validation.enable": true
+}

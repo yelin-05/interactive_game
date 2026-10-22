@@ -1,0 +1,9 @@
+{
+  // 用 VS Code 打开本项目时，会提示安装这些扩展
+  "recommendations": [
+    "vscjava.vscode-java-pack",
+    "vmware.vscode-spring-boot",
+    "redhat.vscode-xml"
+  ],
+  "unwantedRecommendations": []
+}

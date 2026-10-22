@@ -1,0 +1,48 @@
+{
+  "version": "2.0.0",
+  "options": {
+    "cwd": "${workspaceFolder}"
+  },
+  "tasks": [
+    {
+      "label": "mvn: 编译",
+      "type": "shell",
+      "command": "${workspaceFolder}\\mvnw.cmd",
+      "args": ["-B", "-ntp", "compile"],
+      "problemMatcher": ["$javac"],
+      "group": "build"
+    },
+    {
+      "label": "mvn: 打包",
+      "type": "shell",
+      "command": "${workspaceFolder}\\mvnw.cmd",
+      "args": ["-B", "-ntp", "clean", "package"],
+      "problemMatcher": ["$javac"],
+      "group": "build"
+    },
+    {
+      "label": "mvn: 跑测试",
+      "type": "shell",
+      "command": "${workspaceFolder}\\mvnw.cmd",
+      "args": ["-B", "-ntp", "test"],
+      "problemMatcher": ["$javac"],
+      "group": { "kind": "test", "isDefault": true }
+    },
+    {
+      "label": "run: H2 演示档",
+      "type": "shell",
+      "command": "${workspaceFolder}\\mvnw.cmd",
+      "args": ["-B", "spring-boot:run", "-Dspring-boot.run.profiles=h2"],
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "run: MySQL 正式档",
+      "type": "shell",
+      "command": "${workspaceFolder}\\mvnw.cmd",
+      "args": ["-B", "spring-boot:run"],
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}
