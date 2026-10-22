@@ -192,11 +192,15 @@ Spring Boot 默认管理的 8.3.0 在 9.x 服务端上可能握手失败。
 ```bash
 git init
 git add .
-git commit -m "chore: Spring Boot 3 骨架与最小纵向切片"
-git branch -M main
-git remote add origin https://github.com/<你的用户名>/<仓库名>.git
-git push -u origin main
+git commit -m "chore: 初始化工程骨架"
+git remote add origin https://github.com/yelin-05/interactive_game.git
+git push -u origin master        # 本仓库主分支是 master
 ```
+
+> 用 **GitHub Desktop** 更省事：`Add local repository` 加进本地目录 →
+> `Publish repository`，它会在 GitHub 上自动建空仓库再推，不用操心远端初始提交冲突。
+> 推之前记得把 `Settings → Emails` 里的 noreply 邮箱配成 `git config user.email`，
+> 否则提交记录不会算到你账号名下（仓库页 Contributors 会显示 No contributors）。
 
 推之前自查一遍：
 

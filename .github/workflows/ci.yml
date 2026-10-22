@@ -2,9 +2,10 @@ name: build
 
 on:
   push:
-    branches: [ main, dev ]
+    # 仓库主分支叫 master（GitHub Desktop 默认），一并兜住 main 和开发分支
+    branches: [ main, master, dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
 
 jobs:
   build:
@@ -19,6 +20,10 @@ jobs:
           java-version: '21'
           distribution: temurin
           cache: maven
+
+      - name: Make wrapper executable
+        # 仓库在 Windows 上创建，mvnw 可能没带可执行位，Linux runner 上会 Permission denied
+        run: chmod +x ./mvnw
 
       - name: Build & test (H2 profile, no MySQL needed)
         run: ./mvnw -B -ntp verify
