@@ -761,3 +761,205 @@ table.dt tr:last-child td {
     text-align: center;
     padding: 14px 0;
 }
+
+/* =====================================================================
+   通用内容页（任务中心 / 素材库 / 大模型生成）
+   ===================================================================== */
+.page-wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+}
+
+.page-wrap.narrow {
+    max-width: 760px;
+}
+
+.page-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.page-head h1 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.page-head span {
+    font-size: 12.5px;
+    color: var(--muted);
+}
+
+/* ---------- 任务卡片 ---------- */
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.task-card {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: linear-gradient(180deg, var(--card), rgba(22, 31, 61, .5));
+    padding: 16px 18px;
+}
+
+.task-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.task-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.task-title h2 {
+    margin: 0;
+    font-size: 15.5px;
+}
+
+.task-desc {
+    margin: 0 0 10px;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.bar {
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(142, 155, 192, .18);
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.bar > i {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transition: width .3s;
+}
+
+.task-progress {
+    font-size: 11.5px;
+    color: #6b7699;
+    font-variant-numeric: tabular-nums;
+}
+
+.task-side {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 100px;
+}
+
+.task-reward {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--warn);
+}
+
+.task-reward small {
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: 3px;
+    font-weight: 400;
+}
+
+.state-chip {
+    font-size: 11.5px;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px 10px;
+    white-space: nowrap;
+}
+
+.state-chip.done {
+    color: var(--ok);
+    border-color: rgba(52, 211, 153, .4);
+    background: rgba(52, 211, 153, .1);
+}
+
+@media (max-width: 640px) {
+    .task-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .task-side {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+/* ---------- 上传表单 ---------- */
+.upload-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.upload-form .field {
+    flex: 1;
+    min-width: 180px;
+}
+
+select.input {
+    appearance: none;
+}
+
+/* ---------- 素材网格 ---------- */
+.asset-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+}
+
+.asset {
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--card);
+}
+
+.asset img {
+    display: block;
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    background: #0d1426;
+}
+
+.asset figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 9px 11px;
+    font-size: 12px;
+}
+
+.asset figcaption b {
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.asset figcaption span {
+    color: var(--muted);
+    font-size: 11px;
+}

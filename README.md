@@ -151,6 +151,13 @@ POST /api/quiz/submit → 服务端比对答案、算分、写 t_score，返回�
 | GET | `/profile` | 个人中心，**需登录** |
 | GET | `/admin` | 管理后台，**仅 ADMIN**（题库与用户只读概览） |
 | GET | `/rank` | 排行榜：总榜 + 分区榜，分数降序、同分按用时升序取 Top 10 |
+| GET | `/tasks` | 任务中心：任务进度按成绩实时计算，完成可领奖励 |
+| POST | `/tasks/{id}/claim` | 领取任务奖励（需登录、已完成、未领过） |
+| GET | `/assets` | 素材库：按分区浏览 + 上传表单 |
+| POST | `/assets/upload` | 上传图片（需登录，仅 png/jpg/jpeg/gif/webp，≤10MB） |
+| GET | `/uploads/**` | 素材文件静态访问（映射到磁盘 `uploads/`） |
+| GET | `/llm` | 大模型生成：分区+主题出题（Mock 通道） |
+| POST | `/llm/generate` | 触发一次生成 |
 | GET | `/games` | 入口，302 跳转到 `/games/quiz` |
 | GET | `/games/quiz` | 知识闯关：分区选择 → 答题 → 服务端判分结算 |
 | GET | `/api/quiz/categories` | 题库五个分区 + 各分区题量 |
@@ -183,11 +190,12 @@ POST /api/quiz/submit → 服务端比对答案、算分、写 t_score，返回�
 - [x] 工程骨架、依赖、双数据库档、统一响应、全局异常
 - [x] 用户表 + MyBatis-Plus 链路打通
 - [x] 首页与系统自检
-- [ ] 任务中心：发布 / 领取 / 提交 / 状态流转
-- [ ] 素材库：上传、分类、检索、缩略图
+- [x] 任务中心：进度按成绩实时计算 + 领取奖励（t_task / t_user_task）
+- [x] 素材库：图片上传（后缀白名单 + UUID 落盘）、按分区浏览
+- [x] 大模型生成占位：Mock 通道可用，接口形状与真实模型一致
 - [x] 登录注册（BCrypt + Session + 拦截器，用户/管理员分区）
 - [x] 排行榜：积分与通关时间排序、分页
-- [ ] 大模型生成占位：Mock / 真实双通道切换
+- [x] 大模型生成占位：Mock / 真实双通道切换
 - [ ] 登录鉴权（BCrypt + 拦截器或 Spring Security）
 - [ ] 接口文档（springdoc-openapi）
 

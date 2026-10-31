@@ -14,8 +14,9 @@
       <a class="nav-item" th:classappend="${active == 'home'} ? ' on'" th:href="@{/}">首页</a>
       <a class="nav-item" th:classappend="${active == 'quiz'} ? ' on'" th:href="@{/games/quiz}">答题中心</a>
       <a class="nav-item" th:classappend="${active == 'rank'} ? ' on'" th:href="@{/rank}">排行榜</a>
-      <span class="nav-item off" title="建设中">任务中心</span>
-      <span class="nav-item off" title="建设中">素材库</span>
+      <a class="nav-item" th:classappend="${active == 'tasks'} ? ' on'" th:href="@{/tasks}">任务中心</a>
+      <a class="nav-item" th:classappend="${active == 'assets'} ? ' on'" th:href="@{/assets}">素材库</a>
+      <a class="nav-item" th:classappend="${active == 'llm'} ? ' on'" th:href="@{/llm}">大模型生成</a>
       <a class="nav-item" th:if="${session.LOGIN_ROLE == 'ADMIN'}"
          th:classappend="${active == 'admin'} ? ' on'" th:href="@{/admin}">管理后台</a>
     </div>

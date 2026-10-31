@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>大模型生成</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <link rel="stylesheet" th:href="@{/css/site.css}">
+  <link rel="stylesheet" th:href="@{/css/game.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/nav :: bar(${active})}"></div>
+
+<main class="page-wrap narrow">
+  <div class="page-head">
+    <h1>🤖 大模型生成</h1>
+    <span th:text="'通道：' + (${result != null} ? ${result.mode} : 'mock')">通道：mock</span>
+  </div>
+
+  <section class="panel-box">
+    <h2>按分区 + 主题生成一道题</h2>
+    <form class="upload-form" th:action="@{/llm/generate}" method="post">
+      <label class="field">
+        <span>分区</span>
+        <select class="input" name="category">
+          <option th:each="c : ${categories}"
+                  th:value="${c.code}"
+                  th:selected="${category == c.code}"
+                  th:text="${c.icon} + ' ' + ${c.name}">计算机</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>主题（选填）</span>
+        <input class="input" type="text" name="topic" th:value="${topic}"
+               placeholder="例如：TCP 三次握手、宋词">
+      </label>
+      <button class="btn btn-primary" type="submit">生成题目</button>
+    </form>
+  </section>
+
+  <section class="panel-box" th:if="${result != null}">
+    <h2>生成结果</h2>
+    <p class="qtext" th:text="${result.question}">题干</p>
+    <div class="opts">
+      <div class="opt" th:each="o, s : ${result.options}"
+           th:classappend="${s.index == result.answerIndex} ? ' correct'">
+        <span class="opt-key" th:text="${#strings.substring('ABCD', s.index, s.index + 1)}">A</span>
+        <span class="opt-text" th:text="${o}">选项</span>
+      </div>
+    </div>
+    <p class="explain" th:text="${result.explanation}">解析</p>
+  </section>
+
+  <p class="pf-note">
+    当前是 <b>Mock 通道</b>：用模板拼出结构正确的题目，接口形状与真实模型完全一致，
+    所以之后把 <code>MockLlmService.generate()</code> 换成 HTTP 调用即可，调用方不用改。<br>
+    切真实通道：<code>app.llm.mode=real</code> + 环境变量 <code>LLM_API_KEY</code>
+    （真实调用代码留在 <code>// TODO</code> 处，未启用）。
+  </p>
+</main>
+
+</body>
+</html>

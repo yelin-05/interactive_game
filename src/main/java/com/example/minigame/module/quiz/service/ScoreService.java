@@ -118,4 +118,21 @@ public class ScoreService {
     public long count() {
         return scoreMapper.selectCount(null);
     }
+
+    /**
+     * 某人完成的有效局数，可按分区过滤（任务进度用）。
+     *
+     * @param category null 表示任意分区
+     */
+    public long countRounds(Long userId, String category) {
+        if (userId == null) {
+            return 0;
+        }
+        var query = Wrappers.<Score>lambdaQuery().eq(Score::getUserId, userId);
+        if (category != null && !category.isBlank()) {
+            query.eq(Score::getCategory, category);
+        }
+        Long n = scoreMapper.selectCount(query);
+        return n == null ? 0 : n;
+    }
 }

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>任务中心</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/nav :: bar(${active})}"></div>
+
+<main class="page-wrap">
+  <div class="page-head">
+    <h1>📋 任务中心</h1>
+    <span th:text="'累计获得 ' + ${totalReward} + ' 积分'">累计获得 0 积分</span>
+  </div>
+
+  <div class="auth-msg ok" th:if="${claimedPoints != null}"
+       th:text="'领取成功，+' + ${claimedPoints} + ' 积分'">领取成功</div>
+  <div class="auth-msg bad" th:if="${error != null}" th:text="${error}">错误</div>
+  <div class="auth-msg bad" th:unless="${loggedIn}">
+    未登录时不计进度。<a class="inline-link" th:href="@{/login(redirect='/tasks')}">登录</a>后答题才会累计。
+  </div>
+
+  <div class="task-list" th:unless="${#lists.isEmpty(rows)}">
+    <article class="task-card" th:each="r : ${rows}">
+      <div class="task-main">
+        <div class="task-title">
+          <h2 th:text="${r.title}">任务标题</h2>
+          <span class="tag-cat" th:text="${r.categoryName}">分区</span>
+        </div>
+        <p class="task-desc" th:text="${r.description}">任务说明</p>
+        <div class="bar">
+          <i th:style="'width:' + ${r.progress * 100 / r.targetCount} + '%'"></i>
+        </div>
+        <span class="task-progress" th:text="${r.progress} + ' / ' + ${r.targetCount} + ' 局'">0 / 3 局</span>
+      </div>
+
+      <div class="task-side">
+        <div class="task-reward">+<span th:text="${r.rewardPoints}">50</span><small>积分</small></div>
+        <form th:if="${r.claimable}" th:action="@{'/tasks/' + ${r.id} + '/claim'}" method="post">
+          <button class="btn btn-primary" type="submit">领取奖励</button>
+        </form>
+        <span class="state-chip done" th:if="${r.claimed}">已领取</span>
+        <span class="state-chip" th:if="${!r.claimable and !r.claimed}">进行中</span>
+      </div>
+    </article>
+  </div>
+
+  <div class="panel-box" th:if="${#lists.isEmpty(rows)}">
+    <p class="soon-mini">还没有上架的任务。</p>
+  </div>
+
+  <p class="pf-note">
+    任务进度不需要单独的表 —— 直接按 <code>t_score</code> 里符合条件的局数实时算，
+    所以答题成绩一入库，这里立刻更新。
+  </p>
+</main>
+
+</body>
+</html>

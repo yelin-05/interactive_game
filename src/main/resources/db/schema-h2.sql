@@ -52,3 +52,48 @@ CREATE TABLE t_score
 CREATE INDEX idx_score_cat ON t_score (category, score, duration_ms);
 
 CREATE INDEX idx_score_user ON t_score (user_id);
+
+DROP TABLE IF EXISTS t_task;
+
+CREATE TABLE t_task
+(
+    id            BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title         VARCHAR(100) NOT NULL,
+    description   VARCHAR(300),
+    category      VARCHAR(32),
+    target_count  INT          NOT NULL,
+    reward_points INT          NOT NULL,
+    status        TINYINT      NOT NULL DEFAULT 1,
+    created_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_task_status ON t_task (status);
+
+DROP TABLE IF EXISTS t_user_task;
+
+CREATE TABLE t_user_task
+(
+    id            BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id       BIGINT    NOT NULL,
+    task_id       BIGINT    NOT NULL,
+    reward_points INT       NOT NULL,
+    created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_user_task UNIQUE (user_id, task_id)
+);
+
+DROP TABLE IF EXISTS t_asset;
+
+CREATE TABLE t_asset
+(
+    id            BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name          VARCHAR(120) NOT NULL,
+    original_name VARCHAR(255),
+    content_type  VARCHAR(100),
+    size_bytes    BIGINT,
+    category      VARCHAR(32),
+    stored_path   VARCHAR(300) NOT NULL,
+    uploader_id   BIGINT,
+    created_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_asset_category ON t_asset (category);

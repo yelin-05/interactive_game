@@ -1,0 +1,37 @@
+[
+  {
+    "title": "历史新手",
+    "description": "在「历史」分区完成 3 局答题",
+    "category": "history",
+    "targetCount": 3,
+    "rewardPoints": 50
+  },
+  {
+    "title": "科学爱好者",
+    "description": "在「科学」分区完成 2 局答题",
+    "category": "science",
+    "targetCount": 2,
+    "rewardPoints": 40
+  },
+  {
+    "title": "文学漫步",
+    "description": "在「文学」分区完成 2 局答题",
+    "category": "literature",
+    "targetCount": 2,
+    "rewardPoints": 40
+  },
+  {
+    "title": "地理探险家",
+    "description": "在「地理」分区完成 2 局答题",
+    "category": "geography",
+    "targetCount": 2,
+    "rewardPoints": 40
+  },
+  {
+    "title": "全能玩家",
+    "description": "任意分区累计完成 5 局答题",
+    "category": null,
+    "targetCount": 5,
+    "rewardPoints": 100
+  }
+]
