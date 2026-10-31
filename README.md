@@ -131,7 +131,8 @@ mvnw.cmd spring-boot:run
 
 | 方法 | 路径 | 说明 |
 | --- | --- | --- |
-| GET | `/` | 首页，四个模块卡片 + 自检面板 |
+| GET | `/` | 首页：开始答题 / 个人中心 / 自检，模块一览 |
+| GET | `/profile` | 个人中心（演示账号，战绩待 `t_score`） |
 | GET | `/games` | 入口，302 跳转到 `/games/quiz` |
 | GET | `/games/quiz` | 知识闯关：分区选择 → 答题 → 结算 |
 | GET | `/api/quiz/categories` | 题库五个分区 + 各分区题量 |

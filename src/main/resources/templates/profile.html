@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>个人中心</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body>
+
+<header class="site-bar">
+  <a class="site-back" th:href="@{/}">← 返回首页</a>
+  <span class="site-title">个人中心</span>
+</header>
+
+<main class="pf-wrap">
+
+  <section class="pf-user">
+    <div class="pf-avatar" th:text="${initial}">玩</div>
+    <div class="pf-meta">
+      <h1>
+        <span th:text="${nickname}">玩家一号</span>
+        <span class="pf-role" th:text="${roleLabel}">玩家</span>
+      </h1>
+      <p class="pf-line">@<span th:text="${user.username}">player01</span></p>
+      <p class="pf-line dim" th:text="'注册于 ' + ${joinedAt}">注册于 —</p>
+    </div>
+  </section>
+
+  <section class="pf-stats">
+    <div class="pf-stat"><b>--</b><span>累计答题</span></div>
+    <div class="pf-stat"><b>--</b><span>最高分</span></div>
+    <div class="pf-stat"><b>--</b><span>正确率</span></div>
+    <div class="pf-stat"><b>--</b><span>排名</span></div>
+  </section>
+  <p class="pf-note">这四格要等成绩入库（<code>t_score</code>）后才能填真实数字，现在故意留空，不做假数据。</p>
+
+  <section class="pf-panel">
+    <h2>最近战绩</h2>
+    <div class="pf-empty">
+      <p>还没有答题记录</p>
+      <a class="btn btn-primary" th:href="@{/games/quiz}">去答一局 →</a>
+    </div>
+  </section>
+
+  <section class="pf-panel">
+    <h2>账号</h2>
+    <p class="pf-note">
+      登录鉴权还没做，这里固定展示演示账号 <code>player01</code>。<br>
+      接入登录后，这个页面会换成当前登录用户，并出现「修改昵称 / 退出登录」。
+    </p>
+  </section>
+
+</main>
+
+</body>
+</html>

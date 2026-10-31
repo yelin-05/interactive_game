@@ -5,29 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title th:text="${appName} + ' v' + ${appVersion}">互动Web小游戏</title>
   <link rel="stylesheet" th:href="@{/css/app.css}">
+  <link rel="stylesheet" th:href="@{/css/site.css}">
 </head>
 <body>
 
 <header class="hero">
-  <span class="badge">Java EE 期末大作业</span>
   <h1 th:text="${appName}">互动Web小游戏·任务与素材管理</h1>
-  <p class="sub">任务中心 · 素材库 · 排行榜 · 大模型生成占位</p>
+  <p class="sub">五分区题库 · 答对得积分 · 排行榜即将上线</p>
+
   <div class="hero-actions">
-    <a class="btn btn-primary" th:href="@{/games/quiz}">开始答题 →</a>
-    <button id="btn-check" class="btn" type="button">系统自检</button>
-    <a class="btn" th:href="@{/actuator/health}" target="_blank" rel="noopener">健康检查 JSON</a>
+    <a class="btn btn-primary btn-lg" th:href="@{/games/quiz}">开始答题</a>
+    <a class="btn btn-lg" th:href="@{/profile}">个人中心</a>
+    <button id="btn-check" class="btn btn-ghost-sm" type="button">系统自检</button>
+    <a class="btn btn-ghost-sm" th:href="@{/actuator/health}" target="_blank" rel="noopener">健康检查</a>
   </div>
 </header>
 
 <main>
-  <section class="grid">
-    <article class="card" th:each="m, st : ${modules}">
-      <div class="card-top">
-        <span class="code" th:text="${m.code}">task</span>
-        <span class="tag" th:text="${m.status}">骨架就绪</span>
+  <section class="module-row">
+    <article class="mod" th:each="m : ${modules}">
+      <span class="mod-icon" th:text="${m.icon}">📋</span>
+      <div class="mod-body">
+        <div class="mod-head">
+          <span class="mod-name" th:text="${m.name}">任务中心</span>
+          <span class="mod-tag" th:text="${m.status}">骨架就绪</span>
+        </div>
+        <p class="mod-desc" th:text="${m.desc}">说明</p>
       </div>
-      <h2 th:text="${m.name}">任务中心</h2>
-      <p th:text="${m.desc}">描述</p>
     </article>
   </section>
 
