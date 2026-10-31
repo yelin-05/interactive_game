@@ -132,7 +132,7 @@ mvnw.cmd spring-boot:run
 | 方法 | 路径 | 说明 |
 | --- | --- | --- |
 | GET | `/` | 首页，四个模块卡片 + 自检面板 |
-| GET | `/games` | 小游戏模板选型（C 知识闯关已选定） |
+| GET | `/games` | 入口，302 跳转到 `/games/quiz` |
 | GET | `/games/quiz` | 知识闯关：分区选择 → 答题 → 结算 |
 | GET | `/api/quiz/categories` | 题库五个分区 + 各分区题量 |
 | GET | `/api/quiz/questions` | 按分区随机抽题，参数 `category`、`limit` |

@@ -10,6 +10,7 @@ public record ApiResult<T>(int code, String message, T data) {
     public static final int CODE_OK = 0;
     public static final int CODE_ERROR = 500;
     public static final int CODE_BAD_REQUEST = 400;
+    public static final int CODE_NOT_FOUND = 404;
 
     public static <T> ApiResult<T> ok(T data) {
         return new ApiResult<>(CODE_OK, "ok", data);
