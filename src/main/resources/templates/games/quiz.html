@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>C · 知识闯关</title>
+  <link rel="stylesheet" th:href="@{/css/game.css}">
+</head>
+<body class="game-page">
+
+<header class="gbar">
+  <a class="gback" th:href="@{/games}">← 返回选型</a>
+  <span class="gtitle">C · 知识闯关</span>
+  <span class="gtag">答题</span>
+</header>
+
+<main class="stage">
+  <div class="hud">
+    <div class="hud-item"><span class="lab">题目</span><b id="hud-q">-/5</b></div>
+    <div class="hud-item"><span class="lab">得分</span><b id="hud-score">0</b></div>
+    <div class="hud-item"><span class="lab">本题剩余</span><b id="hud-time">--</b></div>
+    <div class="hud-item"><span class="lab">答对</span><b id="hud-right">0</b></div>
+  </div>
+
+  <div class="qhead">
+    <span id="q-topic">等待开始</span>
+    <span id="q-idx">第 0 / 5 题</span>
+  </div>
+  <div class="qbar"><i id="q-bar" style="width:0%"></i></div>
+
+  <div class="qbox">
+    <p class="qtext" id="q-text">点下面的按钮开始。答对得 10 分基础分，剩余时间越多，时间加成越高。</p>
+    <div class="opts" id="opts"></div>
+    <p class="explain" id="explain" hidden></p>
+  </div>
+
+  <div class="stage-foot">
+    <button id="btn-start" class="btn btn-primary" type="button">开始答题</button>
+    <p class="tip">题库现在是写死的 5 道题；接上大模型生成后，题目可以按素材库内容动态出。</p>
+  </div>
+</main>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-card">
+    <h2>挑战结束</h2>
+    <div class="big-score" id="r-score">0</div>
+    <p class="modal-sub">总分</p>
+    <div class="stat-line"><span>答对题数</span><span id="r-right">0 / 5</span></div>
+    <div class="stat-line"><span>平均用时</span><span id="r-avg">0s</span></div>
+    <div class="stat-line"><span>评级</span><span id="r-rank">--</span></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="btn-again" type="button">再来一局</button>
+      <a class="btn btn-ghost" th:href="@{/games}">换模板</a>
+    </div>
+    <p class="pending">成绩暂未入库 · 这个模板最容易跟「大模型生成占位」结合</p>
+  </div>
+</div>
+
+<script th:src="@{/js/games/quiz.js}"></script>
+</body>
+</html>

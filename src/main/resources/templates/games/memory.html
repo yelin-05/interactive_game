@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>B · 记忆翻牌</title>
+  <link rel="stylesheet" th:href="@{/css/game.css}">
+</head>
+<body class="game-page">
+
+<header class="gbar">
+  <a class="gback" th:href="@{/games}">← 返回选型</a>
+  <span class="gtitle">B · 记忆翻牌</span>
+  <span class="gtag">记忆力</span>
+</header>
+
+<main class="stage">
+  <div class="hud">
+    <div class="hud-item"><span class="lab">用时</span><b id="hud-time">0s</b></div>
+    <div class="hud-item"><span class="lab">步数</span><b id="hud-moves">0</b></div>
+    <div class="hud-item"><span class="lab">已配对</span><b id="hud-pairs">0/8</b></div>
+    <div class="hud-item"><span class="lab">当前得分</span><b id="hud-score">1000</b></div>
+  </div>
+
+  <div class="mgrid" id="board"></div>
+
+  <div class="stage-foot">
+    <button id="btn-start" class="btn btn-primary" type="button">开始挑战</button>
+    <p class="tip">翻开两张一样的牌即配对成功。得分 = 1000 − 步数×20 − 用时×5，最低 0 分。</p>
+  </div>
+</main>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-card">
+    <h2>全部配对完成</h2>
+    <div class="big-score" id="r-score">0</div>
+    <p class="modal-sub">最终得分</p>
+    <div class="stat-line"><span>步数</span><span id="r-moves">0</span></div>
+    <div class="stat-line"><span>用时</span><span id="r-time">0s</span></div>
+    <div class="stat-line"><span>评价</span><span id="r-rank">--</span></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="btn-again" type="button">再来一局</button>
+      <a class="btn btn-ghost" th:href="@{/games}">换模板</a>
+    </div>
+    <p class="pending">成绩暂未入库 · 牌面图案后续可换成素材库里的真实素材</p>
+  </div>
+</div>
+
+<script th:src="@{/js/games/memory.js}"></script>
+</body>
+</html>

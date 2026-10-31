@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>选一个游戏模板</title>
+  <link rel="stylesheet" th:href="@{/css/game.css}">
+</head>
+<body class="game-page">
+
+<div class="wrap">
+  <h1>选一个游戏模板</h1>
+  <p class="lead">
+    三个模板都能直接玩、都能计分，代码就在仓库里，改起来工作量差不多。<br>
+    现在是纯前端计分，成绩还没入库 —— 选定一个之后我再把它接上
+    <b>任务中心</b>（每局算一次任务进度）和 <b>排行榜</b>（成绩入 t_score 表、分页排名）。
+  </p>
+
+  <div class="tpl-grid">
+    <article class="tpl" th:each="t : ${templates}">
+      <div class="tpl-top">
+        <span class="tpl-tag" th:text="${t.code}">reaction</span>
+        <span class="tpl-diff" th:text="'难度 ' + ${t.difficulty}">难度 低</span>
+      </div>
+      <h2 th:text="${t.name}">A · 打地鼠</h2>
+      <p th:text="${t.desc}">玩法描述</p>
+      <div class="tpl-meta">
+        <span class="chip" th:text="${t.tag}">反应力</span>
+        <span class="chip" th:text="${t.duration}">30 秒</span>
+        <span class="chip" th:text="'适配：' + ${t.modules}">适配</span>
+      </div>
+      <a class="btn btn-primary" th:href="@{'/games/' + ${t.code}}">进入试玩 →</a>
+    </article>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A · 打地鼠</title>
+  <link rel="stylesheet" th:href="@{/css/game.css}">
+</head>
+<body class="game-page">
+
+<header class="gbar">
+  <a class="gback" th:href="@{/games}">← 返回选型</a>
+  <span class="gtitle">A · 打地鼠</span>
+  <span class="gtag">反应力</span>
+</header>
+
+<main class="stage">
+  <div class="hud">
+    <div class="hud-item"><span class="lab">剩余时间</span><b id="hud-time">30</b></div>
+    <div class="hud-item"><span class="lab">得分</span><b id="hud-score">0</b></div>
+    <div class="hud-item"><span class="lab">连击</span><b id="hud-combo">0</b></div>
+    <div class="hud-item"><span class="lab">命中率</span><b id="hud-acc">--</b></div>
+  </div>
+
+  <div class="holes" id="board"></div>
+
+  <div class="stage-foot">
+    <button id="btn-start" class="btn btn-primary" type="button">开始 · 30 秒</button>
+    <p class="tip">点中冒头的地鼠得分，连击每 +1 单次得分 +2；点到空坑扣 5 分并清空连击。</p>
+  </div>
+</main>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-card">
+    <h2>本局结束</h2>
+    <div class="big-score" id="r-score">0</div>
+    <p class="modal-sub">总分</p>
+    <div class="stat-line"><span>命中 / 点击</span><span id="r-hit">0 / 0</span></div>
+    <div class="stat-line"><span>命中率</span><span id="r-acc">--</span></div>
+    <div class="stat-line"><span>最高连击</span><span id="r-combo">0</span></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="btn-again" type="button">再来一局</button>
+      <a class="btn btn-ghost" th:href="@{/games}">换模板</a>
+    </div>
+    <p class="pending">成绩暂未入库 · 接排行榜后这里会显示你的名次</p>
+  </div>
+</div>
+
+<script th:src="@{/js/games/reaction.js}"></script>
+</body>
+</html>
