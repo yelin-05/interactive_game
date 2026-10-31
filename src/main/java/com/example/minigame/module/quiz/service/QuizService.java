@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -68,6 +71,20 @@ public class QuizService {
         Collections.shuffle(pool);
 
         return pool.stream().limit(size).map(this::toVO).toList();
+    }
+
+    /** 按 id 批量取题，保持传入顺序；含答案与解析，只给服务端判分用。 */
+    public List<QuizQuestionVO> byIds(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return List.of();
+        }
+        Map<Long, Question> map = questionMapper.selectBatchIds(ids).stream()
+                .collect(Collectors.toMap(Question::getId, q -> q));
+        return ids.stream()
+                .map(map::get)
+                .filter(Objects::nonNull)
+                .map(this::toVO)
+                .toList();
     }
 
     private QuizQuestionVO toVO(Question q) {

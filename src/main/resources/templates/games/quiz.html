@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>C · 知识闯关</title>
   <link rel="stylesheet" th:href="@{/css/game.css}">
+  <link rel="stylesheet" th:href="@{/css/site.css}">
 </head>
 <body class="game-page">
 
@@ -29,10 +30,10 @@
   <!-- ================= 答题 ================= -->
   <section id="view-play" hidden>
     <div class="hud">
-      <div class="hud-item"><span class="lab">得分</span><b id="hud-score">0</b></div>
+      <div class="hud-item"><span class="lab">进度</span><b id="hud-progress">1/5</b></div>
       <div class="hud-item"><span class="lab">本题剩余</span><b id="hud-time">15</b></div>
-      <div class="hud-item"><span class="lab">答对</span><b id="hud-right">0</b></div>
-      <div class="hud-item"><span class="lab">连对</span><b id="hud-streak">0</b></div>
+      <div class="hud-item"><span class="lab">已作答</span><b id="hud-answered">0</b></div>
+      <div class="hud-item"><span class="lab">判分</span><b>交卷后</b></div>
     </div>
 
     <div class="play-top">
@@ -58,20 +59,22 @@
 
 <!-- ================= 结算 ================= -->
 <div class="modal" id="modal" hidden>
-  <div class="modal-card">
-    <h2 id="r-title">挑战结束</h2>
+  <div class="modal-card wide">
+    <h2 id="r-title">本局结束</h2>
     <div class="big-score" id="r-score">0</div>
-    <p class="modal-sub" id="r-sub">总分</p>
-    <div class="stat-line"><span>分区</span><span id="r-cat">--</span></div>
+    <p class="modal-sub" id="r-sub">本局得分</p>
     <div class="stat-line"><span>答对题数</span><span id="r-right">0 / 5</span></div>
-    <div class="stat-line"><span>最高连对</span><span id="r-streak">0</span></div>
-    <div class="stat-line"><span>平均用时</span><span id="r-avg">0s</span></div>
-    <div class="stat-line"><span>评级</span><span id="r-rank">--</span></div>
+    <div class="stat-line"><span>得分构成</span><span id="r-breakdown">基础 0 + 速度 0</span></div>
+    <div class="stat-line"><span>用时</span><span id="r-time">0s</span></div>
+    <div class="stat-line"><span>成绩</span><span id="r-saved">—</span></div>
+
+    <div class="detail-list" id="r-details"></div>
+
     <div class="modal-actions">
       <button class="btn btn-primary" id="btn-again" type="button">再来一局</button>
       <button class="btn btn-ghost" id="btn-back" type="button">换分区</button>
     </div>
-    <p class="pending">成绩暂未入库 · 接排行榜后这里会显示你的名次</p>
+    <p class="pending" id="r-tip">成绩由服务端判分</p>
   </div>
 </div>
 

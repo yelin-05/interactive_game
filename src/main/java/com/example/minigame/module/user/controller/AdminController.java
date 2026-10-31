@@ -2,6 +2,7 @@ package com.example.minigame.module.user.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.example.minigame.module.quiz.service.QuizService;
+import com.example.minigame.module.quiz.service.ScoreService;
 import com.example.minigame.module.user.entity.User;
 import com.example.minigame.module.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +24,14 @@ public class AdminController {
 
     private final UserService userService;
     private final QuizService quizService;
+    private final ScoreService scoreService;
 
     @GetMapping
     public String index(Model model) {
         model.addAttribute("active", "admin");
         model.addAttribute("userCount", userService.count());
         model.addAttribute("questionCount", quizService.total());
+        model.addAttribute("scoreCount", scoreService.count());
         model.addAttribute("categories", quizService.categories());
         model.addAttribute("recentQuestions", quizService.latest(6));
         model.addAttribute("recentUsers", userService.list(Wrappers.<User>lambdaQuery()

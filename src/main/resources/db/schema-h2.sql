@@ -34,3 +34,21 @@ CREATE TABLE t_question
 );
 
 CREATE INDEX idx_question_category ON t_question (category);
+
+DROP TABLE IF EXISTS t_score;
+
+CREATE TABLE t_score
+(
+    id            BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id       BIGINT      NOT NULL,
+    category      VARCHAR(32) NOT NULL,
+    score         INT         NOT NULL,
+    correct_count INT         NOT NULL,
+    total_count   INT         NOT NULL,
+    duration_ms   INT         NOT NULL,
+    created_at    TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_score_cat ON t_score (category, score, duration_ms);
+
+CREATE INDEX idx_score_user ON t_score (user_id);

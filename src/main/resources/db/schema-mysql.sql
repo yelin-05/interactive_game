@@ -37,3 +37,20 @@ CREATE TABLE IF NOT EXISTS t_question
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT ='题库';
+
+CREATE TABLE IF NOT EXISTS t_score
+(
+    id            BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
+    user_id       BIGINT      NOT NULL COMMENT 't_user.id',
+    category      VARCHAR(32) NOT NULL COMMENT '答题分区',
+    score         INT         NOT NULL COMMENT '本局得分',
+    correct_count INT         NOT NULL COMMENT '答对题数',
+    total_count   INT         NOT NULL COMMENT '总题数',
+    duration_ms   INT         NOT NULL COMMENT '整局耗时（毫秒，服务端计时）',
+    created_at    TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '提交时间',
+    PRIMARY KEY (id),
+    KEY idx_score_cat (category, score DESC, duration_ms ASC),
+    KEY idx_score_user (user_id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT ='答题成绩';

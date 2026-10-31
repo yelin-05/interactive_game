@@ -129,6 +129,19 @@ mvnw.cmd spring-boot:run
 
 `code = 0` 成功，`400` 参数问题，`500` 服务端异常。前端 `static/js/app.js` 按此结构解析。
 
+**答题与判分流程（防作弊）**
+
+```
+POST /api/quiz/start  → 服务端抽 5 题，正确答案留在 Session 里，只下发题干+选项
+     ↓ 用户作答，前端只记录「每题选了哪个」
+POST /api/quiz/submit → 服务端比对答案、算分、写 t_score，返回逐题解析
+```
+
+答案从不下发到浏览器，`F12` 看不到；耗时也由服务端从开局计时，不采信前端上报。
+
+计分规则：答对每题 20 分（满分 100），提前完成每秒 +2 分、最多 +50，
+所以一局满分 **150**。未登录可以玩，但成绩不入库。
+
 | 方法 | 路径 | 说明 |
 | --- | --- | --- |
 | GET | `/` | 首页（统一导航栏 + 模块一览 + 自检） |
@@ -137,11 +150,12 @@ mvnw.cmd spring-boot:run
 | POST | `/login`、`/register`、`/logout` | 登录 / 注册 / 退出（表单提交） |
 | GET | `/profile` | 个人中心，**需登录** |
 | GET | `/admin` | 管理后台，**仅 ADMIN**（题库与用户只读概览） |
-| GET | `/rank` | 排行榜占位页（等 `t_score`） |
+| GET | `/rank` | 排行榜：总榜 + 分区榜，分数降序、同分按用时升序取 Top 10 |
 | GET | `/games` | 入口，302 跳转到 `/games/quiz` |
-| GET | `/games/quiz` | 知识闯关：分区选择 → 答题 → 结算 |
+| GET | `/games/quiz` | 知识闯关：分区选择 → 答题 → 服务端判分结算 |
 | GET | `/api/quiz/categories` | 题库五个分区 + 各分区题量 |
-| GET | `/api/quiz/questions` | 按分区随机抽题，参数 `category`、`limit` |
+| POST | `/api/quiz/start` | 开局：抽 5 题下发，**不含答案**，返回 `roundId` |
+| POST | `/api/quiz/submit` | 交卷：服务端判分 + 入库，返回逐题解析 |
 | GET | `/api/ping` | 系统自检：JDK、数据库类型/版本、用户数 |
 | GET | `/actuator/health` | 标准健康检查 JSON |
 | GET | `/h2-console` | 仅 H2 档可用，浏览器直接看表 |
@@ -172,7 +186,7 @@ mvnw.cmd spring-boot:run
 - [ ] 任务中心：发布 / 领取 / 提交 / 状态流转
 - [ ] 素材库：上传、分类、检索、缩略图
 - [x] 登录注册（BCrypt + Session + 拦截器，用户/管理员分区）
-- [ ] 排行榜：积分与通关时间排序、分页
+- [x] 排行榜：积分与通关时间排序、分页
 - [ ] 大模型生成占位：Mock / 真实双通道切换
 - [ ] 登录鉴权（BCrypt + 拦截器或 Spring Security）
 - [ ] 接口文档（springdoc-openapi）
