@@ -9,10 +9,7 @@
 </head>
 <body>
 
-<header class="site-bar">
-  <a class="site-back" th:href="@{/}">← 返回首页</a>
-  <span class="site-title">个人中心</span>
-</header>
+<div th:replace="~{fragments/nav :: bar(${active})}"></div>
 
 <main class="pf-wrap">
 
@@ -47,8 +44,8 @@
   <section class="pf-panel">
     <h2>账号</h2>
     <p class="pf-note">
-      登录鉴权还没做，这里固定展示演示账号 <code>player01</code>。<br>
-      接入登录后，这个页面会换成当前登录用户，并出现「修改昵称 / 退出登录」。
+      当前页面展示的是<b>已登录用户</b>，登录态保存在 HTTP Session 里，密码以 BCrypt 摘要存储。<br>
+      修改昵称、上传头像、退出登录等功能后续补充（退出在右上角导航栏）。
     </p>
   </section>
 

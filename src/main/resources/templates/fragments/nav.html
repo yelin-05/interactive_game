@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- 统一导航栏：所有页面共用，改这里等于改全站 -->
+<nav class="navbar" th:fragment="bar(active)">
+  <div class="nav-inner">
+    <a class="brand" th:href="@{/}">
+      <span class="brand-mark">🎮</span>
+      <span>互动小游戏</span>
+    </a>
+
+    <div class="nav-links">
+      <a class="nav-item" th:classappend="${active == 'home'} ? ' on'" th:href="@{/}">首页</a>
+      <a class="nav-item" th:classappend="${active == 'quiz'} ? ' on'" th:href="@{/games/quiz}">答题中心</a>
+      <a class="nav-item" th:classappend="${active == 'rank'} ? ' on'" th:href="@{/rank}">排行榜</a>
+      <span class="nav-item off" title="建设中">任务中心</span>
+      <span class="nav-item off" title="建设中">素材库</span>
+      <a class="nav-item" th:if="${session.LOGIN_ROLE == 'ADMIN'}"
+         th:classappend="${active == 'admin'} ? ' on'" th:href="@{/admin}">管理后台</a>
+    </div>
+
+    <div class="nav-user">
+      <th:block th:if="${session.LOGIN_NICKNAME != null}">
+        <a class="nav-item" th:classappend="${active == 'profile'} ? ' on'" th:href="@{/profile}"
+           th:text="${session.LOGIN_NICKNAME}">玩家一号</a>
+        <form class="nav-form" th:action="@{/logout}" method="post">
+          <button class="nav-btn ghost" type="submit">退出</button>
+        </form>
+      </th:block>
+      <th:block th:if="${session.LOGIN_NICKNAME == null}">
+        <a class="nav-btn ghost" th:href="@{/login}">登录</a>
+        <a class="nav-btn" th:href="@{/register}">注册</a>
+      </th:block>
+    </div>
+  </div>
+</nav>
+
+</body>
+</html>

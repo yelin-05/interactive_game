@@ -9,15 +9,16 @@
 </head>
 <body>
 
+<div th:replace="~{fragments/nav :: bar('home')}"></div>
+
 <header class="hero">
   <h1 th:text="${appName}">互动Web小游戏·任务与素材管理</h1>
-  <p class="sub">五分区题库 · 答对得积分 · 排行榜即将上线</p>
+  <p class="sub">五分区题库 · 答对得积分 · 答题中心在顶部导航</p>
 
   <div class="hero-actions">
-    <a class="btn btn-primary btn-lg" th:href="@{/games/quiz}">开始答题</a>
-    <a class="btn btn-lg" th:href="@{/profile}">个人中心</a>
-    <button id="btn-check" class="btn btn-ghost-sm" type="button">系统自检</button>
+    <button id="btn-check" class="btn" type="button">系统自检</button>
     <a class="btn btn-ghost-sm" th:href="@{/actuator/health}" target="_blank" rel="noopener">健康检查</a>
+    <a class="btn btn-ghost-sm" th:if="${session.LOGIN_NICKNAME == null}" th:href="@{/register}">注册新账号</a>
   </div>
 </header>
 

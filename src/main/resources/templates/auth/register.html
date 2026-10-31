@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>注册</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/nav :: bar(${active})}"></div>
+
+<main class="auth-wrap">
+  <div class="auth-card">
+    <h1>注册</h1>
+    <p class="auth-sub">密码用 BCrypt 加盐摘要存储，数据库里看不到明文</p>
+
+    <div class="auth-msg bad" th:if="${error != null}" th:text="${error}">错误信息</div>
+
+    <form class="auth-form" th:action="@{/register}" method="post">
+      <label class="field">
+        <span>用户名</span>
+        <input class="input" type="text" name="username" th:value="${username}"
+               required autocomplete="username" placeholder="3-20 位字母、数字或下划线">
+      </label>
+      <label class="field">
+        <span>昵称（选填，排行榜显示用）</span>
+        <input class="input" type="text" name="nickname" th:value="${nickname}"
+               autocomplete="nickname" placeholder="不填就用用户名">
+      </label>
+      <label class="field">
+        <span>密码</span>
+        <input class="input" type="password" name="password" required
+               autocomplete="new-password" placeholder="至少 6 位">
+      </label>
+      <label class="field">
+        <span>确认密码</span>
+        <input class="input" type="password" name="password2" required
+               autocomplete="new-password" placeholder="再输入一次">
+      </label>
+      <button class="btn btn-primary btn-block" type="submit">注册</button>
+    </form>
+
+    <p class="auth-foot">已有账号？<a th:href="@{/login}">去登录</a></p>
+  </div>
+</main>
+
+</body>
+</html>

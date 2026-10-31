@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>排行榜</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/nav :: bar(${active})}"></div>
+
+<main class="soon">
+  <h1>🏆 排行榜</h1>
+  <p>
+    还没有成绩数据 —— 因为答题记录还没入库（<code>t_score</code> 表未建）。<br>
+    等成绩入库后，这里会按分区展示 Top 10、支持分页，并显示你自己的名次。
+  </p>
+  <a class="btn btn-primary" th:href="@{/games/quiz}">先去答一局 →</a>
+</main>
+
+</body>
+</html>

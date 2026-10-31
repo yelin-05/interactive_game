@@ -131,8 +131,13 @@ mvnw.cmd spring-boot:run
 
 | 方法 | 路径 | 说明 |
 | --- | --- | --- |
-| GET | `/` | 首页：开始答题 / 个人中心 / 自检，模块一览 |
-| GET | `/profile` | 个人中心（演示账号，战绩待 `t_score`） |
+| GET | `/` | 首页（统一导航栏 + 模块一览 + 自检） |
+| GET | `/login` | 登录页（演示账号 `player01` / `admin`，密码 `password`） |
+| GET | `/register` | 注册页，BCrypt 加盐存储 |
+| POST | `/login`、`/register`、`/logout` | 登录 / 注册 / 退出（表单提交） |
+| GET | `/profile` | 个人中心，**需登录** |
+| GET | `/admin` | 管理后台，**仅 ADMIN**（题库与用户只读概览） |
+| GET | `/rank` | 排行榜占位页（等 `t_score`） |
 | GET | `/games` | 入口，302 跳转到 `/games/quiz` |
 | GET | `/games/quiz` | 知识闯关：分区选择 → 答题 → 结算 |
 | GET | `/api/quiz/categories` | 题库五个分区 + 各分区题量 |
@@ -166,6 +171,7 @@ mvnw.cmd spring-boot:run
 - [x] 首页与系统自检
 - [ ] 任务中心：发布 / 领取 / 提交 / 状态流转
 - [ ] 素材库：上传、分类、检索、缩略图
+- [x] 登录注册（BCrypt + Session + 拦截器，用户/管理员分区）
 - [ ] 排行榜：积分与通关时间排序、分页
 - [ ] 大模型生成占位：Mock / 真实双通道切换
 - [ ] 登录鉴权（BCrypt + 拦截器或 Spring Security）

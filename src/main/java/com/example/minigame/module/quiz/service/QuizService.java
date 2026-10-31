@@ -39,6 +39,22 @@ public class QuizService {
                 .eq(Question::getStatus, 1));
     }
 
+    /** 题库总题数（含已下架），后台统计用。 */
+    public long total() {
+        return questionMapper.selectCount(null);
+    }
+
+    /** 最新入库的若干题，后台列表用。 */
+    public List<QuizQuestionVO> latest(int limit) {
+        int size = Math.max(1, Math.min(limit, 50));
+        return questionMapper.selectList(Wrappers.<Question>lambdaQuery()
+                        .orderByDesc(Question::getId)
+                        .last("limit " + size))
+                .stream()
+                .map(this::toVO)
+                .toList();
+    }
+
     /** 按分区随机抽题。题量不够时有多少给多少。 */
     public List<QuizQuestionVO> randomQuestions(String category, int limit) {
         if (!QuizCategories.exists(category)) {
