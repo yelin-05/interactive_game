@@ -132,6 +132,10 @@ mvnw.cmd spring-boot:run
 | 方法 | 路径 | 说明 |
 | --- | --- | --- |
 | GET | `/` | 首页，四个模块卡片 + 自检面板 |
+| GET | `/games` | 小游戏模板选型（C 知识闯关已选定） |
+| GET | `/games/quiz` | 知识闯关：分区选择 → 答题 → 结算 |
+| GET | `/api/quiz/categories` | 题库五个分区 + 各分区题量 |
+| GET | `/api/quiz/questions` | 按分区随机抽题，参数 `category`、`limit` |
 | GET | `/api/ping` | 系统自检：JDK、数据库类型/版本、用户数 |
 | GET | `/actuator/health` | 标准健康检查 JSON |
 | GET | `/h2-console` | 仅 H2 档可用，浏览器直接看表 |

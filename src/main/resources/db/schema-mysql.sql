@@ -20,3 +20,20 @@ CREATE TABLE IF NOT EXISTS t_user
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT ='用户表';
+
+CREATE TABLE IF NOT EXISTS t_question
+(
+    id           BIGINT        NOT NULL AUTO_INCREMENT COMMENT '主键',
+    category     VARCHAR(32)   NOT NULL COMMENT '分区：computer/literature/geography/history/science',
+    question     VARCHAR(500)  NOT NULL COMMENT '题干',
+    options_json TEXT          NOT NULL COMMENT '选项 JSON 数组，如 ["A","B","C","D"]',
+    answer_index INT           NOT NULL DEFAULT 0 COMMENT '正确选项下标，从 0 开始',
+    explanation  VARCHAR(1000) DEFAULT NULL COMMENT '答案解析，答错时展示',
+    difficulty   TINYINT       NOT NULL DEFAULT 1 COMMENT '1 简单 2 中等 3 困难',
+    status       TINYINT       NOT NULL DEFAULT 1 COMMENT '1 启用 0 下架',
+    created_at   TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    PRIMARY KEY (id),
+    KEY idx_question_category (category)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT ='题库';

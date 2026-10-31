@@ -1,0 +1,486 @@
+[
+  {
+    "category": "computer",
+    "question": "Spring Boot 应用内嵌的 Servlet 容器，默认是哪一个？",
+    "options": ["Tomcat", "Jetty", "Undertow", "Netty"],
+    "answerIndex": 0,
+    "explanation": "spring-boot-starter-web 默认内嵌 Tomcat；换 Jetty 或 Undertow 需要排除默认依赖再引入对应 starter。",
+    "difficulty": 1
+  },
+  {
+    "category": "computer",
+    "question": "MyBatis-Plus 中提供单表 CRUD 通用方法的接口是？",
+    "options": ["JpaRepository", "BaseMapper", "CrudRepository", "MapperTemplate"],
+    "answerIndex": 1,
+    "explanation": "继承 BaseMapper 就自带 selectById、selectList、insert、updateById 等方法，不用手写 XML。",
+    "difficulty": 1
+  },
+  {
+    "category": "computer",
+    "question": "HTTP 状态码 404 表示什么？",
+    "options": ["服务器内部错误", "请求的资源不存在", "请求被重定向", "请求方法不被允许"],
+    "answerIndex": 1,
+    "explanation": "404 Not Found 是资源不存在；500 是服务端错误，301/302 是重定向，405 是方法不允许。",
+    "difficulty": 1
+  },
+  {
+    "category": "computer",
+    "question": "MySQL 里 utf8mb4 相比 utf8 的主要优势是？",
+    "options": ["查询速度更快", "支持 emoji 等 4 字节字符", "占用存储更小", "自动加密数据"],
+    "answerIndex": 1,
+    "explanation": "MySQL 的 utf8 实际是 utf8mb3，最长 3 字节，存不了 emoji；utf8mb4 才是完整的 UTF-8。",
+    "difficulty": 2
+  },
+  {
+    "category": "computer",
+    "question": "把一个普通类交给 Spring 容器管理，最常用的注解是？",
+    "options": ["@Entity", "@Table", "@Component", "@Mapper"],
+    "answerIndex": 2,
+    "explanation": "@Component 及其派生注解（@Service / @Controller / @Repository）用于声明 Bean。",
+    "difficulty": 1
+  },
+  {
+    "category": "computer",
+    "question": "TCP 三次握手的主要目的是什么？",
+    "options": ["加密传输数据", "确认双方收发能力并同步初始序列号", "压缩数据体积", "分配 IP 地址"],
+    "answerIndex": 1,
+    "explanation": "三次握手确认客户端与服务端都能收能发，同时同步双方的初始序列号（ISN）。",
+    "difficulty": 2
+  },
+  {
+    "category": "computer",
+    "question": "Java 中的 String 类型是？",
+    "options": ["可变的", "不可变的", "只能存数字", "必须用 new 创建"],
+    "answerIndex": 1,
+    "explanation": "String 是不可变类，任何修改都会产生新对象；频繁拼接应使用 StringBuilder。",
+    "difficulty": 1
+  },
+  {
+    "category": "computer",
+    "question": "二分查找的时间复杂度是？",
+    "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+    "answerIndex": 1,
+    "explanation": "每次比较把区间减半，因此是对数级复杂度 O(log n)，前提是数据有序。",
+    "difficulty": 2
+  },
+  {
+    "category": "computer",
+    "question": "关系型数据库中主键的主要作用是？",
+    "options": ["加快排序速度", "唯一标识一行记录", "存储外键关系", "自动备份数据"],
+    "answerIndex": 1,
+    "explanation": "主键要求唯一且非空，用于唯一标识一行记录，同时默认建立聚簇或唯一索引。",
+    "difficulty": 1
+  },
+  {
+    "category": "computer",
+    "question": "CSS Flex 布局中，控制主轴方向对齐的属性是？",
+    "options": ["align-items", "justify-content", "flex-wrap", "gap"],
+    "answerIndex": 1,
+    "explanation": "justify-content 控制主轴对齐，align-items 控制交叉轴对齐。",
+    "difficulty": 2
+  },
+  {
+    "category": "computer",
+    "question": "Git 中用于查看提交历史的命令是？",
+    "options": ["git log", "git add", "git push", "git clone"],
+    "answerIndex": 0,
+    "explanation": "git log 查看提交历史，加 --oneline 可以一行一条、加 --graph 看分支拓扑。",
+    "difficulty": 1
+  },
+  {
+    "category": "computer",
+    "question": "HTTP 和 HTTPS 的默认端口分别是？",
+    "options": ["21 和 22", "80 和 443", "8080 和 8443", "3306 和 6379"],
+    "answerIndex": 1,
+    "explanation": "HTTP 默认 80，HTTPS 默认 443；21 是 FTP，22 是 SSH，3306 是 MySQL，6379 是 Redis。",
+    "difficulty": 1
+  },
+
+  {
+    "category": "literature",
+    "question": "《红楼梦》的作者是？",
+    "options": ["罗贯中", "曹雪芹", "施耐庵", "吴承恩"],
+    "answerIndex": 1,
+    "explanation": "《红楼梦》前八十回为曹雪芹所著，后四十回一般认为由高鹗整理续补。",
+    "difficulty": 1
+  },
+  {
+    "category": "literature",
+    "question": "《西游记》的作者是？",
+    "options": ["曹雪芹", "鲁迅", "吴承恩", "蒲松龄"],
+    "answerIndex": 2,
+    "explanation": "《西游记》为明代吴承恩所著；《聊斋志异》才是蒲松龄的作品。",
+    "difficulty": 1
+  },
+  {
+    "category": "literature",
+    "question": "「床前明月光，疑是地上霜」出自哪首诗？",
+    "options": ["杜甫《月夜》", "李白《静夜思》", "王维《山居秋暝》", "苏轼《水调歌头》"],
+    "answerIndex": 1,
+    "explanation": "出自李白《静夜思》，是流传最广的五言绝句之一。",
+    "difficulty": 1
+  },
+  {
+    "category": "literature",
+    "question": "小说集《呐喊》的作者是？",
+    "options": ["老舍", "巴金", "鲁迅", "茅盾"],
+    "answerIndex": 2,
+    "explanation": "《呐喊》是鲁迅的第一部小说集，收录《狂人日记》《阿Q正传》等名篇。",
+    "difficulty": 1
+  },
+  {
+    "category": "literature",
+    "question": "「先天下之忧而忧，后天下之乐而乐」出自哪篇文章？",
+    "options": ["《醉翁亭记》", "《岳阳楼记》", "《滕王阁序》", "《陋室铭》"],
+    "answerIndex": 1,
+    "explanation": "出自范仲淹《岳阳楼记》，是北宋士大夫家国情怀的代表句。",
+    "difficulty": 2
+  },
+  {
+    "category": "literature",
+    "question": "《哈姆雷特》的作者是？",
+    "options": ["但丁", "歌德", "莎士比亚", "雨果"],
+    "answerIndex": 2,
+    "explanation": "《哈姆雷特》是莎士比亚四大悲剧之一，与《奥赛罗》《李尔王》《麦克白》并列。",
+    "difficulty": 1
+  },
+  {
+    "category": "literature",
+    "question": "《百年孤独》的作者是？",
+    "options": ["博尔赫斯", "加西亚·马尔克斯", "略萨", "聂鲁达"],
+    "answerIndex": 1,
+    "explanation": "马尔克斯是哥伦比亚作家、魔幻现实主义代表，《百年孤独》1982 年获诺贝尔文学奖。",
+    "difficulty": 2
+  },
+  {
+    "category": "literature",
+    "question": "「落霞与孤鹜齐飞，秋水共长天一色」的作者是？",
+    "options": ["王勃", "李白", "杜甫", "韩愈"],
+    "answerIndex": 0,
+    "explanation": "出自唐代王勃的《滕王阁序》，是骈文中的千古名句。",
+    "difficulty": 2
+  },
+  {
+    "category": "literature",
+    "question": "《三国演义》的作者是？",
+    "options": ["施耐庵", "罗贯中", "曹雪芹", "冯梦龙"],
+    "answerIndex": 1,
+    "explanation": "《三国演义》是元末明初罗贯中所著，与《水浒传》《西游记》《红楼梦》并称四大名著。",
+    "difficulty": 1
+  },
+  {
+    "category": "literature",
+    "question": "《骆驼祥子》的作者是？",
+    "options": ["老舍", "巴金", "沈从文", "朱自清"],
+    "answerIndex": 0,
+    "explanation": "《骆驼祥子》是老舍的长篇代表作，描写北平人力车夫祥子的悲剧命运。",
+    "difficulty": 1
+  },
+  {
+    "category": "literature",
+    "question": "唐诗中的「大李杜」指的是？",
+    "options": ["李白与杜甫", "李商隐与杜牧", "李贺与杜牧", "李煜与杜甫"],
+    "answerIndex": 0,
+    "explanation": "「大李杜」指李白与杜甫，「小李杜」指李商隐与杜牧，注意区分。",
+    "difficulty": 2
+  },
+  {
+    "category": "literature",
+    "question": "《悲惨世界》的作者是？",
+    "options": ["巴尔扎克", "大仲马", "雨果", "福楼拜"],
+    "answerIndex": 2,
+    "explanation": "《悲惨世界》是法国作家维克多·雨果的长篇小说，另有《巴黎圣母院》也出自他手。",
+    "difficulty": 1
+  },
+
+  {
+    "category": "geography",
+    "question": "中国面积最大的省级行政区是？",
+    "options": ["西藏自治区", "新疆维吾尔自治区", "内蒙古自治区", "青海省"],
+    "answerIndex": 1,
+    "explanation": "新疆面积约 166 万平方公里，居全国省级行政区首位。",
+    "difficulty": 1
+  },
+  {
+    "category": "geography",
+    "question": "世界第一高峰是？",
+    "options": ["乔戈里峰", "珠穆朗玛峰", "干城章嘉峰", "洛子峰"],
+    "answerIndex": 1,
+    "explanation": "珠穆朗玛峰海拔约 8848.86 米，是中国与尼泊尔的界峰，也是世界第一高峰。",
+    "difficulty": 1
+  },
+  {
+    "category": "geography",
+    "question": "中国最长的河流是？",
+    "options": ["黄河", "长江", "珠江", "黑龙江"],
+    "answerIndex": 1,
+    "explanation": "长江全长约 6300 公里，是中国第一、世界第三长河；黄河是第二长河。",
+    "difficulty": 1
+  },
+  {
+    "category": "geography",
+    "question": "世界上面积最大的海洋是？",
+    "options": ["大西洋", "印度洋", "太平洋", "北冰洋"],
+    "answerIndex": 2,
+    "explanation": "太平洋面积约 1.8 亿平方公里，约占世界海洋总面积的一半。",
+    "difficulty": 1
+  },
+  {
+    "category": "geography",
+    "question": "地球表面海洋面积约占多少？",
+    "options": ["50%", "61%", "71%", "85%"],
+    "answerIndex": 2,
+    "explanation": "海洋约占地球表面积的 71%，陆地约占 29%，所以地球常被称作「水球」。",
+    "difficulty": 1
+  },
+  {
+    "category": "geography",
+    "question": "中国最大的淡水湖是？",
+    "options": ["洞庭湖", "太湖", "鄱阳湖", "青海湖"],
+    "answerIndex": 2,
+    "explanation": "鄱阳湖在江西省，是中国第一大淡水湖；青海湖面积更大但是咸水湖。",
+    "difficulty": 2
+  },
+  {
+    "category": "geography",
+    "question": "世界上面积最大的热带沙漠是？",
+    "options": ["塔克拉玛干沙漠", "撒哈拉沙漠", "戈壁沙漠", "阿拉伯沙漠"],
+    "answerIndex": 1,
+    "explanation": "撒哈拉沙漠横贯北非，面积约 900 万平方公里，是世界最大的热带沙漠。",
+    "difficulty": 1
+  },
+  {
+    "category": "geography",
+    "question": "中国地势的总体特征是？",
+    "options": ["东高西低", "西高东低，呈三级阶梯", "南高北低", "四周高中间低"],
+    "answerIndex": 1,
+    "explanation": "中国地势西高东低，大致呈三级阶梯，所以大多数河流自西向东流入海。",
+    "difficulty": 2
+  },
+  {
+    "category": "geography",
+    "question": "世界上最深的海沟是？",
+    "options": ["波多黎各海沟", "马里亚纳海沟", "爪哇海沟", "日本海沟"],
+    "answerIndex": 1,
+    "explanation": "马里亚纳海沟最深处约 11034 米，是已知世界最深处。",
+    "difficulty": 1
+  },
+  {
+    "category": "geography",
+    "question": "中国的陆上邻国中，面积最大的是？",
+    "options": ["印度", "俄罗斯", "蒙古", "哈萨克斯坦"],
+    "answerIndex": 1,
+    "explanation": "俄罗斯国土面积约 1709 万平方公里，是中国的陆上邻国中面积最大的。",
+    "difficulty": 2
+  },
+  {
+    "category": "geography",
+    "question": "本初子午线经过下列哪个地方？",
+    "options": ["法国巴黎", "英国格林尼治", "美国纽约", "意大利罗马"],
+    "answerIndex": 1,
+    "explanation": "0 度经线经过英国伦敦格林尼治天文台旧址，是东西半球经度的起算点。",
+    "difficulty": 1
+  },
+  {
+    "category": "geography",
+    "question": "世界上跨经度最广的国家是？",
+    "options": ["中国", "加拿大", "俄罗斯", "美国"],
+    "answerIndex": 2,
+    "explanation": "俄罗斯东西横跨约 170 个经度，是世界上跨经度最广的国家。",
+    "difficulty": 2
+  },
+
+  {
+    "category": "history",
+    "question": "中华人民共和国成立于哪一天？",
+    "options": ["1945 年 8 月 15 日", "1949 年 10 月 1 日", "1949 年 1 月 1 日", "1921 年 7 月 1 日"],
+    "answerIndex": 1,
+    "explanation": "1949 年 10 月 1 日开国大典在天安门广场举行，中华人民共和国成立。",
+    "difficulty": 1
+  },
+  {
+    "category": "history",
+    "question": "中国历史上第一个统一的中央集权王朝是？",
+    "options": ["夏朝", "商朝", "秦朝", "汉朝"],
+    "answerIndex": 2,
+    "explanation": "公元前 221 年秦始皇统一六国，建立秦朝，推行郡县制，是中国第一个统一的中央集权王朝。",
+    "difficulty": 1
+  },
+  {
+    "category": "history",
+    "question": "五四运动爆发于哪一年？",
+    "options": ["1911 年", "1919 年", "1921 年", "1937 年"],
+    "answerIndex": 1,
+    "explanation": "1919 年 5 月 4 日，因巴黎和会外交失败，北京学生发起爱国运动，是新民主主义革命的开端。",
+    "difficulty": 1
+  },
+  {
+    "category": "history",
+    "question": "丝绸之路的开通与谁出使西域有关？",
+    "options": ["班超", "张骞", "郑和", "甘英"],
+    "answerIndex": 1,
+    "explanation": "西汉张骞两次出使西域，打通了中原与西域的往来通道，被称为「凿空」。",
+    "difficulty": 1
+  },
+  {
+    "category": "history",
+    "question": "下列哪一项不属于中国古代「四大发明」？",
+    "options": ["造纸术", "指南针", "火药", "地动仪"],
+    "answerIndex": 3,
+    "explanation": "四大发明是造纸术、指南针、火药、印刷术；地动仪是张衡的发明，但不在其列。",
+    "difficulty": 2
+  },
+  {
+    "category": "history",
+    "question": "「贞观之治」出现在哪位皇帝在位期间？",
+    "options": ["唐高祖李渊", "唐太宗李世民", "唐玄宗李隆基", "武则天"],
+    "answerIndex": 1,
+    "explanation": "贞观是唐太宗的年号，他在位期间政治清明、经济发展，史称「贞观之治」。",
+    "difficulty": 2
+  },
+  {
+    "category": "history",
+    "question": "第一次世界大战爆发于哪一年？",
+    "options": ["1912 年", "1914 年", "1918 年", "1939 年"],
+    "answerIndex": 1,
+    "explanation": "1914 年萨拉热窝事件后一战爆发，1918 年结束；1939 年是二战爆发。",
+    "difficulty": 2
+  },
+  {
+    "category": "history",
+    "question": "第二次世界大战结束于哪一年？",
+    "options": ["1943 年", "1944 年", "1945 年", "1946 年"],
+    "answerIndex": 2,
+    "explanation": "1945 年 9 月 2 日日本签署投降书，第二次世界大战结束。",
+    "difficulty": 1
+  },
+  {
+    "category": "history",
+    "question": "郑和下西洋最远到达哪里？",
+    "options": ["印度西海岸", "非洲东海岸和红海沿岸", "美洲西海岸", "澳大利亚"],
+    "answerIndex": 1,
+    "explanation": "郑和船队七下西洋，最远到达非洲东海岸和红海沿岸，比哥伦布远航早了半个多世纪。",
+    "difficulty": 2
+  },
+  {
+    "category": "history",
+    "question": "辛亥革命爆发于哪一年？",
+    "options": ["1905 年", "1911 年", "1919 年", "1924 年"],
+    "answerIndex": 1,
+    "explanation": "1911 年武昌起义爆发，随后各省响应，清王朝统治土崩瓦解，故称辛亥革命。",
+    "difficulty": 1
+  },
+  {
+    "category": "history",
+    "question": "文艺复兴最早兴起于哪个国家？",
+    "options": ["法国", "意大利", "德国", "英国"],
+    "answerIndex": 1,
+    "explanation": "文艺复兴 14 世纪发端于意大利，佛罗伦萨是中心，随后扩展到西欧各国。",
+    "difficulty": 1
+  },
+  {
+    "category": "history",
+    "question": "中国古代的科举制度创立于哪个朝代？",
+    "options": ["汉朝", "隋朝", "唐朝", "宋朝"],
+    "answerIndex": 1,
+    "explanation": "隋朝开始用分科考试选拔人才，一般把隋炀帝设进士科作为科举制的起点，唐朝时趋于完备。",
+    "difficulty": 2
+  },
+
+  {
+    "category": "science",
+    "question": "水的化学式是？",
+    "options": ["CO2", "H2O", "O2", "H2O2"],
+    "answerIndex": 1,
+    "explanation": "一个水分子由两个氢原子和一个氧原子构成，H2O2 是过氧化氢。",
+    "difficulty": 1
+  },
+  {
+    "category": "science",
+    "question": "光在真空中的传播速度约为多少？",
+    "options": ["3×10⁵ 米/秒", "3×10⁸ 米/秒", "3×10⁶ 米/秒", "1.5×10⁸ 米/秒"],
+    "answerIndex": 1,
+    "explanation": "真空中光速约 299792458 米/秒，通常取 3×10⁸ 米/秒。",
+    "difficulty": 2
+  },
+  {
+    "category": "science",
+    "question": "人体面积最大的器官是？",
+    "options": ["肝脏", "皮肤", "大脑", "肺"],
+    "answerIndex": 1,
+    "explanation": "皮肤覆盖全身，是人体面积最大、重量最重的器官，成人皮肤约 1.5 到 2 平方米。",
+    "difficulty": 1
+  },
+  {
+    "category": "science",
+    "question": "地球大气中含量最多的气体是？",
+    "options": ["氧气", "二氧化碳", "氮气", "氩气"],
+    "answerIndex": 2,
+    "explanation": "氮气约占大气体积的 78%，氧气约占 21%，其余为二氧化碳、氩气等。",
+    "difficulty": 1
+  },
+  {
+    "category": "science",
+    "question": "声音在下列哪种介质中传播最快？",
+    "options": ["空气", "水", "固体", "真空"],
+    "answerIndex": 2,
+    "explanation": "声音传播速度一般是固体大于液体、液体大于气体，真空中无法传播声音。",
+    "difficulty": 2
+  },
+  {
+    "category": "science",
+    "question": "太阳系中体积最大的行星是？",
+    "options": ["地球", "土星", "木星", "海王星"],
+    "answerIndex": 2,
+    "explanation": "木星是太阳系中体积和质量都最大的行星，质量约为其他行星总和的 2.5 倍。",
+    "difficulty": 1
+  },
+  {
+    "category": "science",
+    "question": "植物进行光合作用主要吸收哪种气体？",
+    "options": ["氧气", "氮气", "二氧化碳", "氢气"],
+    "answerIndex": 2,
+    "explanation": "光合作用吸收二氧化碳、释放氧气，因此森林被称为「地球之肺」。",
+    "difficulty": 1
+  },
+  {
+    "category": "science",
+    "question": "元素的原子序数等于什么？",
+    "options": ["中子数", "质子数", "电子层数", "相对原子质量"],
+    "answerIndex": 1,
+    "explanation": "原子序数等于原子核内的质子数，这也是元素在周期表中的排序依据。",
+    "difficulty": 2
+  },
+  {
+    "category": "science",
+    "question": "标准大气压约为多少？",
+    "options": ["1.013 kPa", "10.13 kPa", "101.3 kPa", "1013 kPa"],
+    "answerIndex": 2,
+    "explanation": "标准大气压约 101.325 kPa，相当于 760 毫米汞柱，约等于 1 个大气压。",
+    "difficulty": 2
+  },
+  {
+    "category": "science",
+    "question": "血液中负责运输氧气的主要成分是？",
+    "options": ["白细胞", "血小板", "血红蛋白", "血浆蛋白"],
+    "answerIndex": 2,
+    "explanation": "红细胞内的血红蛋白与氧结合并运输到全身；白细胞负责免疫，血小板负责凝血。",
+    "difficulty": 1
+  },
+  {
+    "category": "science",
+    "question": "人类正常体细胞中的染色体数目是？",
+    "options": ["23 条", "44 条", "46 条", "48 条"],
+    "answerIndex": 2,
+    "explanation": "人类体细胞有 23 对共 46 条染色体，生殖细胞（精子、卵细胞）为 23 条。",
+    "difficulty": 2
+  },
+  {
+    "category": "science",
+    "question": "常温常压下密度最小的气体是？",
+    "options": ["氧气", "氮气", "氢气", "二氧化碳"],
+    "answerIndex": 2,
+    "explanation": "氢气的密度约为空气的十四分之一，是自然界中密度最小的气体。",
+    "difficulty": 2
+  }
+]

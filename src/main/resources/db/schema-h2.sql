@@ -17,3 +17,20 @@ CREATE TABLE t_user
     updated_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT uk_user_username UNIQUE (username)
 );
+
+DROP TABLE IF EXISTS t_question;
+
+CREATE TABLE t_question
+(
+    id           BIGINT AUTO_INCREMENT PRIMARY KEY,
+    category     VARCHAR(32)   NOT NULL,
+    question     VARCHAR(500)  NOT NULL,
+    options_json VARCHAR(1000) NOT NULL,
+    answer_index INT           NOT NULL DEFAULT 0,
+    explanation  VARCHAR(1000),
+    difficulty   TINYINT       NOT NULL DEFAULT 1,
+    status       TINYINT       NOT NULL DEFAULT 1,
+    created_at   TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_question_category ON t_question (category);

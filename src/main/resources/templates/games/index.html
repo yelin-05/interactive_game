@@ -11,9 +11,9 @@
 <div class="wrap">
   <h1>选一个游戏模板</h1>
   <p class="lead">
-    三个模板都能直接玩、都能计分，代码就在仓库里，改起来工作量差不多。<br>
-    现在是纯前端计分，成绩还没入库 —— 选定一个之后我再把它接上
-    <b>任务中心</b>（每局算一次任务进度）和 <b>排行榜</b>（成绩入 t_score 表、分页排名）。
+    <b>C · 知识闯关已选定</b>，正在往「题库分区 + 数据库存题」方向做：题目不再写死在前端，
+    而是存进 <code>t_question</code> 表，按计算机 / 文学 / 地理 / 历史 / 科学 五个分区随机抽题。<br>
+    A、B 两个模板先留着没删，随时可以回头改主意。
   </p>
 
   <div class="tpl-grid">
@@ -21,6 +21,7 @@
       <div class="tpl-top">
         <span class="tpl-tag" th:text="${t.code}">reaction</span>
         <span class="tpl-diff" th:text="'难度 ' + ${t.difficulty}">难度 低</span>
+        <span class="chosen" th:if="${t.code == 'quiz'}">✓ 已选定</span>
       </div>
       <h2 th:text="${t.name}">A · 打地鼠</h2>
       <p th:text="${t.desc}">玩法描述</p>
