@@ -52,3 +52,9 @@ desktop.ini
 /uploads/
 /storage/
 /generated/
+
+# ===== 外部安装包（VS Code 扩展离线包等，别让 Desktop 顺手提交 13MB 二进制）=====
+*.vsix
+*.zip
+*.msi
+*.exe
