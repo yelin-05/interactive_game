@@ -12,10 +12,10 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>minigame-asset</artifactId>
+    <artifactId>moshi</artifactId>
     <version>0.1.0-SNAPSHOT</version>
-    <name>minigame-asset</name>
-    <description>互动 Web 小游戏：任务 / 素材库 / 排行榜 / 大模型生成占位</description>
+    <name>moshi</name>
+    <description>魔识 · 互动答题与素材管理（任务 / 素材库 / 排行榜 / 大模型生成）</description>
 
     <properties>
         <java.version>25</java.version>

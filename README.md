@@ -1,8 +1,8 @@
-# 互动 Web 小游戏 · 任务与素材管理
+# 魔识 · 互动答题与素材管理
 
-> Java EE 期末大作业 —— 任务中心 / 素材库 / 排行榜 / 大模型生成占位
+> Java EE 期末大作业 —— 「魔识」：知识闯关 / 任务中心 / 素材库 / 排行榜 / 大模型生成占位
 
-一个基于 **Spring Boot 3 + MyBatis-Plus + Thymeleaf** 的互动小游戏平台，主玩法是「知识闯关」，
+「魔识」是一个基于 **Spring Boot 3 + MyBatis-Plus + Thymeleaf** 的互动答题平台，主玩法是五分区「知识闯关」，
 配套任务中心、素材库、排行榜、大模型出题（Mock 通道）与只读管理后台。
 
 Web 容器 → Controller → Service → MyBatis-Plus → 数据源整条链路已打通，登录鉴权、
@@ -143,15 +143,21 @@ mvnw.cmd spring-boot:run
 **答题与判分流程（防作弊）**
 
 ```
-POST /api/quiz/start  → 服务端抽 5 题，正确答案留在 Session 里，只下发题干+选项
-     ↓ 用户作答，前端只记录「每题选了哪个」
-POST /api/quiz/submit → 服务端比对答案、算分、写 t_score，返回逐题解析
+GET  /api/quiz/modes   → 难度档（简单/普通/困难：题数、限时、抽题难度）
+POST /api/quiz/start?category=xxx&mode=yyy → 按难度抽题，答案留在 Session，只下发题干+选项
+     ↓ 逐题作答 POST /api/quiz/answer {roundId, index, answer} → 即时返回对错/连击/本题得分
+POST /api/quiz/submit → 服务端结算、写 t_score，返回逐题解析
 ```
 
 答案从不下发到浏览器，`F12` 看不到；耗时也由服务端从开局计时，不采信前端上报。
 
-计分规则：答对每题 20 分（满分 100），提前完成每秒 +2 分、最多 +50，
-所以一局满分 **150**。未登录可以玩，但成绩不入库。
+计分规则（三档难度、四大机制）：
+- 基础分按难度分档：简单 10 / 中等 20 / 困难 30；
+- 连击加成：连续答对第 n 题额外 +(n-1)×2，答错清零；
+- 失误惩罚：答错或超时每题 -5；
+- 速度加成：提前完成每秒 +2、最多 +50。
+
+一局总分 = max(0, 基础分 + 连击加成 − 失误扣分) + 速度加成。未登录可以玩，但成绩不入库。
 
 | 方法 | 路径 | 说明 |
 | --- | --- | --- |
@@ -171,9 +177,11 @@ POST /api/quiz/submit → 服务端比对答案、算分、写 t_score，返回�
 | POST | `/llm/generate` | 触发一次生成 |
 | GET | `/games` | 入口，302 跳转到 `/games/quiz` |
 | GET | `/games/quiz` | 知识闯关：分区选择 → 答题 → 服务端判分结算 |
+| GET | `/api/quiz/modes` | 难度档列表：简单/普通/困难（题数、限时、抽题难度） |
 | GET | `/api/quiz/categories` | 题库五个分区 + 各分区题量 |
-| POST | `/api/quiz/start` | 开局：抽 5 题下发，**不含答案**，返回 `roundId` |
-| POST | `/api/quiz/submit` | 交卷：服务端判分 + 入库，返回逐题解析 |
+| POST | `/api/quiz/start` | 开局：按难度抽题下发，**不含答案**，返回 `roundId` |
+| POST | `/api/quiz/answer` | 逐题作答：返回对错/连击/本题得分（即时反馈） |
+| POST | `/api/quiz/submit` | 交卷：服务端结算 + 入库，返回逐题解析 |
 | GET | `/api/ping` | 系统自检：JDK、数据库类型/版本、用户数 |
 | GET | `/actuator/health` | 标准健康检查 JSON |
 | GET | `/h2-console` | 仅 H2 档可用，浏览器直接看表 |

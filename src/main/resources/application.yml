@@ -3,7 +3,7 @@
 #  切换数据源：默认 mysql；演示/无库环境用 --spring.profiles.active=h2
 # =====================================================================
 app:
-  name: 互动Web小游戏·任务与素材管理
+  name: 魔识
   version: 0.1.0
   # 大模型占位：mock 用本地假数据（离线可演示），real 走真实接口
   llm:
@@ -24,7 +24,7 @@ server:
 
 spring:
   application:
-    name: minigame-asset
+    name: moshi
   profiles:
     # 想默认跑 MySQL 就保持 mysql；答辩前可用 h2 做兜底演示
     active: mysql

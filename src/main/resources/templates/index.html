@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title th:text="${appName} + ' v' + ${appVersion}">互动Web小游戏</title>
+  <title th:text="${appName} + ' v' + ${appVersion}">魔识</title>
   <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
   <link rel="stylesheet" th:href="@{/css/app.css}">
   <link rel="stylesheet" th:href="@{/css/site.css}">
@@ -13,8 +13,8 @@
 <div th:replace="~{fragments/nav :: bar('home')}"></div>
 
 <header class="hero">
-  <h1 th:text="${appName}">互动Web小游戏·任务与素材管理</h1>
-  <p class="sub">五分区题库 · 答对得积分 · 答题中心在顶部导航</p>
+  <h1 th:text="${appName}">魔识</h1>
+  <p class="sub">互动答题 · 任务 · 素材库 · 排行榜</p>
 
   <div class="hero-actions">
     <button id="btn-check" class="btn" type="button">系统自检</button>

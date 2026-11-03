@@ -6,7 +6,7 @@
       "name": "启动 · H2 演示档（推荐先跑这个）",
       "request": "launch",
       "mainClass": "com.example.minigame.MinigameApplication",
-      "projectName": "minigame-asset",
+      "projectName": "moshi",
       "vmArgs": "-Dspring.profiles.active=h2",
       "console": "internalConsole"
     },
@@ -15,7 +15,7 @@
       "name": "启动 · MySQL 正式档",
       "request": "launch",
       "mainClass": "com.example.minigame.MinigameApplication",
-      "projectName": "minigame-asset",
+      "projectName": "moshi",
       "vmArgs": "-Dspring.profiles.active=mysql",
       "console": "internalConsole"
     }
