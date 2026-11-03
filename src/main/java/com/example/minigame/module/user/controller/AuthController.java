@@ -46,10 +46,8 @@ public class AuthController {
                     user.getNickname() == null ? user.getUsername() : user.getNickname());
             session.setAttribute(AuthUtil.SESSION_ROLE, user.getRole());
 
-            if (redirect != null && redirect.startsWith("/")) {
-                return "redirect:" + redirect;
-            }
-            return "redirect:/";
+            String target = safeRedirect(redirect);
+            return target == null ? "redirect:/" : "redirect:" + target;
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("username", username);
@@ -94,5 +92,25 @@ public class AuthController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
+    }
+
+    /**
+     * 只允许站内相对路径，挡掉开放重定向。
+     *
+     * <p>以前用 {@code redirect.startsWith("/")} 判断，{@code //evil.com} 会被当成
+     * 协议相对 URL 直接跳走（钓鱼常用手法）。这里额外要求不是 {@code //} 开头、
+     * 不含反斜杠（浏览器把 {@code \} 当 {@code /} 处理）。
+     *
+     * @return 可安全跳转的路径；参数不可用时返回 null，由调用方回首页
+     */
+    static String safeRedirect(String redirect) {
+        if (redirect == null || redirect.isBlank()) {
+            return null;
+        }
+        String target = redirect.trim();
+        if (!target.startsWith("/") || target.startsWith("//") || target.indexOf('\\') >= 0) {
+            return null;
+        }
+        return target;
     }
 }

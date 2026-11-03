@@ -2,12 +2,15 @@
 
 > Java EE 期末大作业 —— 任务中心 / 素材库 / 排行榜 / 大模型生成占位
 
-一个基于 **Spring Boot 3 + MyBatis-Plus + Thymeleaf** 的互动小游戏后台与展示平台。
-当前处于「骨架 + 最小纵向切片」阶段：Web 容器 → Controller → Service → MyBatis-Plus → 数据源
-整条链路已打通，业务模块按同一分层往里填即可。
+一个基于 **Spring Boot 3 + MyBatis-Plus + Thymeleaf** 的互动小游戏平台，主玩法是「知识闯关」，
+配套任务中心、素材库、排行榜、大模型出题（Mock 通道）与只读管理后台。
 
-![Java](https://img.shields.io/badge/Java-21-orange)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.5-6db33f)
+Web 容器 → Controller → Service → MyBatis-Plus → 数据源整条链路已打通，登录鉴权、
+服务端判分、成绩入库、任务发奖都已跑通；新增业务模块按
+`module/<模块名>/{entity,mapper,service,controller,vo}` 分层往里填即可。
+
+![Java](https://img.shields.io/badge/Java-25-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.16-6db33f)
 ![MyBatis-Plus](https://img.shields.io/badge/MyBatis--Plus-3.5.9-blue)
 ![MySQL](https://img.shields.io/badge/MySQL-8.x%20%2F%209.x-4479a1)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
@@ -54,8 +57,8 @@ mvnw.cmd spring-boot:run
 
 | 层次 | 选型 | 说明 |
 | --- | --- | --- |
-| 运行环境 | JDK 21 | Spring Boot 3 要求 17+；本机 `JAVA_HOME=D:\java\JDK_21` |
-| 框架 | Spring Boot 3.3.5 | 内嵌 Tomcat，打包成 jar 直接 `java -jar` |
+| 运行环境 | JDK 25 LTS | Spring Boot 3.5.16，与 Java 25 兼容 |
+| 框架 | Spring Boot 3.5.16 | 内嵌 Tomcat，打包成 jar 直接 `java -jar` |
 | 持久层 | MyBatis-Plus 3.5.9 | `BaseMapper` / `IService` 免写单表 SQL，分页插件已配 |
 | 数据库 | MySQL 9.x（主）/ H2（演示档） | MySQL 驱动用 9.1.0，兼容 8.x 与 9.x 服务端 |
 | 视图 | Thymeleaf | 服务端渲染，页面不依赖 CDN，断网也能演示 |
@@ -73,7 +76,7 @@ mvnw.cmd spring-boot:run
 
 | 文件 | 作用 |
 | --- | --- |
-| `settings.json` | Java 工具链指向 JDK 21，构建统一走 Maven Wrapper |
+| `settings.json` | Java 工具链指向 JDK 25，构建统一走 Maven Wrapper |
 | `launch.json` | 按 `F5` 直接启动：`H2 演示档` / `MySQL 正式档` 两套，可打断点 |
 | `tasks.json` | `Ctrl+Shift+B` 编译，另有跑测试、`spring-boot:run` 任务 |
 | `extensions.json` | 打开项目时提示安装 Java / Spring Boot 扩展 |
@@ -86,7 +89,7 @@ mvnw.cmd spring-boot:run
 
 注意两点：
 
-- `settings.json` 里的 JDK 路径是本机绝对路径（`D:\java\JDK_21`），换电脑要改
+- `settings.json` 里的 JDK 路径是本机绝对路径（`D:\java\JDK_25`），换电脑要改
 - 只提交上面四个文件，其余 `.vscode/*`（如工作区缓存）已在 `.gitignore` 里排除
 
 ---
@@ -99,19 +102,27 @@ mvnw.cmd spring-boot:run
 ├── mvnw / mvnw.cmd / .mvn/            # Maven Wrapper，没装 Maven 的机器也能构建
 ├── src/main/java/com/example/minigame/
 │   ├── MinigameApplication.java       # 启动类，@MapperScan 在这里
-│   ├── common/                        # ApiResult 统一响应、全局异常处理
-│   ├── config/                        # MyBatis-Plus 分页等配置
+│   ├── common/                        # ApiResult 统一响应、全局异常、AuthUtil 登录态常量
+│   ├── config/                        # 分页插件、拦截器注册、/uploads 静态映射
 │   └── module/                        # 按业务模块分包，一个模块一个文件夹
-│       ├── user/                      # entity / mapper / service
-│       └── system/                    # 首页、自检接口
+│       ├── user/     entity/mapper/service/controller        # 用户、登录注册（BCrypt）
+│       ├── quiz/     entity/mapper/service/controller/dto/vo  # 题库、开局判分、成绩、分区常量
+│       │             └── bootstrap/   # QuestionSeeder：题库 JSON 幂等灌库
+│       ├── task/     entity/mapper/service/controller/vo      # 任务进度与领奖
+│       │             └── bootstrap/   # TaskSeeder
+│       ├── asset/    entity/mapper/service/controller         # 素材上传与浏览
+│       ├── llm/      service/controller/vo                    # 大模型出题（Mock）
+│       ├── game/     controller/vo                            # /games 入口 → /games/quiz
+│       └── system/   controller/vo                            # 首页、排行榜、/api/ping 自检
 ├── src/main/resources/
-│   ├── application.yml                # 公共配置 + 默认 profile
+│   ├── application.yml                # 公共配置 + 默认 profile（mysql）
 │   ├── application-mysql.yml          # MySQL 档
 │   ├── application-h2.yml             # H2 演示档
 │   ├── db/                            # 建库建表脚本（mysql / h2 各一套）
-│   ├── templates/index.html           # 首页
-│   └── static/css|js                  # 本地静态资源，无 CDN 依赖
-└── src/test/java/                     # 冒烟测试，CI 上不需要 MySQL
+│   ├── seed/questions.json            # 60 道题，MySQL/H2 共用一份
+│   ├── templates/                     # Thymeleaf 页面 + fragments/nav.html 统一导航
+│   └── static/                        # css / js / favicon.svg，全部本地，无 CDN 依赖
+└── src/test/java/                     # @SpringBootTest + H2 档冒烟测试，CI 上不需要 MySQL
 ```
 
 **约定**：新增业务模块时按 `module/<模块名>/{entity,mapper,service,controller,vo}` 建包，
@@ -189,14 +200,16 @@ POST /api/quiz/submit → 服务端比对答案、算分、写 t_score，返回�
 
 - [x] 工程骨架、依赖、双数据库档、统一响应、全局异常
 - [x] 用户表 + MyBatis-Plus 链路打通
-- [x] 首页与系统自检
-- [x] 任务中心：进度按成绩实时计算 + 领取奖励（t_task / t_user_task）
+- [x] 首页与系统自检（`/api/ping`、`/actuator/health`）
+- [x] 知识闯关：五分区 60 题入库、开局抽题、**服务端判分**、成绩写 `t_score`
+- [x] 登录注册（BCrypt + Session + 拦截器，`/profile` 需登录、`/admin` 需 ADMIN）
+- [x] 排行榜：总榜 + 分区榜，分数降序、同分按用时升序取 Top 10
+- [x] 个人中心：真实战绩、最好成绩、分区统计
+- [x] 任务中心：进度按成绩实时计算 + 领取奖励（`t_task` / `t_user_task`，唯一键防重复领）
 - [x] 素材库：图片上传（后缀白名单 + UUID 落盘）、按分区浏览
-- [x] 大模型生成占位：Mock 通道可用，接口形状与真实模型一致
-- [x] 登录注册（BCrypt + Session + 拦截器，用户/管理员分区）
-- [x] 排行榜：积分与通关时间排序、分页
-- [x] 大模型生成占位：Mock / 真实双通道切换
-- [ ] 登录鉴权（BCrypt + 拦截器或 Spring Security）
+- [x] 大模型出题：Mock 通道可用，接口形状与真实模型一致
+- [ ] 大模型真实通道：`app.llm.mode=real` + `LLM_API_KEY` 还没接（当前恒为 Mock）
+- [ ] 管理后台写操作：题目/任务增删改、上下架、用户禁用
 - [ ] 接口文档（springdoc-openapi）
 
 ---
@@ -205,7 +218,7 @@ POST /api/quiz/submit → 服务端比对答案、算分、写 t_score，返回�
 
 **`UnsupportedClassVersionError` / 编译报 61 版本**
 PATH 里 `java` 可能指向了老的 JRE 1.8。构建交给 Maven 用 `JAVA_HOME` 就行；
-若 `java -jar` 报错，先把 `JAVA_HOME` 指向 JDK 21 并把 `%JAVA_HOME%\bin` 放到 PATH 最前。
+若 `java -jar` 报错，先把 `JAVA_HOME` 指向 JDK 25 并把 `%JAVA_HOME%\bin` 放到 PATH 最前。
 
 **连不上 MySQL：`Access denied`**
 密码没通过环境变量传进去，或 `DB_USER` 不是 root。先确认

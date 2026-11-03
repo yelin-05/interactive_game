@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * 一局答题的「开局 → 交卷」流程，包含服务端判题。
@@ -94,26 +95,33 @@ public class QuizRoundService {
             throw new IllegalArgumentException("本局已结束或已过期，请重新开始");
         }
 
-        List<QuizQuestionVO> questions = quizService.byIds(round.questionIds());
-        if (questions.isEmpty()) {
+        // 题目可能被下架/删除。按本局保存的题目顺序逐题对齐，
+        // 否则 byIds 少返回一题就会让后面所有 answers 整体错位。
+        Map<Long, QuizQuestionVO> byId = quizService.byIds(round.questionIds()).stream()
+                .collect(Collectors.toMap(QuizQuestionVO::id, q -> q));
+        if (byId.size() != round.questionIds().size()) {
             throw new IllegalArgumentException("题目已失效，请重新开始");
         }
 
         List<Integer> answers = form.getAnswers() == null ? List.of() : form.getAnswers();
-        int total = questions.size();
+        int total = round.questionIds().size();
         int correct = 0;
         List<QuizResultVO.Detail> details = new ArrayList<>(total);
 
         for (int i = 0; i < total; i++) {
-            QuizQuestionVO q = questions.get(i);
+            QuizQuestionVO q = byId.get(round.questionIds().get(i));
             Integer picked = i < answers.size() ? answers.get(i) : null;
             int yourAnswer = picked == null ? -1 : picked;
-            boolean ok = picked != null && picked == q.answerIndex();
+            // 必须比数值：Integer 用 == 比的是引用，只有 -128..127 缓存内才碰巧相等
+            boolean ok = picked != null && q.answerIndex() != null
+                    && picked.intValue() == q.answerIndex();
             if (ok) {
                 correct++;
             }
             details.add(new QuizResultVO.Detail(
-                    q.id(), q.question(), q.answerIndex(), yourAnswer, ok, q.explanation()));
+                    q.id(), q.question(),
+                    q.answerIndex() == null ? -1 : q.answerIndex(),
+                    yourAnswer, ok, q.explanation()));
         }
 
         // 耗时用服务端计时，不信前端上报

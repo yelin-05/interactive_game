@@ -21,10 +21,10 @@ public class HomeController {
     private String appVersion;
 
     private static final List<ModuleInfo> MODULES = List.of(
-            new ModuleInfo("task", "任务中心", "📋", "发布 · 领取 · 提交 · 状态流转", "骨架就绪"),
-            new ModuleInfo("asset", "素材库", "🖼️", "上传 · 分类 · 检索", "骨架就绪"),
-            new ModuleInfo("rank", "排行榜", "🏆", "积分 · 排名 · 分页", "骨架就绪"),
-            new ModuleInfo("llm", "大模型生成", "🤖", "出题 · 文案 · Mock/真实", "骨架就绪")
+            new ModuleInfo("task", "任务中心", "📋", "进度实时计算 · 完成后领取奖励", "已上线"),
+            new ModuleInfo("asset", "素材库", "🖼️", "上传 · 按分区浏览", "已上线"),
+            new ModuleInfo("rank", "排行榜", "🏆", "总榜 + 五分区榜 · 分数降序", "已上线"),
+            new ModuleInfo("llm", "大模型生成", "🤖", "按分区 + 主题出题 · Mock 通道", "Mock 可用")
     );
 
     @GetMapping("/")

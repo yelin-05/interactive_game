@@ -14,10 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 21
+      - name: Set up JDK 25
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          # pom.xml 里 java.version=25，CI 必须用同一个版本，否则 release 25 编译不了
+          java-version: '25'
           distribution: temurin
           cache: maven
 

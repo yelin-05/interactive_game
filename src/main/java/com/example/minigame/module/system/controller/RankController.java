@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -24,7 +25,11 @@ public class RankController {
 
     @GetMapping("/rank")
     public String rank(@RequestParam(required = false) String category, Model model) {
-        String cat = (category == null || category.isBlank()) ? null : category;
+        // 非法分区（手改 URL、旧链接）不能让页面 500：直接回退到总榜
+        QuizCategories.Def def = (category == null || category.isBlank())
+                ? null
+                : QuizCategories.of(category);
+        String cat = def == null ? null : def.code();
         List<RankRowVO> rows = scoreService.top(cat, TOP_N);
 
         model.addAttribute("active", "rank");
@@ -32,8 +37,8 @@ public class RankController {
         model.addAttribute("category", cat);
         model.addAttribute("categories", QuizCategories.ALL);
         model.addAttribute("totalRecords", scoreService.count());
-        model.addAttribute("categoryName", cat == null ? "总榜" : QuizCategories.of(cat).name());
-        model.addAttribute("timeFmt", java.time.format.DateTimeFormatter.ofPattern("MM-dd HH:mm"));
+        model.addAttribute("categoryName", def == null ? "总榜" : def.name());
+        model.addAttribute("timeFmt", DateTimeFormatter.ofPattern("MM-dd HH:mm"));
         return "rank";
     }
 }

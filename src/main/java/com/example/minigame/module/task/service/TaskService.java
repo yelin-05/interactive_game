@@ -10,6 +10,7 @@ import com.example.minigame.module.task.mapper.UserTaskMapper;
 import com.example.minigame.module.task.vo.TaskRowVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,18 +48,24 @@ public class TaskService {
         }
 
         return tasks.stream().map(t -> {
+            int target = targetOf(t);
             long done = userId == null ? 0 : scoreService.countRounds(userId, t.getCategory());
-            int progress = (int) Math.min(done, t.getTargetCount());
+            int progress = (int) Math.min(done, target);
             boolean isClaimed = claimed.getOrDefault(t.getId(), false);
-            boolean claimable = done >= t.getTargetCount() && !isClaimed;
-            String categoryName = t.getCategory() == null
-                    ? "任意分区"
-                    : QuizCategories.of(t.getCategory()) == null
-                    ? t.getCategory()
-                    : QuizCategories.of(t.getCategory()).name();
+            boolean claimable = done >= target && !isClaimed;
+            QuizCategories.Def def = t.getCategory() == null ? null : QuizCategories.of(t.getCategory());
+            String categoryName = def == null
+                    ? (t.getCategory() == null ? "任意分区" : t.getCategory())
+                    : def.name();
             return new TaskRowVO(t.getId(), t.getTitle(), t.getDescription(), t.getCategory(),
-                    categoryName, t.getTargetCount(), progress, t.getRewardPoints(), claimable, isClaimed);
+                    categoryName, target, progress, t.getRewardPoints(), claimable, isClaimed);
         }).toList();
+    }
+
+    /** 目标局数：NULL 或 ≤0 一律按 1 处理，避免页面除零和 NPE。 */
+    private static int targetOf(Task t) {
+        Integer n = t.getTargetCount();
+        return n == null || n <= 0 ? 1 : n;
     }
 
     /** 领取任务奖励，返回本次获得的积分。 */
@@ -77,16 +84,22 @@ public class TaskService {
         if (exist != null && exist > 0) {
             throw new IllegalArgumentException("这个任务的奖励已经领过了");
         }
+        int target = targetOf(task);
         long done = scoreService.countRounds(userId, task.getCategory());
-        if (done < task.getTargetCount()) {
-            throw new IllegalArgumentException("还没完成，还差 " + (task.getTargetCount() - done) + " 局");
+        if (done < target) {
+            throw new IllegalArgumentException("还没完成，还差 " + (target - done) + " 局");
         }
 
         UserTask ut = new UserTask();
         ut.setUserId(userId);
         ut.setTaskId(taskId);
         ut.setRewardPoints(task.getRewardPoints());
-        userTaskMapper.insert(ut);
+        try {
+            userTaskMapper.insert(ut);
+        } catch (DuplicateKeyException e) {
+            // 唯一键 (user_id, task_id) 兜底：双击 / 并发提交时上面的 selectCount 可能都放过
+            throw new IllegalArgumentException("这个任务的奖励已经领过了");
+        }
 
         log.info("用户 {} 领取任务 {} 的奖励 {} 分", userId, taskId, task.getRewardPoints());
         return task.getRewardPoints();

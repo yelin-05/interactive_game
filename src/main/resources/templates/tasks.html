@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>任务中心</title>
+  <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
   <link rel="stylesheet" th:href="@{/css/app.css}">
   <link rel="stylesheet" th:href="@{/css/site.css}">
 </head>
@@ -33,7 +34,7 @@
         </div>
         <p class="task-desc" th:text="${r.description}">任务说明</p>
         <div class="bar">
-          <i th:style="'width:' + ${r.progress * 100 / r.targetCount} + '%'"></i>
+          <i th:style="'width:' + ${r.targetCount > 0 ? (r.progress * 100 / r.targetCount) : 0} + '%'"></i>
         </div>
         <span class="task-progress" th:text="${r.progress} + ' / ' + ${r.targetCount} + ' 局'">0 / 3 局</span>
       </div>
