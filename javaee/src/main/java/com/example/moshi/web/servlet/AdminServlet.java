@@ -1,10 +1,7 @@
 package com.example.moshi.web.servlet;
 
-import com.example.moshi.dao.AssetDao;
-import com.example.moshi.dao.QuestionDao;
-import com.example.moshi.dao.ScoreDao;
-import com.example.moshi.dao.UserDao;
 import com.example.moshi.model.Question;
+import com.example.moshi.service.DashboardService;
 import com.example.moshi.util.Categories;
 
 import javax.servlet.ServletException;
@@ -19,25 +16,22 @@ import java.util.List;
 @WebServlet("/admin")
 public class AdminServlet extends HttpServlet {
 
-    private final UserDao userDao = new UserDao();
-    private final QuestionDao questionDao = new QuestionDao();
-    private final ScoreDao scoreDao = new ScoreDao();
-    private final AssetDao assetDao = new AssetDao();
+    private final DashboardService dashboard = new DashboardService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {
-            req.setAttribute("userCount", userDao.count());
-            req.setAttribute("questionCount", questionDao.count());
-            req.setAttribute("scoreCount", scoreDao.count());
-            req.setAttribute("assetCount", assetDao.count());
+            req.setAttribute("userCount", dashboard.userCount());
+            req.setAttribute("questionCount", dashboard.questionCount());
+            req.setAttribute("scoreCount", dashboard.scoreCount());
+            req.setAttribute("assetCount", dashboard.assetCount());
 
-            List<Question> latest = questionDao.latest(6);
+            List<Question> latest = dashboard.latestQuestions();
             req.setAttribute("recentQuestions", latest);
-            req.setAttribute("categoryStats", questionDao.countByCategory());
+            req.setAttribute("categoryStats", dashboard.categoryStats());
         } catch (Exception e) {
-            req.setAttribute("error", "读取统计失败：" + e.getMessage());
+            req.setAttribute("error", "统计服务暂不可用，请稍后重试");
         }
         req.setAttribute("pageTitle", "管理后台 · 魔识");
         req.setAttribute("active", "admin");

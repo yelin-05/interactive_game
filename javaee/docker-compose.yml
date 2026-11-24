@@ -1,0 +1,39 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: moshi
+      MYSQL_USER: ${MOSHI_DB_USER}
+      MYSQL_PASSWORD: ${MOSHI_DB_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./src/main/resources/db/schema-mysql.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./src/main/resources/db/data-demo-mysql.sql:/docker-entrypoint-initdb.d/02-demo.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      MOSHI_DB_URL: jdbc:mysql://db:3306/moshi?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      MOSHI_DB_USER: ${MOSHI_DB_USER}
+      MOSHI_DB_PASSWORD: ${MOSHI_DB_PASSWORD}
+      MOSHI_DB_SEED: "true"
+      MOSHI_LLM_MODE: mock
+      MOSHI_CONTEXT_PATH: ${MOSHI_CONTEXT_PATH:-ROOT}
+      JAVA_OPTS: -Dmoshi.upload.dir=/uploads
+    ports:
+      - "${MOSHI_HTTP_PORT:-18080}:8080"
+    volumes:
+      - uploads:/uploads
+
+volumes:
+  mysql-data:
+  uploads:

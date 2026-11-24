@@ -111,6 +111,7 @@ public class QuizRound implements Serializable {
     private final List<Item> items;
     private final int[] answers;
     private final long startedAt;
+    private long questionStartedAt;
     private int index;
 
     public QuizRound(String category, QuizMode mode, List<Item> items, long startedAt) {
@@ -123,6 +124,7 @@ public class QuizRound implements Serializable {
             answers[i] = -1;
         }
         this.startedAt = startedAt;
+        this.questionStartedAt = startedAt;
         this.index = 0;
     }
 
@@ -132,6 +134,7 @@ public class QuizRound implements Serializable {
     public List<Item> getItems() { return items; }
     public int[] getAnswers() { return answers; }
     public long getStartedAt() { return startedAt; }
+    public long getQuestionStartedAt() { return questionStartedAt; }
     public int getIndex() { return index; }
 
     public boolean isFinished() {
@@ -143,8 +146,24 @@ public class QuizRound implements Serializable {
     }
 
     public void answer(int pick) {
-        answers[index] = pick;
+        if (isFinished()) {
+            throw new IllegalStateException("本局已结束");
+        }
+        if (pick < -1 || pick >= current().getOptions().size()) {
+            throw new IllegalArgumentException("选项超出范围");
+        }
+        long now = System.currentTimeMillis();
+        answers[index] = now - questionStartedAt > secondsPerQuestion * 1000L ? -1 : pick;
         index++;
+        questionStartedAt = now;
+    }
+
+    public void expire(long now) {
+        while (!isFinished() && now - questionStartedAt > secondsPerQuestion * 1000L) {
+            answers[index] = -1;
+            index++;
+            questionStartedAt += secondsPerQuestion * 1000L;
+        }
     }
 
     public int getAnsweredCount() {

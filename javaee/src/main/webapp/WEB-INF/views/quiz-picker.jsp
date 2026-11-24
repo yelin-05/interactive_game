@@ -14,6 +14,7 @@
   </c:if>
 
   <form action="${ctx}/quiz" method="post" id="startForm">
+    <input type="hidden" name="_csrf" value="<c:out value='${csrfToken}'/>">
     <input type="hidden" name="action" value="start">
 
     <h2 class="sec-title">1. 选择分区</h2>

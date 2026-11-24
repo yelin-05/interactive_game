@@ -24,6 +24,7 @@
             <c:out value="${sessionScope.loginNickname}"/>
           </a>
           <form class="nav-form" action="${pageContext.request.contextPath}/logout" method="post">
+            <input type="hidden" name="_csrf" value="<c:out value='${csrfToken}'/>">
             <button class="nav-btn ghost" type="submit">退出</button>
           </form>
         </c:when>

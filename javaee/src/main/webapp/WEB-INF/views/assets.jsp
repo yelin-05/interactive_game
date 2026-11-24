@@ -21,6 +21,7 @@
       <section class="panel">
         <h2>上传素材</h2>
         <form class="upload-form" action="${ctx}/assets" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="_csrf" value="<c:out value='${csrfToken}'/>">
           <label class="field">
             <span>名称（选填）</span>
             <input class="input" type="text" name="name" placeholder="不填就用文件名">
@@ -75,7 +76,7 @@
     </c:otherwise>
   </c:choose>
 
-  <p class="muted">文件存在 <code>${user.home}/.moshi/uploads</code>，库里只存文件名；上传只放行图片后缀，落盘名用 UUID 重生成。</p>
+  <p class="muted">文件保存在应用外的持久目录，数据库记录文件名、类型和上传者；上传会校验图片内容、尺寸和扩展名，落盘名使用 UUID。</p>
 </main>
 
 <%@ include file="/WEB-INF/views/inc/foot.jspf" %>

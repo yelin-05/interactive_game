@@ -56,7 +56,7 @@
     </p>
     <p class="muted">
       技术栈：JavaEE 8（<code>javax.servlet.*</code>）+ Tomcat 9 + JSP/JSTL + 原生 JDBC + MySQL 8。
-      演示账号：<code>player01 / password</code>（玩家）、<code>admin / password</code>（管理员）。
+      账号由部署者初始化，页面不公开任何固定密码。
     </p>
   </section>
 </main>

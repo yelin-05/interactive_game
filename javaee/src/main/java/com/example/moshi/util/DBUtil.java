@@ -16,14 +16,13 @@ import java.sql.SQLException;
 public final class DBUtil {
 
     private static final String DEFAULT_URL =
-            "jdbc:mysql://localhost:3306/minigame"
+            "jdbc:mysql://localhost:3306/moshi"
                     + "?useUnicode=true&characterEncoding=UTF-8"
-                    + "&serverTimezone=Asia/Shanghai&useSSL=false"
-                    + "&allowPublicKeyRetrieval=true";
+                    + "&serverTimezone=Asia/Shanghai";
 
     private static final String URL = env("MOSHI_DB_URL", DEFAULT_URL);
-    private static final String USER = env("MOSHI_DB_USER", "root");
-    private static final String PASSWORD = env("MOSHI_DB_PASSWORD", "123456");
+    private static final String USER = required("MOSHI_DB_USER");
+    private static final String PASSWORD = required("MOSHI_DB_PASSWORD");
 
     static {
         try {
@@ -42,6 +41,14 @@ public final class DBUtil {
             v = System.getProperty(key);
         }
         return (v == null || v.isBlank()) ? fallback : v;
+    }
+
+    private static String required(String key) {
+        String value = env(key, null);
+        if (value == null) {
+            throw new IllegalStateException("缺少数据库配置：" + key);
+        }
+        return value;
     }
 
     public static Connection getConnection() throws SQLException {

@@ -6,13 +6,11 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 /**
  * 统一编码过滤器：请求、响应都按 UTF-8 处理，解决中文表单乱码。
  */
-@WebFilter(filterName = "encodingFilter", urlPatterns = "/*")
 public class EncodingFilter implements Filter {
 
     @Override

@@ -6,12 +6,14 @@
 <main class="wrap narrow">
   <div class="page-head">
     <h1>🤖 大模型生成</h1>
-    <span>通道：${empty result ? 'mock' : result.mode}</span>
+    <span>通道：${llmMode}</span>
   </div>
 
+  <c:if test="${not empty sessionScope.loginUserId}">
   <section class="panel">
     <h2>按分区 + 主题生成一道题</h2>
     <form class="upload-form" action="${ctx}/llm" method="post">
+      <input type="hidden" name="_csrf" value="<c:out value='${csrfToken}'/>">
       <label class="field">
         <span>分区</span>
         <select class="input" name="category">
@@ -28,6 +30,14 @@
       <button class="btn primary" type="submit">生成题目</button>
     </form>
   </section>
+  </c:if>
+  <c:if test="${empty sessionScope.loginUserId}">
+    <div class="msg warn">生成题目需要先 <a href="${ctx}/login?to=/llm">登录</a>，避免匿名消耗模型额度。</div>
+  </c:if>
+
+  <c:if test="${not empty error}">
+    <div class="msg bad"><c:out value="${error}"/></div>
+  </c:if>
 
   <c:if test="${not empty result}">
     <section class="panel">
@@ -46,8 +56,9 @@
   </c:if>
 
   <p class="muted">
-    当前是 <b>Mock 通道</b>：用模板拼出结构正确的题目，接口形状与真实模型一致。
-    切真实通道只需在 <code>LlmServlet.generate()</code> 里把 TODO 处的 HTTP 调用补上。
+    默认使用 <b>Mock 通道</b>验证题目结构；配置 <code>MOSHI_LLM_MODE=real</code>、
+    <code>MOSHI_LLM_BASE_URL</code>、<code>MOSHI_LLM_API_KEY</code> 和 <code>MOSHI_LLM_MODEL</code>
+    后可调用 OpenAI 兼容接口。密钥只从环境变量或系统属性读取，不写入仓库。
   </p>
 </main>
 

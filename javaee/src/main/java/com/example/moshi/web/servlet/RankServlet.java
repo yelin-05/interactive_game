@@ -1,7 +1,7 @@
 package com.example.moshi.web.servlet;
 
-import com.example.moshi.dao.ScoreDao;
 import com.example.moshi.model.RankRow;
+import com.example.moshi.service.RankService;
 import com.example.moshi.util.Categories;
 
 import javax.servlet.ServletException;
@@ -16,7 +16,7 @@ import java.util.List;
 @WebServlet("/rank")
 public class RankServlet extends HttpServlet {
 
-    private final ScoreDao scoreDao = new ScoreDao();
+    private final RankService ranks = new RankService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -26,12 +26,12 @@ public class RankServlet extends HttpServlet {
             category = null;
         }
         try {
-            List<RankRow> rows = scoreDao.top(category, 10);
+            List<RankRow> rows = ranks.top(category, 10);
             req.setAttribute("rows", rows);
-            req.setAttribute("totalRecords", scoreDao.count());
+            req.setAttribute("totalRecords", ranks.count());
         } catch (Exception e) {
             req.setAttribute("rows", List.of());
-            req.setAttribute("error", "查询失败：" + e.getMessage());
+            req.setAttribute("error", "排行榜服务暂不可用，请稍后重试");
         }
         req.setAttribute("pageTitle", "排行榜 · 魔识");
         req.setAttribute("active", "rank");

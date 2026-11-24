@@ -12,6 +12,7 @@
     </c:if>
 
     <form class="form" action="${pageContext.request.contextPath}/register" method="post">
+      <input type="hidden" name="_csrf" value="<c:out value='${csrfToken}'/>">
       <label class="field">
         <span>用户名</span>
         <input class="input" type="text" name="username" value="<c:out value='${username}'/>"

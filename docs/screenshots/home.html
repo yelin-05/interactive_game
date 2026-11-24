@@ -1,0 +1,110 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>魔识 · 互动答题与素材管理</title>
+  <link rel="stylesheet" href="/moshi/static/css/site.css">
+</head>
+<body>
+
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="brand" href="/moshi/home">
+      <span class="brand-mark">🎮</span><span>魔识</span>
+    </a>
+
+    <div class="nav-links">
+      <a class="nav-item on" href="/moshi/home">首页</a>
+      <a class="nav-item " href="/moshi/quiz">答题中心</a>
+      <a class="nav-item " href="/moshi/rank">排行榜</a>
+      <a class="nav-item " href="/moshi/tasks">任务中心</a>
+      <a class="nav-item " href="/moshi/assets">素材库</a>
+      <a class="nav-item " href="/moshi/llm">大模型生成</a>
+      
+    </div>
+
+    <div class="nav-user">
+      
+        
+        
+          <a class="nav-btn ghost" href="/moshi/login">登录</a>
+          <a class="nav-btn" href="/moshi/register">注册</a>
+        
+      
+    </div>
+  </div>
+</nav>
+
+
+<header class="hero">
+  <h1>魔识</h1>
+  <p class="sub">互动答题 · 任务 · 素材库 · 排行榜</p>
+  <div class="hero-actions">
+    <a class="btn primary lg" href="/moshi/quiz">开始答题</a>
+    <a class="btn lg" href="/moshi/rank">看排行榜</a>
+  </div>
+  <p class="db-line">
+    数据库：<span class="ok">连接正常</span>
+    · 注册用户 3 人
+  </p>
+</header>
+
+<main class="wrap">
+  <section class="module-row">
+    <a class="mod" href="/moshi/quiz">
+      <span class="mod-icon">🎮</span>
+      <div class="mod-body">
+        <div class="mod-head"><span class="mod-name">答题中心</span><span class="mod-tag">已上线</span></div>
+        <p class="mod-desc">五分区题库 · 三档难度 · 服务端判分</p>
+      </div>
+    </a>
+    <a class="mod" href="/moshi/rank">
+      <span class="mod-icon">🏆</span>
+      <div class="mod-body">
+        <div class="mod-head"><span class="mod-name">排行榜</span><span class="mod-tag">已上线</span></div>
+        <p class="mod-desc">总榜 + 分区榜 · 分数降序</p>
+      </div>
+    </a>
+    <a class="mod" href="/moshi/tasks">
+      <span class="mod-icon">📋</span>
+      <div class="mod-body">
+        <div class="mod-head"><span class="mod-name">任务中心</span><span class="mod-tag">已上线</span></div>
+        <p class="mod-desc">进度按成绩实时计算 · 可领奖励</p>
+      </div>
+    </a>
+    <a class="mod" href="/moshi/assets">
+      <span class="mod-icon">🖼️</span>
+      <div class="mod-body">
+        <div class="mod-head"><span class="mod-name">素材库</span><span class="mod-tag">已上线</span></div>
+        <p class="mod-desc">图片上传 · 按分区浏览</p>
+      </div>
+    </a>
+  </section>
+
+  <section class="panel">
+    <h2>这个项目是什么</h2>
+    <p>
+      「魔识」是一个互动答题平台：用户在五个知识分区（计算机 / 文学 / 地理 / 历史 / 科学）里
+      按难度档位答题，交卷后由服务端判分，成绩入库并进入排行榜；
+      完成指定局数可以领取任务奖励；管理员可以在后台查看运营数据。
+    </p>
+    <p class="muted">
+      技术栈：JavaEE 8（<code>javax.servlet.*</code>）+ Tomcat 9 + JSP/JSTL + 原生 JDBC + MySQL 8。
+      账号由部署者初始化，页面不公开任何固定密码。
+    </p>
+  </section>
+</main>
+
+
+<footer class="foot">
+  魔识 · JavaEE 8（Servlet 4.0 + JSP + JSTL + JDBC）· Tomcat 9
+</footer>
+</body>
+</html>
+

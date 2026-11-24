@@ -21,6 +21,7 @@
     <p class="qtext"><c:out value="${item.question}"/></p>
 
     <form action="${ctx}/quiz" method="post" id="answerForm">
+      <input type="hidden" name="_csrf" value="<c:out value='${csrfToken}'/>">
       <input type="hidden" name="action" value="answer">
       <input type="hidden" name="pick" id="pickInput" value="-1">
       <div class="opts">
@@ -34,6 +35,7 @@
     </form>
 
     <form action="${ctx}/quiz" method="post" class="quit-form">
+      <input type="hidden" name="_csrf" value="<c:out value='${csrfToken}'/>">
       <input type="hidden" name="action" value="abandon">
       <button class="btn ghost" type="submit">退出本局</button>
     </form>

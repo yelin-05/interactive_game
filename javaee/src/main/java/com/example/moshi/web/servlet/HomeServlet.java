@@ -1,7 +1,6 @@
 package com.example.moshi.web.servlet;
 
-import com.example.moshi.dao.UserDao;
-import com.example.moshi.util.DBUtil;
+import com.example.moshi.service.HomeService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,19 +18,18 @@ import java.sql.SQLException;
 @WebServlet(name = "homeServlet", urlPatterns = {"", "/home"})
 public class HomeServlet extends HttpServlet {
 
-    private final UserDao userDao = new UserDao();
+    private final HomeService home = new HomeService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setAttribute("pageTitle", "魔识 · 互动答题与素材管理");
         req.setAttribute("active", "home");
-        req.setAttribute("dbOk", DBUtil.ping());
+        req.setAttribute("dbOk", home.databaseAvailable());
         try {
-            req.setAttribute("userCount", userDao.count());
+            req.setAttribute("userCount", home.userCount());
         } catch (SQLException e) {
             req.setAttribute("userCount", 0L);
-            req.setAttribute("dbError", e.getMessage());
         }
         req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
     }

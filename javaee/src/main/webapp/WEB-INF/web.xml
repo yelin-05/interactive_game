@@ -7,6 +7,67 @@
 
     <display-name>魔识 · JavaEE 8</display-name>
 
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>com.example.moshi.web.filter.EncodingFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>securityHeadersFilter</filter-name>
+        <filter-class>com.example.moshi.web.filter.SecurityHeadersFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>sessionValidationFilter</filter-name>
+        <filter-class>com.example.moshi.web.filter.SessionValidationFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>csrfFilter</filter-name>
+        <filter-class>com.example.moshi.web.filter.CsrfFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>authFilter</filter-name>
+        <filter-class>com.example.moshi.web.filter.AuthFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>adminFilter</filter-name>
+        <filter-class>com.example.moshi.web.filter.AdminFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>securityHeadersFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>sessionValidationFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>csrfFilter</filter-name>
+        <url-pattern>/login</url-pattern>
+        <url-pattern>/register</url-pattern>
+        <url-pattern>/logout</url-pattern>
+        <url-pattern>/quiz</url-pattern>
+        <url-pattern>/tasks</url-pattern>
+        <url-pattern>/assets</url-pattern>
+        <url-pattern>/llm</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>authFilter</filter-name>
+        <url-pattern>/profile</url-pattern>
+        <url-pattern>/profile/*</url-pattern>
+        <url-pattern>/tasks</url-pattern>
+        <url-pattern>/assets</url-pattern>
+        <url-pattern>/llm</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>adminFilter</filter-name>
+        <url-pattern>/admin</url-pattern>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

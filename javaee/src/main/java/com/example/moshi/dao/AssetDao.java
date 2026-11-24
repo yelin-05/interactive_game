@@ -24,7 +24,7 @@ public class AssetDao {
             ps.setLong(4, a.getSizeBytes());
             ps.setString(5, a.getCategory());
             ps.setString(6, a.getStoredPath());
-            ps.setLong(7, 0L);
+            ps.setLong(7, a.getUploaderId());
             ps.executeUpdate();
         }
     }
@@ -57,6 +57,30 @@ public class AssetDao {
             }
         }
         return list;
+    }
+
+    public Asset findByStoredPath(String storedPath) throws SQLException {
+        String sql = "SELECT id, name, original_name, content_type, size_bytes, category, stored_path, "
+                + "uploader_id FROM t_asset WHERE stored_path = ?";
+        try (Connection c = DBUtil.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, storedPath);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+                Asset a = new Asset();
+                a.setId(rs.getLong("id"));
+                a.setName(rs.getString("name"));
+                a.setOriginalName(rs.getString("original_name"));
+                a.setContentType(rs.getString("content_type"));
+                a.setSizeBytes(rs.getLong("size_bytes"));
+                a.setCategory(rs.getString("category"));
+                a.setStoredPath(rs.getString("stored_path"));
+                a.setUploaderId(rs.getLong("uploader_id"));
+                return a;
+            }
+        }
     }
 
     public long count() throws SQLException {

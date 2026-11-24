@@ -12,6 +12,7 @@ public class Asset implements Serializable {
     private long sizeBytes;
     private String category;
     private String storedPath;
+    private long uploaderId;
 
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
@@ -27,6 +28,8 @@ public class Asset implements Serializable {
     public void setCategory(String category) { this.category = category; }
     public String getStoredPath() { return storedPath; }
     public void setStoredPath(String storedPath) { this.storedPath = storedPath; }
+    public long getUploaderId() { return uploaderId; }
+    public void setUploaderId(long uploaderId) { this.uploaderId = uploaderId; }
 
     public long getSizeKb() {
         return sizeBytes / 1024;

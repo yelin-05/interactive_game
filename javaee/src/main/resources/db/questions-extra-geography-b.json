@@ -1,0 +1,22 @@
+[
+  { "category": "geography", "question": "世界上面积最大的淡水湖是？", "options": ["维多利亚湖", "贝加尔湖", "休伦湖", "苏必利尔湖"], "answerIndex": 3, "explanation": "苏必利尔湖约 8.2 万平方公里，按面积是世界最大的淡水湖；按蓄水量最大的是贝加尔湖。", "difficulty": 2 },
+  { "category": "geography", "question": "地中海位于哪三个大洲之间？", "options": ["亚洲、欧洲、非洲", "欧洲、非洲、南美洲", "亚洲、非洲、大洋洲", "欧洲、亚洲、北美洲"], "answerIndex": 0, "explanation": "地中海北岸是欧洲，南岸是非洲，东岸是亚洲。", "difficulty": 2 },
+  { "category": "geography", "question": "中国面积最大的群岛是？", "options": ["南沙群岛", "西沙群岛", "舟山群岛", "长山群岛"], "answerIndex": 2, "explanation": "舟山群岛共有岛屿 1300 多个，是中国最大的群岛。", "difficulty": 2 },
+  { "category": "geography", "question": "巴拿马运河连接的两大洋是？", "options": ["大西洋和印度洋", "太平洋和大西洋", "太平洋和印度洋", "大西洋和北冰洋"], "answerIndex": 1, "explanation": "巴拿马运河打通了太平洋与大西洋，缩短了美洲东西海岸的航程。", "difficulty": 2 },
+  { "category": "geography", "question": "通常所说的中国「三大火炉」不包括哪座城市？", "options": ["重庆", "武汉", "南京", "广州"], "answerIndex": 3, "explanation": "传统「三大火炉」指重庆、武汉、南京；广州虽然炎热，但不在这一说法里。", "difficulty": 2 },
+  { "category": "geography", "question": "世界上面积最小的国家是？", "options": ["梵蒂冈", "摩纳哥", "圣马力诺", "列支敦士登"], "answerIndex": 0, "explanation": "梵蒂冈面积约 0.44 平方公里，是面积最小的主权国家。", "difficulty": 2 },
+  { "category": "geography", "question": "世界上面积最大的内陆水体（湖）是？", "options": ["咸海", "贝加尔湖", "里海", "青海湖"], "answerIndex": 2, "explanation": "里海约 37 万平方公里，虽名「海」，实为内陆湖。", "difficulty": 2 },
+  { "category": "geography", "question": "中国第二大岛是？", "options": ["台湾岛", "崇明岛", "舟山岛", "海南岛"], "answerIndex": 3, "explanation": "海南岛约 3.4 万平方公里，仅次于台湾岛。", "difficulty": 2 },
+  { "category": "geography", "question": "世界上最大的珊瑚礁群是？", "options": ["马尔代夫环礁", "大堡礁", "红海珊瑚礁", "帕劳珊瑚礁"], "answerIndex": 1, "explanation": "澳大利亚东北沿海的大堡礁绵延 2000 多公里，是世界最大的珊瑚礁群。", "difficulty": 3 },
+  { "category": "geography", "question": "世界上最宽的瀑布是？", "options": ["尼亚加拉瀑布", "维多利亚瀑布", "黄果树瀑布", "伊瓜苏瀑布"], "answerIndex": 3, "explanation": "伊瓜苏瀑布宽约 2700 米；维多利亚瀑布以落差和水量著称。", "difficulty": 3 },
+  { "category": "geography", "question": "中国最长的内流河是？", "options": ["黑河", "塔里木河", "疏勒河", "雅鲁藏布江"], "answerIndex": 1, "explanation": "塔里木河全长约 2100 公里，沿塔里木盆地北缘流动，最终消失在沙漠中。", "difficulty": 3 },
+  { "category": "geography", "question": "世界上海拔最高的首都（政府所在地）是？", "options": ["基多", "加德满都", "拉巴斯", "墨西哥城"], "answerIndex": 2, "explanation": "玻利维亚的拉巴斯海拔约 3600 米，是世界海拔最高的首都级城市。", "difficulty": 3 },
+  { "category": "geography", "question": "亚洲与欧洲的分界线不包括？", "options": ["乌拉尔山脉", "大高加索山脉", "乌拉尔河", "阿尔卑斯山脉"], "answerIndex": 3, "explanation": "传统分界线是乌拉尔山—乌拉尔河—里海—大高加索山—黑海，阿尔卑斯山在欧洲腹地。", "difficulty": 3 },
+  { "category": "geography", "question": "非洲的最高峰是？", "options": ["肯尼亚山", "鲁文佐里山", "乞力马扎罗山", "阿特拉斯山"], "answerIndex": 2, "explanation": "乞力马扎罗山海拔 5895 米，是非洲最高峰。", "difficulty": 3 },
+  { "category": "geography", "question": "世界上面积最大的高原是？", "options": ["巴西高原", "青藏高原", "东非高原", "蒙古高原"], "answerIndex": 0, "explanation": "巴西高原约 500 万平方公里，面积最大；青藏高原平均海拔最高。", "difficulty": 3 },
+  { "category": "geography", "question": "黄河发源于哪座山脉？", "options": ["唐古拉山", "祁连山", "秦岭", "巴颜喀拉山"], "answerIndex": 3, "explanation": "黄河源头在青海巴颜喀拉山北麓的约古宗列盆地。", "difficulty": 3 },
+  { "category": "geography", "question": "中国大陆海岸线最长的省级行政区是？", "options": ["广东省", "山东省", "福建省", "浙江省"], "answerIndex": 0, "explanation": "广东大陆海岸线约 4100 公里，居全国首位。", "difficulty": 3 },
+  { "category": "geography", "question": "世界上最长的海峡是？", "options": ["马六甲海峡", "白令海峡", "莫桑比克海峡", "英吉利海峡"], "answerIndex": 2, "explanation": "莫桑比克海峡长约 1670 公里，是世界上最长的海峡。", "difficulty": 3 },
+  { "category": "geography", "question": "国际日期变更线大致与哪条经线重合？", "options": ["0° 经线", "180° 经线", "90° 经线", "东经 120° 经线"], "answerIndex": 1, "explanation": "为避免同一国家出现两个日期，实际界线在 180° 经线附近有折弯。", "difficulty": 3 },
+  { "category": "geography", "question": "与中国陆上边界线最长的邻国是？", "options": ["俄罗斯", "印度", "哈萨克斯坦", "蒙古"], "answerIndex": 3, "explanation": "中蒙边界约 4700 公里，是最长的一段陆地边界。", "difficulty": 3 }
+]

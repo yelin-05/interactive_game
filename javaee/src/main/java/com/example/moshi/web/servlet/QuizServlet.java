@@ -1,11 +1,8 @@
 package com.example.moshi.web.servlet;
 
-import com.example.moshi.dao.QuestionDao;
-import com.example.moshi.dao.ScoreDao;
-import com.example.moshi.model.Question;
 import com.example.moshi.model.QuizMode;
 import com.example.moshi.model.QuizRound;
-import com.example.moshi.model.Score;
+import com.example.moshi.service.QuizService;
 import com.example.moshi.util.Categories;
 import com.example.moshi.web.SessionKeys;
 
@@ -16,38 +13,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * 答题中心：选分区/难度 → 逐题作答 → 服务端判分 → 结果。
- *
- * <p>整局状态放在 Session 的 quizRound 里，正确答案不出服务端。
- */
 @WebServlet("/quiz")
 public class QuizServlet extends HttpServlet {
 
-    private static final String ATTR_ROUND = "quizRound";
-
-    private final QuestionDao questionDao = new QuestionDao();
-    private final ScoreDao scoreDao = new ScoreDao();
+    private final QuizService quiz = new QuizService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         HttpSession session = req.getSession(false);
-        QuizRound round = session == null ? null : (QuizRound) session.getAttribute(ATTR_ROUND);
-
-        req.setAttribute("pageTitle", "答题中心 · 魔识");
-        req.setAttribute("active", "quiz");
-        req.setAttribute("categories", Categories.ALL);
-
-        if (round != null && !round.isFinished()) {
-            req.setAttribute("round", round);
-            req.setAttribute("item", round.current());
-            req.setAttribute("mode", QuizMode.from(round.getModeCode()));
-            req.getRequestDispatcher("/WEB-INF/views/quiz-question.jsp").forward(req, resp);
-            return;
+        setPage(req);
+        if (session != null) {
+            try {
+                QuizService.Completion finished = quiz.finishIfNeeded(session);
+                if (finished != null) {
+                    showResult(req, resp, finished.getRound(), finished.getResult());
+                    return;
+                }
+                QuizRound round = quiz.getRound(session);
+                if (round != null && !round.isFinished()) {
+                    req.setAttribute("round", round);
+                    req.setAttribute("item", round.current());
+                    req.setAttribute("mode", QuizMode.from(round.getModeCode()));
+                    req.getRequestDispatcher("/WEB-INF/views/quiz-question.jsp").forward(req, resp);
+                    return;
+                }
+            } catch (Exception ex) {
+                throw new ServletException("读取答题状态失败", ex);
+            }
         }
         req.getRequestDispatcher("/WEB-INF/views/quiz-picker.jsp").forward(req, resp);
     }
@@ -57,13 +51,12 @@ public class QuizServlet extends HttpServlet {
             throws ServletException, IOException {
         String action = req.getParameter("action");
         HttpSession session = req.getSession(true);
-
         if ("start".equals(action)) {
             start(req, resp, session);
         } else if ("answer".equals(action)) {
             answer(req, resp, session);
         } else if ("abandon".equals(action)) {
-            session.removeAttribute(ATTR_ROUND);
+            quiz.abandon(session);
             resp.sendRedirect(req.getContextPath() + "/quiz");
         } else {
             resp.sendRedirect(req.getContextPath() + "/quiz");
@@ -74,77 +67,57 @@ public class QuizServlet extends HttpServlet {
             throws ServletException, IOException {
         String category = req.getParameter("category");
         QuizMode mode = QuizMode.from(req.getParameter("mode"));
-
+        setPage(req);
         if (!Categories.exists(category)) {
-            req.setAttribute("pageTitle", "答题中心 · 魔识");
-            req.setAttribute("active", "quiz");
-            req.setAttribute("categories", Categories.ALL);
             req.setAttribute("error", "请选择一个有效分区");
             req.getRequestDispatcher("/WEB-INF/views/quiz-picker.jsp").forward(req, resp);
             return;
         }
-
         try {
-            List<Question> picked = questionDao.pick(category, mode, mode.getCount());
-            if (picked.isEmpty()) {
-                req.setAttribute("pageTitle", "答题中心 · 魔识");
-                req.setAttribute("active", "quiz");
-                req.setAttribute("categories", Categories.ALL);
-                req.setAttribute("error", "这个分区在当前难度下还没有题目");
-                req.getRequestDispatcher("/WEB-INF/views/quiz-picker.jsp").forward(req, resp);
-                return;
-            }
-            List<QuizRound.Item> items = new ArrayList<>();
-            for (Question q : picked) {
-                items.add(new QuizRound.Item(q.getId(), q.getQuestion(), q.getOptions(),
-                        q.getDifficulty(), q.getAnswerIndex(), q.getExplanation()));
-            }
-            session.setAttribute(ATTR_ROUND, new QuizRound(category, mode, items, System.currentTimeMillis()));
+            quiz.start(session, category, mode);
             resp.sendRedirect(req.getContextPath() + "/quiz");
-        } catch (Exception e) {
-            throw new ServletException("开局失败：" + e.getMessage(), e);
+        } catch (IllegalArgumentException ex) {
+            req.setAttribute("error", ex.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/quiz-picker.jsp").forward(req, resp);
+        } catch (Exception ex) {
+            throw new ServletException("开局失败", ex);
         }
     }
 
     private void answer(HttpServletRequest req, HttpServletResponse resp, HttpSession session)
             throws ServletException, IOException {
-        QuizRound round = (QuizRound) session.getAttribute(ATTR_ROUND);
-        if (round == null || round.isFinished()) {
+        QuizRound before = quiz.getRound(session);
+        if (before == null || before.isFinished()) {
             resp.sendRedirect(req.getContextPath() + "/quiz");
             return;
         }
-
-        int pick = parseInt(req.getParameter("pick"), -1);
-        round.answer(pick);
-
-        if (!round.isFinished()) {
-            resp.sendRedirect(req.getContextPath() + "/quiz");
+        int pick;
+        try {
+            pick = Integer.parseInt(req.getParameter("pick"));
+        } catch (Exception ex) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "选项参数无效");
             return;
         }
-
-        Long userId = (Long) session.getAttribute(SessionKeys.USER_ID);
-        boolean saved = false;
-        if (userId != null) {
-            try {
-                QuizRound.Result preview = round.grade(true);
-                Score s = new Score();
-                s.setUserId(userId);
-                s.setCategory(round.getCategory());
-                s.setScore(preview.getScore());
-                s.setCorrectCount(preview.getCorrect());
-                s.setTotalCount(preview.getTotal());
-                s.setDurationMs(preview.getDurationMs());
-                scoreDao.insert(s);
-                saved = true;
-            } catch (Exception e) {
-                e.printStackTrace();
+        try {
+            QuizService.Completion completion = quiz.answer(session, pick);
+            if (completion == null) {
+                resp.sendRedirect(req.getContextPath() + "/quiz");
+                return;
             }
+            setPage(req);
+            showResult(req, resp, completion.getRound(), completion.getResult());
+        } catch (IllegalArgumentException ex) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "选项参数无效");
+        } catch (Exception ex) {
+            throw new ServletException("提交答案失败", ex);
         }
+    }
 
-        QuizRound.Result result = round.grade(saved);
-        session.removeAttribute(ATTR_ROUND);
-        req.setAttribute("pageTitle", "本局结算 · 魔识");
-        req.setAttribute("active", "quiz");
+    private void showResult(HttpServletRequest req, HttpServletResponse resp,
+                            QuizRound round, QuizRound.Result result)
+            throws ServletException, IOException {
+        HttpSession session = req.getSession(false);
+        Long userId = session == null ? null : (Long) session.getAttribute(SessionKeys.USER_ID);
         req.setAttribute("result", result);
         req.setAttribute("categoryName", Categories.nameOf(round.getCategory()));
         req.setAttribute("mode", QuizMode.from(round.getModeCode()));
@@ -152,11 +125,9 @@ public class QuizServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/views/quiz-result.jsp").forward(req, resp);
     }
 
-    private int parseInt(String s, int fallback) {
-        try {
-            return Integer.parseInt(s);
-        } catch (Exception e) {
-            return fallback;
-        }
+    private void setPage(HttpServletRequest req) {
+        req.setAttribute("pageTitle", "答题中心 · 魔识");
+        req.setAttribute("active", "quiz");
+        req.setAttribute("categories", Categories.ALL);
     }
 }

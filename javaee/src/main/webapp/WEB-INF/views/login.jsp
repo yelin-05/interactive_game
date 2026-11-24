@@ -18,6 +18,7 @@
     </c:if>
 
     <form class="form" action="${pageContext.request.contextPath}/login" method="post">
+      <input type="hidden" name="_csrf" value="<c:out value='${csrfToken}'/>">
       <input type="hidden" name="to" value="<c:out value='${to}'/>">
       <label class="field">
         <span>用户名</span>
@@ -33,12 +34,6 @@
     </form>
 
     <p class="auth-foot">还没有账号？<a href="${pageContext.request.contextPath}/register">立即注册</a></p>
-
-    <div class="auth-demo">
-      <b>演示账号</b>
-      <span>玩家：<code>player01</code> / <code>password</code></span>
-      <span>管理员：<code>admin</code> / <code>password</code></span>
-    </div>
   </div>
 </main>
 

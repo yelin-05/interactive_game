@@ -7,6 +7,7 @@ public final class SessionKeys {
     public static final String USERNAME = "loginUsername";
     public static final String NICKNAME = "loginNickname";
     public static final String ROLE = "loginRole";
+    public static final String CSRF = "csrfToken";
 
     /** 登录后要跳回的原始地址 */
     public static final String REDIRECT = "loginRedirect";

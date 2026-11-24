@@ -10,7 +10,7 @@
   </div>
 
   <c:if test="${not empty claimedPoints}">
-    <div class="msg ok">领取成功，+${claimedPoints} 积分</div>
+    <div class="msg ok">领取成功，+<c:out value="${claimedPoints}"/> 积分</div>
   </c:if>
   <c:if test="${not empty error}">
     <div class="msg bad"><c:out value="${error}"/></div>
@@ -44,6 +44,7 @@
                 </c:when>
                 <c:when test="${row.claimable}">
                   <form action="${ctx}/tasks" method="post">
+                    <input type="hidden" name="_csrf" value="<c:out value='${csrfToken}'/>">
                     <input type="hidden" name="taskId" value="${row.task.id}">
                     <button class="btn primary" type="submit">领取奖励</button>
                   </form>
