@@ -1,0 +1,6 @@
+<%@ page pageEncoding="UTF-8" %>
+<footer class="foot">
+  魔识 · JavaEE 8（Servlet 4.0 + JSP + JSTL + JDBC）· Tomcat 9
+</footer>
+</body>
+</html>

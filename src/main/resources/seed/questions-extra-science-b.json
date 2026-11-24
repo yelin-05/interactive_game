@@ -1,0 +1,22 @@
+[
+  { "category": "science", "question": "牛顿第一定律又被称为？", "options": ["万有引力定律", "动量守恒定律", "惯性定律", "能量守恒定律"], "answerIndex": 2, "explanation": "物体在不受外力时保持原有运动状态，这条定律揭示了惯性。", "difficulty": 2 },
+  { "category": "science", "question": "下列营养素中不能为人体提供能量的是？", "options": ["糖类", "脂肪", "蛋白质", "维生素"], "answerIndex": 3, "explanation": "糖类、脂肪、蛋白质是三大供能物质，维生素主要参与调节代谢。", "difficulty": 2 },
+  { "category": "science", "question": "地震震级每增加 1 级，释放的能量大约增加多少倍？", "options": ["2 倍", "约 32 倍", "10 倍", "100 倍"], "answerIndex": 1, "explanation": "震级是对数尺度，每差 1 级能量约差 10 的 1.5 次方，即约 32 倍。", "difficulty": 2 },
+  { "category": "science", "question": "常见金属活动性顺序中，最活泼的金属是？", "options": ["钾", "钠", "钙", "镁"], "answerIndex": 0, "explanation": "顺序俗称「钾钙钠镁铝…」，钾排在常见金属最前。", "difficulty": 2 },
+  { "category": "science", "question": "下列物质中属于纯净物的是？", "options": ["空气", "海水", "食醋", "蒸馏水"], "answerIndex": 3, "explanation": "蒸馏水只含水分子；空气、海水、食醋都由多种物质混合而成。", "difficulty": 2 },
+  { "category": "science", "question": "人体细胞进行有氧呼吸、产生能量最多的场所是？", "options": ["细胞质基质", "细胞核", "线粒体", "高尔基体"], "answerIndex": 2, "explanation": "线粒体是有氧呼吸的主要场所，常被称作细胞的「动力车间」。", "difficulty": 2 },
+  { "category": "science", "question": "光的反射现象中，入射角与反射角的关系是？", "options": ["两者相等", "入射角大于反射角", "入射角小于反射角", "两者没有关系"], "answerIndex": 0, "explanation": "反射定律：反射角等于入射角，且三线共面、法线两侧。", "difficulty": 2 },
+  { "category": "science", "question": "下列气体中，是加剧温室效应主要元凶的是？", "options": ["氮气", "氧气", "氢气", "二氧化碳"], "answerIndex": 3, "explanation": "二氧化碳吸收地面长波辐射，化石燃料燃烧使其浓度持续上升。", "difficulty": 2 },
+  { "category": "science", "question": "相对论是由哪位物理学家提出的？", "options": ["爱因斯坦", "牛顿", "伽利略", "普朗克"], "answerIndex": 0, "explanation": "爱因斯坦 1905 年提出狭义相对论，1915 年提出广义相对论。", "difficulty": 3 },
+  { "category": "science", "question": "元素周期表主要按什么顺序排列元素？", "options": ["相对原子质量由小到大", "电子层数由多到少", "原子序数（核电荷数）由小到大", "元素名称笔画"], "answerIndex": 2, "explanation": "现代周期表按原子序数排列，门捷列夫最早按原子量排序。", "difficulty": 3 },
+  { "category": "science", "question": "人体内的胰岛素由哪个器官分泌？", "options": ["肝脏", "胰脏", "肾脏", "肾上腺"], "answerIndex": 1, "explanation": "胰脏内的胰岛 B 细胞分泌胰岛素，用于降低血糖。", "difficulty": 3 },
+  { "category": "science", "question": "热力学第二定律的一种常见表述是？", "options": ["能量守恒", "力等于质量乘加速度", "作用力与反作用力大小相等", "孤立系统的熵不会自发减少"], "answerIndex": 3, "explanation": "第二定律说明自然过程有方向性，热不能自发从低温传到高温。", "difficulty": 3 },
+  { "category": "science", "question": "下列粒子中带正电的是？", "options": ["质子", "电子", "中子", "光子"], "answerIndex": 0, "explanation": "质子带正电，电子带负电，中子和光子不带电。", "difficulty": 3 },
+  { "category": "science", "question": "化学反应前后质量守恒的根本原因是？", "options": ["体积保持不变", "温度保持不变", "原子的种类、数目和质量都不变", "催化剂不参与反应"], "answerIndex": 2, "explanation": "化学反应只是原子重新组合，原子本身没有增加或消失。", "difficulty": 3 },
+  { "category": "science", "question": "光电效应说明光具有？", "options": ["波动性", "质量", "惯性", "粒子性"], "answerIndex": 3, "explanation": "光以光子形式一份份被吸收，体现粒子性；干涉衍射体现波动性。", "difficulty": 3 },
+  { "category": "science", "question": "DNA 双螺旋结构模型的提出者是？", "options": ["沃森和克里克", "达尔文和孟德尔", "居里夫妇", "巴斯德和科赫"], "answerIndex": 0, "explanation": "1953 年沃森与克里克提出 DNA 双螺旋模型，开启了分子生物学时代。", "difficulty": 3 },
+  { "category": "science", "question": "血液中负责凝血的血细胞是？", "options": ["红细胞", "血小板", "白细胞", "淋巴细胞"], "answerIndex": 1, "explanation": "血管破损时血小板聚集并释放凝血因子，形成血栓堵住伤口。", "difficulty": 3 },
+  { "category": "science", "question": "地球大气中能大量吸收紫外线、保护地表生物的是？", "options": ["对流层", "电离层", "臭氧层", "二氧化碳层"], "answerIndex": 2, "explanation": "臭氧层位于平流层，能吸收大部分紫外线，氟利昂会破坏它。", "difficulty": 3 },
+  { "category": "science", "question": "人体血红蛋白中不可缺少的元素是？", "options": ["钙", "锌", "碘", "铁"], "answerIndex": 3, "explanation": "血红蛋白靠铁离子结合氧气，缺铁会导致缺铁性贫血。", "difficulty": 3 },
+  { "category": "science", "question": "半导体的导电能力介于？", "options": ["两种绝缘体之间", "导体与绝缘体之间", "超导体与导体之间", "导体与超导体之间"], "answerIndex": 1, "explanation": "硅、锗等半导体的导电性可随温度、掺杂而改变，是芯片的基础材料。", "difficulty": 3 }
+]

@@ -10,7 +10,10 @@ import java.util.List;
 public record QuizResultVO(
         int score,
         int baseScore,
+        int comboBonus,
+        int penalty,
         int speedBonus,
+        int maxCombo,
         int correct,
         int total,
         int durationMs,
@@ -23,6 +26,7 @@ public record QuizResultVO(
      *
      * @param correctAnswer 正确选项下标
      * @param yourAnswer    你的选择，-1 表示未作答/超时
+     * @param gained        本题得分（答对=基础分+连击，答错/超时=-5）
      */
     public record Detail(
             Long questionId,
@@ -30,7 +34,9 @@ public record QuizResultVO(
             int correctAnswer,
             int yourAnswer,
             boolean correct,
-            String explanation
+            String explanation,
+            int difficulty,
+            int gained
     ) {
     }
 }

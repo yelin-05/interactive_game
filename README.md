@@ -63,6 +63,7 @@ mvnw.cmd spring-boot:run
 | 数据库 | MySQL 9.x（主）/ H2（演示档） | MySQL 驱动用 9.1.0，兼容 8.x 与 9.x 服务端 |
 | 视图 | Thymeleaf | 服务端渲染，页面不依赖 CDN，断网也能演示 |
 | 其他 | Lombok / Validation / Actuator | 简化样板代码、参数校验、健康检查 |
+| 前端 | 原生 CSS + 原生 JS | 无构建步骤；`theme.css` 一套令牌（默认天蓝 / 可切墨绿深色），`settings.css` 只管 `/llm` 设置页 |
 
 > 没用 JSP + 外置 Tomcat 的原因：Spring Boot 内嵌容器打包即跑，
 > 答辩现场不用现场配置 Tomcat；本机 `D:\java\Tomcat` 仍保留，需要时可切回 WAR 方案。
@@ -107,11 +108,11 @@ mvnw.cmd spring-boot:run
 │   └── module/                        # 按业务模块分包，一个模块一个文件夹
 │       ├── user/     entity/mapper/service/controller        # 用户、登录注册（BCrypt）
 │       ├── quiz/     entity/mapper/service/controller/dto/vo  # 题库、开局判分、成绩、分区常量
-│       │             └── bootstrap/   # QuestionSeeder：题库 JSON 幂等灌库
+│       │             └── bootstrap/   # QuestionSeeder 幂等灌库 + QuestionAutoFiller 自动补题
 │       ├── task/     entity/mapper/service/controller/vo      # 任务进度与领奖
 │       │             └── bootstrap/   # TaskSeeder
 │       ├── asset/    entity/mapper/service/controller         # 素材上传与浏览
-│       ├── llm/      service/controller/vo                    # 大模型出题（Mock）
+│       ├── llm/      service/controller/vo                    # 大模型出题（mock / real 双通道）
 │       ├── game/     controller/vo                            # /games 入口 → /games/quiz
 │       └── system/   controller/vo                            # 首页、排行榜、/api/ping 自检
 ├── src/main/resources/
@@ -119,9 +120,9 @@ mvnw.cmd spring-boot:run
 │   ├── application-mysql.yml          # MySQL 档
 │   ├── application-h2.yml             # H2 演示档
 │   ├── db/                            # 建库建表脚本（mysql / h2 各一套）
-│   ├── seed/questions.json            # 60 道题，MySQL/H2 共用一份
+│   ├── seed/questions.json            # 首批 80 道题 + questions-extra-*-{a,b}.json 共 200 道扩充题
 │   ├── templates/                     # Thymeleaf 页面 + fragments/nav.html 统一导航
-│   └── static/                        # css / js / favicon.svg，全部本地，无 CDN 依赖
+│   └── static/                        # css(site/theme/settings) / js / favicon.svg，全部本地，无 CDN 依赖
 └── src/test/java/                     # @SpringBootTest + H2 档冒烟测试，CI 上不需要 MySQL
 ```
 
@@ -166,15 +167,18 @@ POST /api/quiz/submit → 服务端结算、写 t_score，返回逐题解析
 | GET | `/register` | 注册页，BCrypt 加盐存储 |
 | POST | `/login`、`/register`、`/logout` | 登录 / 注册 / 退出（表单提交） |
 | GET | `/profile` | 个人中心，**需登录** |
-| GET | `/admin` | 管理后台，**仅 ADMIN**（题库与用户只读概览） |
+| GET | `/admin` | 管理后台，**仅 ADMIN**（只读概览 + 自动补题入口） |
+| POST | `/admin/questions/autofill` | 让游戏自己补题：大模型出题 → 校验 → 写 `t_question`，**仅 ADMIN** |
 | GET | `/rank` | 排行榜：总榜 + 分区榜，分数降序、同分按用时升序取 Top 10 |
 | GET | `/tasks` | 任务中心：任务进度按成绩实时计算，完成可领奖励 |
 | POST | `/tasks/{id}/claim` | 领取任务奖励（需登录、已完成、未领过） |
 | GET | `/assets` | 素材库：按分区浏览 + 上传表单 |
 | POST | `/assets/upload` | 上传图片（需登录，仅 png/jpg/jpeg/gif/webp，≤10MB） |
 | GET | `/uploads/**` | 素材文件静态访问（映射到磁盘 `uploads/`） |
-| GET | `/llm` | 大模型生成：分区+主题出题（Mock 通道） |
+| GET | `/llm` | 大模型生成：分区+主题出题（默认 mock，`real` 需 Key），页面上直接显示通道状态与失败原因 |
 | POST | `/llm/generate` | 触发一次生成 |
+| GET | `/api/llm/status` | 大模型通道自检：当前通道、是否配了 Key、调用/回落次数、最近一次失败原因 |
+| POST | `/api/llm/test` | 真跑一次生成，返回的 `mode` 是 `real` 才算接通 |
 | GET | `/games` | 入口，302 跳转到 `/games/quiz` |
 | GET | `/games/quiz` | 知识闯关：分区选择 → 答题 → 服务端判分结算 |
 | GET | `/api/quiz/modes` | 难度档列表：简单/普通/困难（题数、限时、抽题难度） |
@@ -196,11 +200,80 @@ POST /api/quiz/submit → 服务端结算、写 t_score，返回逐题解析
 | 数据源密码 | `DB_PASSWORD` | 空 | **只从环境变量读，禁止硬编码** |
 | 库名 | `DB_NAME` | `minigame` | |
 | 端口 | — | `8080` | 改了记得同步 README |
-| 大模型模式 | — | `mock` | `mock` 用本地假数据，`real` 走真实接口 |
-| 大模型 Key | `LLM_API_KEY` | 空 | 未配置时自动停留在 mock 通道 |
+| 大模型模式 | `LLM_MODE` | `mock` | `mock` 用本地模板拼题，`real` 走 OpenAI 兼容的真实接口 |
+| 大模型 Key | `LLM_API_KEY` | 空 | 未配置时 `real` 会自动回落 mock 通道（且自动补题拒绝入库） |
+| 大模型地址 | `LLM_BASE_URL` | DeepSeek `/v1/chat/completions` | 任何 OpenAI 兼容端点都行 |
+| 大模型模型名 | `LLM_MODEL` | `deepseek-chat` | 跟着所选厂商填 |
+| 强制 JSON 模式 | `LLM_JSON_FORMAT` | `true` | 发 `response_format=json_object`；本机 Ollama 这类不支持的要设 `false` |
+| 大模型超时 | `LLM_TIMEOUT_SECONDS` | `20` | 连不上时不要卡太久 |
+| 自动补题开关 | — | `true` | `app.quiz.auto-fill.enabled`，关掉后后台按钮也不执行 |
+| 启动时补题 | — | `false` | `app.quiz.auto-fill.on-startup` |
+| 定时补题 | — | `-`（关闭） | `app.quiz.auto-fill.cron`，例 `0 0 3 * * *` |
+| 占位题入库 | — | `false` | `app.quiz.auto-fill.allow-mock`，仅离线演示流水线时打开 |
+| 补题目标题量 | — | 8/6/6 | `app.quiz.auto-fill.target.{easy,normal,hard}`，按分区按难度算缺口 |
 
 真实 Key、真实密码放进 `application-local.yml`（已在 `.gitignore` 里），
 或直接用环境变量，**两者都不要提交到 GitHub**。
+
+### 接入真实大模型（3 步）
+
+默认 `mock` 通道只会拼出「占位选项 A/B/C/D」；要让 `/llm` 和「让游戏自己补题」出真题，必须走 `real`。
+
+**方式零：双击 `run-real.bat`（最省事）**
+
+脚本会提示粘贴 API Key，然后自动设好 `LLM_MODE=real` 并以 H2 档启动；
+启动后打开 `http://localhost:8080/llm`，右上角显示「通道：real」就是接上了。
+
+**方式一：环境变量（临时生效，关掉终端就没了）**
+
+```powershell
+set LLM_MODE=real
+set LLM_API_KEY=sk-你的Key
+.\mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=h2
+```
+
+**方式二：写进本地配置文件（推荐，重启不用重设）**
+
+新建 `src/main/resources/application-local.yml` —— 已在 `.gitignore` 里，
+`application.yml` 也已写好 `spring.config.import: optional:classpath:application-local.yml`，文件不在也不报错：
+
+```yaml
+app:
+  llm:
+    mode: real
+    api-key: sk-你的Key
+```
+
+**更省事的做法：在页面上直接接**
+
+打开 `/llm`，在「🔌 接入大模型」里：选通道（real）→ 选厂商 → 选模型（下拉里直接挑 `flash` / `plus` / `max` / `reasoner` 这类档位，
+目录外的模型名可直接手填）→ 粘贴 Key → 保存即可 ——
+**保存后立即生效，不用重启**。配置会写到 `config/llm-settings.local.json`（已在 `.gitignore`），
+重启后依然有效；想回退到 `application.yml` 里的值，删掉这个文件即可。
+这个表单只有 ADMIN 能提交（演示账号 `admin / password`），避免部署到公网后谁都能改。
+
+常见厂商怎么填（都是 OpenAI 兼容端点，代码不用改）：
+
+| 厂商 | `LLM_BASE_URL` | `LLM_MODEL` | 备注 |
+| --- | --- | --- | --- |
+| DeepSeek | `https://api.deepseek.com/v1/chat/completions` | `deepseek-chat` | 默认值 |
+| 阿里云百炼（通义） | `https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions` | `qwen-plus` | 用「兼容模式」端点 |
+| 智谱 GLM | `https://open.bigmodel.cn/api/paas/v4/chat/completions` | `glm-4-flash` | flash 有免费额度 |
+| 本机 Ollama | `http://localhost:11434/v1/chat/completions` | `qwen2.5:7b` | 另需 `LLM_JSON_FORMAT=false`，Key 随便填 |
+
+**接完怎么确认通了**
+
+1. 打开 `/llm`：右上角显示「通道：real」，状态栏里 `API Key：已配置`；
+2. `GET /api/llm/status`：`keyConfigured=true`、`lastError=null`；
+3. `POST /api/llm/test?category=computer&topic=TCP`：返回 `mode=real`，题干/选项是真题而不是「占位选项 A」。
+
+**没通会怎样（重点）**
+
+真实通道失败**不抛异常**，而是回落成 mock 占位题（`mode` 变成 `mock`，自动补题因此拒绝入库），
+失败原因写进 `lastError`，同时显示在 `/llm` 页面顶部和 `GET /api/llm/status` 里。
+常见值：`HTTP 401`（Key 不对）、`HTTP 404`（base-url 少了 `/v1` 或路径写错）、
+`HTTP 402`（余额不足）、`HTTP 429`（限流）、`ResourceAccessException`（网络不通/超时）、
+`JsonProcessingException`（模型没按 JSON 返回，可开 `LLM_JSON_FORMAT=true` 再试）。
 
 ---
 
@@ -209,14 +282,14 @@ POST /api/quiz/submit → 服务端结算、写 t_score，返回逐题解析
 - [x] 工程骨架、依赖、双数据库档、统一响应、全局异常
 - [x] 用户表 + MyBatis-Plus 链路打通
 - [x] 首页与系统自检（`/api/ping`、`/actuator/health`）
-- [x] 知识闯关：五分区 60 题入库、开局抽题、**服务端判分**、成绩写 `t_score`
+- [x] 知识闯关：五分区 280 题入库、开局抽题、**服务端判分**、成绩写 `t_score`
 - [x] 登录注册（BCrypt + Session + 拦截器，`/profile` 需登录、`/admin` 需 ADMIN）
 - [x] 排行榜：总榜 + 分区榜，分数降序、同分按用时升序取 Top 10
 - [x] 个人中心：真实战绩、最好成绩、分区统计
 - [x] 任务中心：进度按成绩实时计算 + 领取奖励（`t_task` / `t_user_task`，唯一键防重复领）
 - [x] 素材库：图片上传（后缀白名单 + UUID 落盘）、按分区浏览
-- [x] 大模型出题：Mock 通道可用，接口形状与真实模型一致
-- [ ] 大模型真实通道：`app.llm.mode=real` + `LLM_API_KEY` 还没接（当前恒为 Mock）
+- [x] 大模型出题：mock / real 双通道，`/llm` 页面可选厂商 + 选模型档位（flash / plus / max / reasoner，也能手填），改通道 / 地址 / Key 立即生效，失败自动回落 mock
+- [x] 题库自动补充：按难度补缺口 → 校验 → 去重 → 入库，后台按钮 / 启动 / 定时三种触发
 - [ ] 管理后台写操作：题目/任务增删改、上下架、用户禁用
 - [ ] 接口文档（springdoc-openapi）
 

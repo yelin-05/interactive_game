@@ -7,6 +7,8 @@
   <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
   <link rel="stylesheet" th:href="@{/css/app.css}">
   <link rel="stylesheet" th:href="@{/css/site.css}">
+  <link rel="stylesheet" th:href="@{/css/theme.css}">
+  <script th:src="@{/js/theme.js}"></script>
 </head>
 <body>
 
@@ -40,12 +42,15 @@
         <input class="input" type="password" name="password2" required
                autocomplete="new-password" placeholder="再输入一次">
       </label>
+      <p class="pw-note">两次输入不一致会即时提示；点 👁 可以逐字核对，省得注册完登不上。</p>
       <button class="btn btn-primary btn-block" type="submit">注册</button>
     </form>
 
     <p class="auth-foot">已有账号？<a th:href="@{/login}">去登录</a></p>
   </div>
 </main>
+
+<script th:src="@{/js/password-toggle.js}"></script>
 
 </body>
 </html>

@@ -1,0 +1,37 @@
+<%@ page pageEncoding="UTF-8" %>
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="brand" href="${pageContext.request.contextPath}/home">
+      <span class="brand-mark">🎮</span><span>魔识</span>
+    </a>
+
+    <div class="nav-links">
+      <a class="nav-item ${active == 'home' ? 'on' : ''}" href="${pageContext.request.contextPath}/home">首页</a>
+      <a class="nav-item ${active == 'quiz' ? 'on' : ''}" href="${pageContext.request.contextPath}/quiz">答题中心</a>
+      <a class="nav-item ${active == 'rank' ? 'on' : ''}" href="${pageContext.request.contextPath}/rank">排行榜</a>
+      <a class="nav-item ${active == 'tasks' ? 'on' : ''}" href="${pageContext.request.contextPath}/tasks">任务中心</a>
+      <a class="nav-item ${active == 'assets' ? 'on' : ''}" href="${pageContext.request.contextPath}/assets">素材库</a>
+      <a class="nav-item ${active == 'llm' ? 'on' : ''}" href="${pageContext.request.contextPath}/llm">大模型生成</a>
+      <c:if test="${sessionScope.loginRole == 'ADMIN'}">
+        <a class="nav-item ${active == 'admin' ? 'on' : ''}" href="${pageContext.request.contextPath}/admin">管理后台</a>
+      </c:if>
+    </div>
+
+    <div class="nav-user">
+      <c:choose>
+        <c:when test="${not empty sessionScope.loginUserId}">
+          <a class="nav-item" href="${pageContext.request.contextPath}/profile">
+            <c:out value="${sessionScope.loginNickname}"/>
+          </a>
+          <form class="nav-form" action="${pageContext.request.contextPath}/logout" method="post">
+            <button class="nav-btn ghost" type="submit">退出</button>
+          </form>
+        </c:when>
+        <c:otherwise>
+          <a class="nav-btn ghost" href="${pageContext.request.contextPath}/login">登录</a>
+          <a class="nav-btn" href="${pageContext.request.contextPath}/register">注册</a>
+        </c:otherwise>
+      </c:choose>
+    </div>
+  </div>
+</nav>

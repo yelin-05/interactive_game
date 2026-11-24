@@ -22,6 +22,8 @@
     </div>
 
     <div class="nav-user">
+      <button class="nav-btn ghost theme-toggle" type="button" data-theme-toggle
+              aria-label="切换深浅色" title="切换深浅色">☾</button>
       <th:block th:if="${session.LOGIN_NICKNAME != null}">
         <a class="nav-item" th:classappend="${active == 'profile'} ? ' on'" th:href="@{/profile}"
            th:text="${session.LOGIN_NICKNAME}">玩家一号</a>

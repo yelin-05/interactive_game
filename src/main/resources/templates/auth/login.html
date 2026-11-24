@@ -7,6 +7,8 @@
   <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
   <link rel="stylesheet" th:href="@{/css/app.css}">
   <link rel="stylesheet" th:href="@{/css/site.css}">
+  <link rel="stylesheet" th:href="@{/css/theme.css}">
+  <script th:src="@{/js/theme.js}"></script>
 </head>
 <body>
 
@@ -32,6 +34,7 @@
         <input class="input" type="password" name="password" required
                autocomplete="current-password" placeholder="至少 6 位">
       </label>
+      <p class="pw-note">看不清输入了什么？点密码框右侧的 👁 切换显示/隐藏，避免大小写或输入法出错。</p>
       <button class="btn btn-primary btn-block" type="submit">登录</button>
     </form>
 
@@ -44,6 +47,8 @@
     </div>
   </div>
 </main>
+
+<script th:src="@{/js/password-toggle.js}"></script>
 
 </body>
 </html>

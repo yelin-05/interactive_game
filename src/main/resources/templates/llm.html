@@ -3,63 +3,286 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>大模型生成 · 魔识</title>
+  <title>大模型设置 · 魔识</title>
   <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
   <link rel="stylesheet" th:href="@{/css/app.css}">
   <link rel="stylesheet" th:href="@{/css/site.css}">
   <link rel="stylesheet" th:href="@{/css/game.css}">
+  <link rel="stylesheet" th:href="@{/css/theme.css}">
+  <link rel="stylesheet" th:href="@{/css/settings.css}">
+  <script th:src="@{/js/theme.js}"></script>
 </head>
-<body>
+<body class="settings-page">
 
 <div th:replace="~{fragments/nav :: bar(${active})}"></div>
 
-<main class="page-wrap narrow">
-  <div class="page-head">
-    <h1>🤖 大模型生成</h1>
-    <span th:text="'通道：' + (${result != null} ? ${result.mode} : 'mock')">通道：mock</span>
-  </div>
+<main class="settings-wrap">
 
-  <section class="panel-box">
-    <h2>按分区 + 主题生成一道题</h2>
-    <form class="upload-form" th:action="@{/llm/generate}" method="post">
-      <label class="field">
-        <span>分区</span>
-        <select class="input" name="category">
-          <option th:each="c : ${categories}"
-                  th:value="${c.code}"
-                  th:selected="${category == c.code}"
-                  th:text="${c.icon} + ' ' + ${c.name}">计算机</option>
-        </select>
-      </label>
-      <label class="field">
-        <span>主题（选填）</span>
-        <input class="input" type="text" name="topic" th:value="${topic}"
-               placeholder="例如：TCP 三次握手、宋词">
-      </label>
-      <button class="btn btn-primary" type="submit">生成题目</button>
-    </form>
-  </section>
+  <!-- 左侧图标栏：视觉锚点，手机上收成一行 -->
+  <aside class="settings-rail" aria-label="设置分区">
+    <a class="rail-item" th:href="@{/}" title="回首页">⌂</a>
+    <span class="rail-item on" title="大模型设置" aria-current="page">⚙</span>
+    <a class="rail-item" th:if="${session.LOGIN_ROLE == 'ADMIN'}" th:href="@{/admin}" title="管理后台">▤</a>
+    <a class="rail-item" th:href="@{/profile}" title="个人中心">☺</a>
+  </aside>
 
-  <section class="panel-box" th:if="${result != null}">
-    <h2>生成结果</h2>
-    <p class="qtext" th:text="${result.question}">题干</p>
-    <div class="opts">
-      <div class="opt" th:each="o, s : ${result.options}"
-           th:classappend="${s.index == result.answerIndex} ? ' correct'">
-        <span class="opt-key" th:text="${#strings.substring('ABCD', s.index, s.index + 1)}">A</span>
-        <span class="opt-text" th:text="${o}">选项</span>
+  <div class="settings-main">
+    <header class="settings-head">
+      <div>
+        <h1>设置</h1>
+        <p class="settings-sub">大模型接入 · 保存后立即生效，不用重启服务</p>
       </div>
-    </div>
-    <p class="explain" th:text="${result.explanation}">解析</p>
-  </section>
+      <button class="btn btn-primary" type="submit" form="llm-form">保存并生效</button>
+    </header>
 
-  <p class="pf-note">
-    当前是 <b>Mock 通道</b>：用模板拼出结构正确的题目，接口形状与真实模型完全一致，
-    所以之后把 <code>MockLlmService.generate()</code> 换成 HTTP 调用即可，调用方不用改。<br>
-    切真实通道：<code>app.llm.mode=real</code> + 环境变量 <code>LLM_API_KEY</code>
-    （真实调用代码留在 <code>// TODO</code> 处，未启用）。
-  </p>
+    <div class="settings-tabs" id="llm-tabs">
+      <button class="settings-tab on" type="button" data-tab="config">接口配置</button>
+      <button class="settings-tab" type="button" data-tab="status">状态与试跑</button>
+    </div>
+
+    <div class="auth-msg ok" th:if="${settingsOk}" th:text="${settingsOk}">配置已保存</div>
+    <div class="auth-msg bad" th:if="${settingsError}" th:text="${settingsError}">配置保存失败</div>
+
+    <!-- ================= 标签 1：接口配置 ================= -->
+    <form id="llm-form" data-panel="config" th:action="@{/llm/settings}" method="post">
+      <section class="settings-card">
+        <h2 class="settings-section-title"><span class="ico">🔌</span>接口配置</h2>
+        <p class="settings-note">
+          当前值来源 <code th:text="${llmSettings.source}">application.yml</code>，通道
+          <code th:text="${llmSettings.mode}">mock</code>，Key
+          <b th:if="${llmSettings.keyConfigured}" th:text="${llmSettings.keyHint}" style="color:var(--ok)">已配置</b>
+          <b th:unless="${llmSettings.keyConfigured}" style="color:var(--bad)">未配置</b>。<br>
+          这里填的是 OpenAI 兼容的 <code>/chat/completions</code> 接口：DeepSeek、通义千问、智谱、Kimi、OpenAI、本机 Ollama 都能直接用。
+        </p>
+
+        <div class="settings-row">
+          <span class="lab">运行通道</span>
+          <div class="segmented">
+            <label>
+              <input type="radio" name="mode" value="mock" th:checked="${llmSettings.mode != 'real'}">
+              <span>mock · 占位题</span>
+            </label>
+            <label>
+              <input type="radio" name="mode" value="real" th:checked="${llmSettings.mode == 'real'}">
+              <span>real · 真实模型</span>
+            </label>
+          </div>
+          <p class="help">mock 不联网、答辩保底；real 走真实接口，超时或报错会自动回落 mock，不会把页面卡住。</p>
+        </div>
+
+        <div class="settings-grid cols-2" style="margin-top:18px">
+          <div class="field-block">
+            <label class="lab" for="llm-vendor">厂商</label>
+            <div class="select-wrap">
+              <select id="llm-vendor">
+                <option value="deepseek">DeepSeek（chat / reasoner）</option>
+                <option value="qwen">通义千问 DashScope（flash / plus / max）</option>
+                <option value="zhipu">智谱 GLM（flash / air / plus）</option>
+                <option value="moonshot">Moonshot Kimi（8k / 32k / 128k）</option>
+                <option value="openai">OpenAI（mini / 4o）</option>
+                <option value="ollama">本机 Ollama（离线跑）</option>
+                <option value="custom">其它 / 自建（手填地址与模型）</option>
+              </select>
+            </div>
+            <p class="help">换厂商会自动带出接口地址、JSON 开关和候选模型。</p>
+          </div>
+
+          <div class="field-block">
+            <label class="lab" for="llm-model">模型</label>
+            <input class="input" type="text" id="llm-model" name="model"
+                   th:value="${llmSettings.model}"
+                   placeholder="deepseek-chat / qwen-flash / glm-4-plus"
+                   autocomplete="off" spellcheck="false">
+            <p class="help">这是真正提交给接口的模型名，可以直接手改；点下面卡片也能填进来。</p>
+          </div>
+        </div>
+
+        <div class="field-block" style="margin-top:18px">
+          <span class="lab">档位</span>
+          <div class="model-cards" id="llm-model-cards" role="group" aria-label="模型档位"></div>
+          <p class="help">
+            <b>flash / mini / turbo</b> 又快又便宜，适合现场演示；<b>pro / max / plus / reasoner</b> 更聪明但更慢更贵，适合出难题。
+            目录里没有的模型（新版本、自建模型）直接写进「模型」就生效。
+          </p>
+        </div>
+
+        <div class="field-block" style="margin-top:18px">
+          <label class="lab" for="llm-api-key">API Key</label>
+          <input class="input" type="password" id="llm-api-key" name="apiKey" autocomplete="off"
+                 th:placeholder="${llmSettings.keyConfigured}
+                     ? '已保存：' + ${llmSettings.keyHint} + '，留空表示不修改'
+                     : '粘贴 Key，例如 sk-xxxxxxxx'">
+          <p class="help">只写在本机 <code>config/llm-settings.local.json</code>（已在 .gitignore），不会进仓库；留空就是不修改。</p>
+        </div>
+
+        <details class="settings-adv">
+          <summary>高级设置</summary>
+          <div class="adv-body">
+            <div class="settings-grid cols-2">
+              <div class="field-block">
+                <label class="lab" for="llm-base-url">请求地址</label>
+                <input class="input" type="text" name="baseUrl" id="llm-base-url"
+                       th:value="${llmSettings.baseUrl}"
+                       placeholder="https://api.deepseek.com/v1/chat/completions"
+                       spellcheck="false">
+                <p class="help">OpenAI 兼容的 <code>chat/completions</code> 地址，末尾一般带 <code>/v1/...</code>。</p>
+              </div>
+              <div class="field-block">
+                <label class="lab" for="llm-timeout">超时（秒，3-120）</label>
+                <input class="input" type="number" name="timeoutSeconds" id="llm-timeout"
+                       min="3" max="120" th:value="${llmSettings.timeoutSeconds}">
+                <p class="help">推理模型会慢一些，出难题时可以调到 60 秒以上。</p>
+              </div>
+            </div>
+
+            <div class="field-block" style="margin-top:16px;gap:10px">
+              <label class="check-line">
+                <input type="checkbox" name="jsonFormat" value="true" th:checked="${llmSettings.jsonFormat}">
+                <span>发送 <code>response_format=json_object</code>（Ollama 等不支持时关掉）</span>
+              </label>
+              <label class="check-line">
+                <input type="checkbox" name="clearKey" value="true">
+                <span>清空已保存的 Key</span>
+              </label>
+            </div>
+          </div>
+        </details>
+
+        <div class="settings-actions">
+          <button class="btn btn-primary" type="submit">保存并生效</button>
+          <span class="hint-inline">
+            仅管理员可保存 · 配置文件 <code th:text="${llmSettings.file}">config/llm-settings.local.json</code>
+          </span>
+        </div>
+        <p class="stat-note bad" th:if="${persistError}" th:text="'⚠️ 本地文件写入失败：' + ${persistError}">写入失败</p>
+      </section>
+    </form>
+
+    <!-- ================= 标签 2：状态与试跑 ================= -->
+    <div data-panel="status" hidden>
+      <section class="settings-card">
+        <h2 class="settings-section-title"><span class="ico">📊</span>通道状态</h2>
+        <p class="settings-note">保存配置后这里会立刻刷新，不用重启。</p>
+
+        <div class="stat-grid">
+          <div class="stat">
+            <span class="k">配置通道</span>
+            <b class="v" th:text="${configuredMode}">mock</b>
+          </div>
+          <div class="stat">
+            <span class="k">实际通道</span>
+            <b class="v" th:text="${llmStatus.mode}">mock</b>
+          </div>
+          <div class="stat">
+            <span class="k">模型</span>
+            <b class="v mono" th:text="${llmStatus.model ?: '—'}">deepseek-chat</b>
+          </div>
+          <div class="stat">
+            <span class="k">JSON 模式</span>
+            <b class="v" th:text="${llmStatus.jsonFormat ? '开' : '关'}">开</b>
+          </div>
+          <div class="stat">
+            <span class="k">调用 / 成功 / 回落</span>
+            <b class="v" th:text="${llmStatus.calls} + ' / ' + ${llmStatus.successes} + ' / ' + ${llmStatus.fallbacks}">0 / 0 / 0</b>
+          </div>
+        </div>
+
+        <p class="stat-note" th:if="${llmStatus.baseUrl != null}">
+          请求地址：<code th:text="${llmStatus.baseUrl}">https://api.deepseek.com/v1/chat/completions</code>
+        </p>
+        <p class="stat-note" th:if="${llmStatus.mode == 'real'}">
+          API Key：<b th:text="${llmStatus.keyConfigured ? '已配置' : '未配置'}">已配置</b>
+        </p>
+        <p class="stat-note bad" th:if="${llmStatus.lastError != null}"
+           th:text="'最近失败：' + ${llmStatus.lastErrorAt} + ' — ' + ${llmStatus.lastError}">最近失败</p>
+        <p class="stat-note ok" th:if="${llmStatus.lastSuccessAt != null}"
+           th:text="'最近成功：' + ${llmStatus.lastSuccessAt}">最近成功</p>
+      </section>
+
+      <section class="settings-card" th:if="${llmDegraded}">
+        <h2 class="settings-section-title"><span class="ico">⚠️</span>真实通道没跑起来</h2>
+        <p class="stat-note bad">
+          通道已经是 <code>real</code>，但还没有 API Key，本次生成的是 Mock 占位题。<br>
+          回到「接口配置」填 Key 保存，或设环境变量 <code>LLM_API_KEY</code> 后重启。
+        </p>
+      </section>
+
+      <section class="settings-card" th:if="${result != null and result.mode == 'mock' and configuredMode == 'real'}">
+        <h2 class="settings-section-title"><span class="ico">↩️</span>已回落到占位通道</h2>
+        <p class="stat-note bad" th:if="${llmStatus.lastError}" th:text="'失败原因：' + ${llmStatus.lastError}">失败原因</p>
+        <p class="stat-note" th:if="${llmStatus.lastError == null}">本次没有拿到真实模型返回，请查看服务端日志。</p>
+      </section>
+
+      <!-- ---------- 试跑 ---------- -->
+      <section class="settings-card">
+        <h2 class="settings-section-title"><span class="ico">✍️</span>按分区 + 主题生成一道题</h2>
+        <p class="settings-note">
+          这也是连通性自检：保存配置后点一次生成，结果标签显示 <b>real</b> 说明 Key 和网络都通了。
+        </p>
+        <form th:action="@{/llm/generate}" method="post">
+          <div class="settings-grid cols-2">
+            <div class="field-block">
+              <label class="lab" for="llm-category">分区</label>
+              <div class="select-wrap">
+                <select id="llm-category" name="category">
+                  <option th:each="c : ${categories}"
+                          th:value="${c.code}"
+                          th:selected="${category == c.code}"
+                          th:text="${c.icon} + ' ' + ${c.name}">计算机</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-block">
+              <label class="lab" for="llm-topic">主题（选填）</label>
+              <input class="input" type="text" id="llm-topic" name="topic" th:value="${topic}"
+                     placeholder="例如：TCP 三次握手、宋词">
+            </div>
+          </div>
+          <div class="settings-actions">
+            <button class="btn btn-primary" type="submit">生成题目</button>
+            <span class="hint-inline">生成一次就会刷新上面的调用计数</span>
+          </div>
+        </form>
+      </section>
+
+      <section class="settings-card" th:if="${result != null}">
+        <h2 class="settings-section-title">
+          <span class="ico">📝</span>生成结果
+          <span class="chip accent" th:text="${result.mode}">mock</span>
+        </h2>
+        <p class="qtext" th:text="${result.question}">题干</p>
+        <div class="opts">
+          <div class="opt" th:each="o, s : ${result.options}"
+               th:classappend="${s.index == result.answerIndex} ? ' correct'">
+            <span class="opt-key" th:text="${#strings.substring('ABCD', s.index, s.index + 1)}">A</span>
+            <span class="opt-text" th:text="${o}">选项</span>
+          </div>
+        </div>
+        <p class="explain" th:text="${result.explanation}">解析</p>
+      </section>
+
+      <section class="settings-card">
+        <h2 class="settings-section-title"><span class="ico">💡</span>三种接法都能用</h2>
+        <ol class="settings-note" style="margin:8px 0 0;padding-left:18px">
+          <li>本页表单 —— 填完保存立即生效（推荐，答辩现场演示最直观）；</li>
+          <li>环境变量 —— <code>LLM_MODE=real</code> + <code>LLM_API_KEY=你的Key</code>，可选
+            <code>LLM_BASE_URL</code> / <code>LLM_MODEL</code> / <code>LLM_JSON_FORMAT</code>；</li>
+          <li>本地配置文件 <code>src/main/resources/application-local.yml</code>（已在 .gitignore，不会进仓库）。</li>
+        </ol>
+        <p class="settings-note" style="margin-bottom:0">
+          优先级：页面保存（写本机配置文件）&gt; 本地配置文件 &gt; 环境变量 / application.yml。<br>
+          命令行自检：<code>GET /api/llm/status</code> 看通道与最近失败原因，<code>POST /api/llm/test</code> 真跑一次生成。<br>
+          想把生成的题批量补进正式题库：管理后台 →「让游戏自己补题」（见 <code>QuestionAutoFillService</code>）。
+        </p>
+      </section>
+    </div>
+  </div>
 </main>
+
+<script th:src="@{/js/password-toggle.js}"></script>
+<script th:src="@{/js/llm-settings.js}"></script>
 
 </body>
 </html>
+
+

@@ -32,6 +32,9 @@ src/main/resources/application-*.local.yml
 .env
 .env.*
 !.env.example
+# /llm 页面「接入大模型」保存的运行时配置（里面有 API Key）
+config/
+llm-settings.local.json
 
 # ===== 日志与运行时 =====
 logs/

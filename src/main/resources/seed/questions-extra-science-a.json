@@ -1,0 +1,22 @@
+[
+  { "category": "science", "question": "水在标准大气压下的沸点是？", "options": ["90 ℃", "110 ℃", "100 ℃", "120 ℃"], "answerIndex": 2, "explanation": "标准大气压下纯水沸点为 100 ℃，气压降低沸点也会降低。", "difficulty": 1 },
+  { "category": "science", "question": "地球绕太阳公转一周大约需要多长时间？", "options": ["约 365 天", "24 小时", "约 30 天", "约 12 小时"], "answerIndex": 0, "explanation": "公转一周约 365.25 天，因此每四年要闰一天。", "difficulty": 1 },
+  { "category": "science", "question": "人体长期缺乏维生素 C 会导致？", "options": ["夜盲症", "佝偻病", "脚气病", "坏血病"], "answerIndex": 3, "explanation": "夜盲症缺维生素 A，佝偻病缺维生素 D，脚气病缺维生素 B1。", "difficulty": 1 },
+  { "category": "science", "question": "下列动物中属于哺乳动物的是？", "options": ["鲨鱼", "鳄鱼", "鲸", "企鹅"], "answerIndex": 2, "explanation": "鲸用肺呼吸、胎生并哺乳，是生活在海里的哺乳动物。", "difficulty": 1 },
+  { "category": "science", "question": "空气中氧气约占体积的多少？", "options": ["约 21%", "约 78%", "约 0.03%", "约 50%"], "answerIndex": 0, "explanation": "氮气约 78%、氧气约 21%、二氧化碳约 0.03%。", "difficulty": 1 },
+  { "category": "science", "question": "力的国际单位是？", "options": ["焦耳", "瓦特", "帕斯卡", "牛顿"], "answerIndex": 3, "explanation": "焦耳是能量单位，瓦特是功率单位，帕斯卡是压强单位。", "difficulty": 1 },
+  { "category": "science", "question": "植物进行光合作用的场所是？", "options": ["线粒体", "细胞核", "叶绿体", "液泡"], "answerIndex": 2, "explanation": "叶绿体中的叶绿素吸收光能，把二氧化碳和水合成有机物。", "difficulty": 1 },
+  { "category": "science", "question": "声音的传播需要什么？", "options": ["真空", "介质", "光", "电场"], "answerIndex": 1, "explanation": "声波是机械波，固体、液体、气体都能传声，真空不能传声。", "difficulty": 1 },
+  { "category": "science", "question": "化学元素符号 Fe 表示的是？", "options": ["铁", "氟", "铅", "钾"], "answerIndex": 0, "explanation": "Fe 来自拉丁文 ferrum；氟是 F，铅是 Pb，钾是 K。", "difficulty": 1 },
+  { "category": "science", "question": "一天中气温最高通常出现在？", "options": ["正午 12 点", "清晨日出前", "午夜", "午后 2 点左右"], "answerIndex": 3, "explanation": "地面吸热放热有滞后，正午太阳最高，气温峰值通常在午后两点左右。", "difficulty": 1 },
+  { "category": "science", "question": "铁生锈主要与什么有关？", "options": ["氮气", "二氧化碳", "水分和氧气", "阳光"], "answerIndex": 2, "explanation": "铁在潮湿空气中与氧气、水共同作用生成铁锈，涂油或镀层可以隔绝。", "difficulty": 1 },
+  { "category": "science", "question": "人体中含量最多的物质是？", "options": ["蛋白质", "脂肪", "无机盐", "水"], "answerIndex": 3, "explanation": "成年人体内水分约占体重的 60%，是含量最多的物质。", "difficulty": 1 },
+  { "category": "science", "question": "下列动物中属于恒温动物的是？", "options": ["青蛙", "鸟类", "鲫鱼", "蜥蜴"], "answerIndex": 1, "explanation": "鸟类和哺乳类能维持恒定体温；青蛙、鱼、蜥蜴都是变温动物。", "difficulty": 1 },
+  { "category": "science", "question": "人体最大的消化腺是？", "options": ["肝脏", "胰腺", "唾液腺", "甲状腺"], "answerIndex": 0, "explanation": "肝脏分泌胆汁帮助消化脂肪，是人体最大的消化腺。", "difficulty": 1 },
+  { "category": "science", "question": "海拔越高，大气压通常？", "options": ["越高", "不变", "越低", "先升高后降低"], "answerIndex": 2, "explanation": "高处空气稀薄，气压降低，所以高原上水的沸点不到 100 ℃。", "difficulty": 2 },
+  { "category": "science", "question": "血液中白细胞的主要功能是？", "options": ["免疫防御", "运输氧气", "凝血", "运输养分"], "answerIndex": 0, "explanation": "红细胞运氧，白细胞吞噬病原体，血小板负责凝血。", "difficulty": 2 },
+  { "category": "science", "question": "下列能源中属于可再生能源的是？", "options": ["煤", "石油", "天然气", "风能"], "answerIndex": 3, "explanation": "风能、太阳能、水能可不断补充；煤、石油、天然气是化石能源。", "difficulty": 2 },
+  { "category": "science", "question": "声音的音调高低由什么决定？", "options": ["振幅", "频率", "波形", "介质温度"], "answerIndex": 1, "explanation": "频率越高音调越高，振幅决定响度，波形决定音色。", "difficulty": 2 },
+  { "category": "science", "question": "细胞中储存遗传信息的物质主要是？", "options": ["蛋白质", "脂肪", "DNA", "淀粉"], "answerIndex": 2, "explanation": "DNA 上的基因携带遗传信息，蛋白质是生命活动的主要承担者。", "difficulty": 2 },
+  { "category": "science", "question": "化学中 pH 小于 7 的溶液呈？", "options": ["碱性", "中性", "两性", "酸性"], "answerIndex": 3, "explanation": "pH = 7 为中性，小于 7 偏酸，大于 7 偏碱。", "difficulty": 2 }
+]

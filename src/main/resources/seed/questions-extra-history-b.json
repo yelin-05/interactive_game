@@ -1,0 +1,22 @@
+[
+  { "category": "history", "question": "古罗马的第一部成文法典是？", "options": ["《查士丁尼法典》", "《汉谟拉比法典》", "《拿破仑法典》", "《十二铜表法》"], "answerIndex": 3, "explanation": "公元前 5 世纪制定的《十二铜表法》是罗马成文法的起点。", "difficulty": 2 },
+  { "category": "history", "question": "美国南北战争期间颁布《解放黑人奴隶宣言》的总统是？", "options": ["华盛顿", "林肯", "杰斐逊", "罗斯福"], "answerIndex": 1, "explanation": "林肯 1863 年颁布宣言，随后又推动废除奴隶制。", "difficulty": 2 },
+  { "category": "history", "question": "明朝郑和下西洋的起锚港是？", "options": ["泉州", "广州", "刘家港", "宁波"], "answerIndex": 2, "explanation": "刘家港在今江苏太仓，是郑和船队的主要出发港。", "difficulty": 2 },
+  { "category": "history", "question": "唐朝的都城是？", "options": ["长安", "洛阳", "开封", "南京"], "answerIndex": 0, "explanation": "长安（今西安）是唐朝都城，也是当时世界上最大的城市之一。", "difficulty": 2 },
+  { "category": "history", "question": "第一次工业革命首先发生在哪个国家？", "options": ["法国", "德国", "美国", "英国"], "answerIndex": 3, "explanation": "18 世纪后半期从英国棉纺织业开始，以蒸汽机的改良为标志。", "difficulty": 2 },
+  { "category": "history", "question": "中国第一个五年计划开始于哪一年？", "options": ["1949 年", "1958 年", "1953 年", "1966 年"], "answerIndex": 2, "explanation": "1953 年起实施第一个五年计划，重点发展重工业。", "difficulty": 2 },
+  { "category": "history", "question": "「闭关锁国」政策在哪个朝代后期执行得最严格？", "options": ["唐朝", "宋朝", "明朝", "清朝"], "answerIndex": 3, "explanation": "清朝乾隆以后只留广州一口通商，直到鸦片战争被迫打开国门。", "difficulty": 2 },
+  { "category": "history", "question": "世界上现存最早的有明确纪年的印刷品是？", "options": ["《论语》", "《金刚经》", "《史记》", "《九章算术》"], "answerIndex": 1, "explanation": "敦煌出土的唐咸通九年（868 年）《金刚经》，现存大英博物馆。", "difficulty": 2 },
+  { "category": "history", "question": "商鞅变法发生在哪个诸侯国？", "options": ["秦国", "齐国", "魏国", "楚国"], "answerIndex": 0, "explanation": "秦孝公任用商鞅变法，为秦统一六国奠定基础。", "difficulty": 3 },
+  { "category": "history", "question": "「安史之乱」发生在哪位皇帝在位期间？", "options": ["唐太宗", "唐高宗", "唐德宗", "唐玄宗"], "answerIndex": 3, "explanation": "755 年安禄山、史思明起兵，唐玄宗被迫入蜀，唐朝由盛转衰。", "difficulty": 3 },
+  { "category": "history", "question": "元朝的建立者是？", "options": ["成吉思汗", "窝阔台", "忽必烈", "蒙哥"], "answerIndex": 2, "explanation": "成吉思汗统一蒙古诸部；忽必烈 1271 年定国号「大元」，建立元朝。", "difficulty": 3 },
+  { "category": "history", "question": "《汉谟拉比法典》属于哪个古代文明？", "options": ["古巴比伦", "古埃及", "古印度", "古希腊"], "answerIndex": 0, "explanation": "古巴比伦国王汉谟拉比颁布，刻在黑色玄武岩石柱上。", "difficulty": 3 },
+  { "category": "history", "question": "拜占庭帝国的首都君士坦丁堡今天叫什么？", "options": ["雅典", "罗马", "安卡拉", "伊斯坦布尔"], "answerIndex": 3, "explanation": "1453 年奥斯曼帝国攻陷君士坦丁堡，后成为奥斯曼帝国的都城，今称伊斯坦布尔。", "difficulty": 3 },
+  { "category": "history", "question": "欧洲文艺复兴的核心思想是？", "options": ["禁欲主义", "君权神授", "人文主义", "重商主义"], "answerIndex": 2, "explanation": "人文主义以人为中心，反对神学对人的束缚，主张个性解放。", "difficulty": 3 },
+  { "category": "history", "question": "「光荣革命」发生于哪个国家？", "options": ["英国", "法国", "荷兰", "西班牙"], "answerIndex": 0, "explanation": "1688 年英国不流血政变，确立议会主权，为君主立宪奠基。", "difficulty": 3 },
+  { "category": "history", "question": "中国第一部纪传体通史是？", "options": ["《资治通鉴》", "《汉书》", "《春秋》", "《史记》"], "answerIndex": 3, "explanation": "《史记》开创纪传体；《资治通鉴》是编年体；《春秋》是编年史。", "difficulty": 3 },
+  { "category": "history", "question": "八国联军侵华战争后清政府签订的条约是？", "options": ["《南京条约》", "《辛丑条约》", "《北京条约》", "《马关条约》"], "answerIndex": 1, "explanation": "1901 年《辛丑条约》赔款 4.5 亿两白银，清政府完全沦为列强工具。", "difficulty": 3 },
+  { "category": "history", "question": "古希腊哲学家柏拉图的代表作是？", "options": ["《政治学》", "《形而上学》", "《理想国》", "《沉思录》"], "answerIndex": 2, "explanation": "《政治学》《形而上学》是亚里士多德的作品，《沉思录》是马可·奥勒留所著。", "difficulty": 3 },
+  { "category": "history", "question": "俄国十月革命发生于哪一年？", "options": ["1917 年", "1905 年", "1921 年", "1924 年"], "answerIndex": 0, "explanation": "1917 年十月革命建立苏维埃政权，是人类历史上第一次社会主义革命。", "difficulty": 3 },
+  { "category": "history", "question": "中国古代「三省六部制」中的三省不包括？", "options": ["中书省", "门下省", "尚书省", "枢密院"], "answerIndex": 3, "explanation": "三省是中书省、门下省、尚书省；枢密院是宋代掌管军事的机构。", "difficulty": 3 }
+]

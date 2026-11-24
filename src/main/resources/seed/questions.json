@@ -482,5 +482,165 @@
     "answerIndex": 2,
     "explanation": "氢气的密度约为空气的十四分之一，是自然界中密度最小的气体。",
     "difficulty": 2
+  },
+  {
+    "category": "computer",
+    "question": "下面哪种设计模式属于创建型模式？",
+    "options": ["观察者模式", "单例模式", "装饰器模式", "策略模式"],
+    "answerIndex": 1,
+    "explanation": "单例模式属于创建型模式；观察者、策略属于行为型，装饰器属于结构型。",
+    "difficulty": 3
+  },
+  {
+    "category": "computer",
+    "question": "在 TCP/IP 模型中，IP 协议工作在哪一层？",
+    "options": ["应用层", "传输层", "网络层（网际层）", "数据链路层"],
+    "answerIndex": 2,
+    "explanation": "IP 协议位于网络层（网际层），负责寻址与路由；TCP/UDP 位于传输层。",
+    "difficulty": 3
+  },
+  {
+    "category": "computer",
+    "question": "Java 中 HashMap 默认的初始容量和负载因子分别是？",
+    "options": ["16 和 0.75", "8 和 0.75", "16 和 0.5", "32 和 0.5"],
+    "answerIndex": 0,
+    "explanation": "HashMap 默认初始容量 16、负载因子 0.75，超过阈值会触发扩容（2 倍）。",
+    "difficulty": 3
+  },
+  {
+    "category": "computer",
+    "question": "HTTP/1.1 中 304 状态码表示什么？",
+    "options": ["永久重定向", "资源未修改，使用本地缓存", "临时重定向", "请求成功"],
+    "answerIndex": 1,
+    "explanation": "304 Not Modified 表示资源自上次请求后未变化，客户端可直接使用缓存副本。",
+    "difficulty": 3
+  },
+  {
+    "category": "literature",
+    "question": "《离骚》的作者是？",
+    "options": ["屈原", "宋玉", "贾谊", "司马相如"],
+    "answerIndex": 0,
+    "explanation": "《离骚》是战国时期楚国诗人屈原的代表作，开创了「楚辞」这一文学体裁。",
+    "difficulty": 3
+  },
+  {
+    "category": "literature",
+    "question": "「史家之绝唱，无韵之离骚」是鲁迅对哪部史书的评价？",
+    "options": ["《汉书》", "《史记》", "《资治通鉴》", "《左传》"],
+    "answerIndex": 1,
+    "explanation": "这是鲁迅对《史记》的评价，称赞其史学价值与文学成就兼备。",
+    "difficulty": 3
+  },
+  {
+    "category": "literature",
+    "question": "下列哪部作品不属于莎士比亚四大悲剧？",
+    "options": ["《哈姆雷特》", "《奥赛罗》", "《罗密欧与朱丽叶》", "《麦克白》"],
+    "answerIndex": 2,
+    "explanation": "四大悲剧是《哈姆雷特》《奥赛罗》《李尔王》《麦克白》，《罗密欧与朱丽叶》不算在内。",
+    "difficulty": 3
+  },
+  {
+    "category": "literature",
+    "question": "「唐宋八大家」中，属于唐代的是哪两位？",
+    "options": ["韩愈、柳宗元", "苏轼、苏辙", "欧阳修、王安石", "曾巩、苏洵"],
+    "answerIndex": 0,
+    "explanation": "唐宋八大家中唐代只有韩愈、柳宗元，其余六位（三苏、欧阳修、王安石、曾巩）均为宋代。",
+    "difficulty": 3
+  },
+  {
+    "category": "geography",
+    "question": "世界上海拔最高的高原是？",
+    "options": ["巴西高原", "青藏高原", "伊朗高原", "德干高原"],
+    "answerIndex": 1,
+    "explanation": "青藏高原平均海拔超过 4000 米，被称为「世界屋脊」，是世界海拔最高的高原。",
+    "difficulty": 3
+  },
+  {
+    "category": "geography",
+    "question": "地球自转一周（恒星日）约为多长时间？",
+    "options": ["24 小时", "23 小时 56 分 4 秒", "24 小时 4 分", "23 小时"],
+    "answerIndex": 1,
+    "explanation": "恒星日约 23 小时 56 分 4 秒；太阳日（昼夜交替）才是 24 小时。",
+    "difficulty": 3
+  },
+  {
+    "category": "geography",
+    "question": "下列哪个国家不与中国陆上接壤？",
+    "options": ["越南", "印度", "泰国", "尼泊尔"],
+    "answerIndex": 2,
+    "explanation": "泰国与中国并不直接接壤；越南、印度、尼泊尔都是中国的陆上邻国。",
+    "difficulty": 3
+  },
+  {
+    "category": "geography",
+    "question": "喜马拉雅山脉是哪两大板块碰撞形成的？",
+    "options": ["太平洋板块与美洲板块", "印度洋板块与亚欧板块", "非洲板块与亚欧板块", "南极板块与太平洋板块"],
+    "answerIndex": 1,
+    "explanation": "喜马拉雅山脉是印度洋板块向北挤压亚欧板块隆起形成的，至今仍在缓慢抬升。",
+    "difficulty": 3
+  },
+  {
+    "category": "history",
+    "question": "中国历史上「开元盛世」出现在哪位皇帝在位期间？",
+    "options": ["唐太宗", "唐玄宗", "唐高宗", "武则天"],
+    "answerIndex": 1,
+    "explanation": "开元是唐玄宗李隆基的年号，他统治前期政治清明、经济繁荣，史称「开元盛世」。",
+    "difficulty": 3
+  },
+  {
+    "category": "history",
+    "question": "被誉为「中国近代史开端」的历史事件是？",
+    "options": ["辛亥革命", "鸦片战争", "五四运动", "戊戌变法"],
+    "answerIndex": 1,
+    "explanation": "1840 年鸦片战争使中国开始沦为半殖民地半封建社会，一般被视为中国近代史的开端。",
+    "difficulty": 3
+  },
+  {
+    "category": "history",
+    "question": "《资治通鉴》的编年记事从哪一年开始？",
+    "options": ["公元前 221 年", "公元前 403 年（三家分晋）", "公元前 206 年", "公元前 770 年"],
+    "answerIndex": 1,
+    "explanation": "《资治通鉴》从周威烈王二十三年（前 403 年）「三家分晋」写起，止于五代后周。",
+    "difficulty": 3
+  },
+  {
+    "category": "history",
+    "question": "罗马帝国分裂为东西两部是在哪一年？",
+    "options": ["公元 286 年", "公元 395 年", "公元 476 年", "公元 330 年"],
+    "answerIndex": 1,
+    "explanation": "公元 395 年狄奥多西一世去世后，罗马帝国正式分裂为东、西两部分。",
+    "difficulty": 3
+  },
+  {
+    "category": "science",
+    "question": "催化剂在化学反应中的作用是？",
+    "options": ["改变反应速率，且本身在反应前后质量与性质不变", "提高反应产物的产量", "只加快正反应", "参与反应并被消耗"],
+    "answerIndex": 0,
+    "explanation": "催化剂改变化学反应速率（加快或减慢），但本身的质量和化学性质在反应前后不变。",
+    "difficulty": 3
+  },
+  {
+    "category": "science",
+    "question": "人体中负责把声波转化为神经信号的器官是？",
+    "options": ["鼓膜", "耳蜗", "半规管", "听小骨"],
+    "answerIndex": 1,
+    "explanation": "耳蜗内的毛细胞把机械振动转化为神经冲动；鼓膜和听小骨负责传导，半规管主管平衡。",
+    "difficulty": 3
+  },
+  {
+    "category": "science",
+    "question": "光从空气斜射入水中时会发生什么？",
+    "options": ["折射且折射角大于入射角", "折射且折射角小于入射角", "只反射不折射", "沿原方向直线传播"],
+    "answerIndex": 1,
+    "explanation": "光从光疏介质（空气）斜射入光密介质（水）时，折射角小于入射角。",
+    "difficulty": 3
+  },
+  {
+    "category": "science",
+    "question": "下列哪种现象属于化学变化？",
+    "options": ["水结冰", "铁生锈", "玻璃破碎", "酒精挥发"],
+    "answerIndex": 1,
+    "explanation": "铁生锈生成新物质（氧化铁），是化学变化；水结冰、玻璃破碎、酒精挥发都是物理变化。",
+    "difficulty": 3
   }
 ]

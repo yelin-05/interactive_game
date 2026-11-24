@@ -7,6 +7,8 @@
   <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
   <link rel="stylesheet" th:href="@{/css/app.css}">
   <link rel="stylesheet" th:href="@{/css/site.css}">
+  <link rel="stylesheet" th:href="@{/css/theme.css}">
+  <script th:src="@{/js/theme.js}"></script>
 </head>
 <body>
 
@@ -15,8 +17,33 @@
 <main class="admin-wrap">
   <div class="admin-head">
     <h1>管理后台</h1>
-    <span>只读概览 · 增删改待题库编辑功能上线</span>
+    <span>概览只读 · 已支持「让游戏自己补题」</span>
   </div>
+
+  <section class="panel-box">
+    <h2>题库自动补充</h2>
+    <p class="pf-note">
+      当前大模型通道：<b th:text="${llmMode}">mock</b>。
+      <span th:if="${llmMode != 'real'}">
+        真实通道可以在 <a th:href="@{/llm}">大模型出题</a> 页面直接填地址 / 模型 / API Key 并保存（立即生效，不用重启）；
+        也可以设 <code>LLM_MODE=real</code> + <code>LLM_API_KEY</code> 环境变量。
+        mock 通道生成的是占位题，默认不进题库。通道自检：<code>GET /api/llm/status</code>。
+      </span>
+      目标题量：每分区 简单 8 / 中等 6 / 困难 6 —— 困难档一局要抽 10 题（难度 2+3），中等+困难必须留够余量。
+      内置题库已按每分区 56 道灌入（16 道原有 + 40 道扩充），所以这里点下去通常显示「新增 0 道」，属于正常现象。
+    </p>
+    <form th:action="@{/admin/questions/autofill}" method="post">
+      <button class="btn btn-primary" type="submit" th:disabled="${!autoFillEnabled}">让游戏自己补题</button>
+    </form>
+    <p class="pf-note" th:if="${autofillError}" th:text="${autofillError}" style="color:#e5534b">补题失败</p>
+    <div th:if="${autofillReport != null}" style="margin-top:14px">
+      <p><b th:text="'通道 ' + ${autofillReport.mode} + ' · 新增 ' + ${autofillReport.inserted}
+                     + ' 道 · 拒收 ' + ${autofillReport.rejected} + ' 道'">结果</b></p>
+      <ul style="margin:8px 0 0 18px;font-size:13px;line-height:1.75;color:var(--muted,#8b93a7)">
+        <li th:each="n : ${autofillReport.notes}" th:text="${n}">说明</li>
+      </ul>
+    </div>
+  </section>
 
   <div class="kpi-row">
     <div class="kpi"><b th:text="${userCount}">3</b><span>注册用户</span></div>

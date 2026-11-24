@@ -1,0 +1,381 @@
+/* =====================================================================
+   全站主题令牌 + 主题覆盖
+   加载顺序：app.css / game.css / site.css → theme.css（最后）
+   默认「天蓝」浅色（低亮度、不刺眼），右上角 🌗 切「墨绿」深色，
+   选择存在 localStorage（键 moshi-theme）。
+   ===================================================================== */
+
+:root {
+    color-scheme: light;
+
+    /* 底：柔和天蓝，不是刺眼的纯白 */
+    --bg: #e2eff9;
+    --bg-2: #f3fafe;
+    --card: #f5fbff;
+    --card-2: #e8f4fd;
+    --line: #c3dcee;
+    --line-soft: #d9e9f6;
+
+    /* 字：深青灰，比纯黑柔和 */
+    --text: #16323e;
+    --text-strong: #0b2230;
+    --muted: #4c6f80;
+    --muted-2: #547589;
+
+    --ok: #0d7a55;
+    --bad: #bf443c;
+    --warn: #94600a;
+    --accent: #1f6fa8;
+    --accent-2: #0f7d72;
+
+    --accent-soft: rgba(31, 111, 168, .10);
+    --accent-line: rgba(31, 111, 168, .34);
+    --accent-ring: rgba(31, 111, 168, .18);
+
+    --surface: rgba(16, 58, 74, .045);
+    --surface-2: rgba(16, 58, 74, .06);
+    --surface-strong: rgba(16, 58, 74, .085);
+
+    --field-bg: #fcfeff;
+    --nav-bg: rgba(240, 249, 255, .88);
+    --overlay: rgba(14, 38, 50, .42);
+
+    --glow-1: rgba(120, 190, 240, .38);
+    --glow-2: rgba(112, 212, 196, .26);
+
+    --ink-strong: #0b2230;
+    --on-accent: #ffffff;
+    --ok-soft: rgba(13, 122, 85, .10);
+    --ok-line: rgba(13, 122, 85, .30);
+    --bad-soft: rgba(191, 68, 60, .10);
+    --bad-line: rgba(191, 68, 60, .30);
+
+    --tile-1: #fbfdff;
+    --tile-2: #e4f1fb;
+    --hole-shadow: rgba(16, 58, 74, .14);
+    --flip-1: #e4f2fd;
+    --flip-2: #d3e9f8;
+
+    --shadow-card: 0 16px 36px -26px rgba(12, 48, 66, .45);
+    --shadow-pop: 0 20px 44px -24px rgba(12, 48, 66, .28);
+}
+
+/* 墨绿深色 —— 点右上角 🌗 切换 */
+html[data-theme="dark"] {
+    color-scheme: dark;
+
+    --bg: #0a1c19;
+    --bg-2: #102b25;
+    --card: #122a24;
+    --card-2: rgba(18, 42, 36, .55);
+    --line: #1f4a3f;
+    --line-soft: rgba(31, 74, 63, .6);
+
+    --text: #e4f3ec;
+    --text-strong: #ffffff;
+    --muted: #93b7a8;
+    --muted-2: #72988a;
+
+    --ok: #4ade80;
+    --bad: #f87171;
+    --warn: #fbbf24;
+    --accent: #35d0a1;
+    --accent-2: #5cc8e8;
+
+    --accent-soft: rgba(53, 208, 161, .12);
+    --accent-line: rgba(53, 208, 161, .38);
+    --accent-ring: rgba(53, 208, 161, .16);
+
+    --surface: rgba(255, 255, 255, .04);
+    --surface-2: rgba(255, 255, 255, .03);
+    --surface-strong: rgba(147, 183, 168, .18);
+
+    --field-bg: rgba(5, 16, 13, .7);
+    --nav-bg: rgba(10, 28, 25, .8);
+    --overlay: rgba(3, 10, 8, .8);
+
+    --glow-1: #123a30;
+    --glow-2: #0f333f;
+
+    --ink-strong: #ffffff;
+    --on-accent: #06231c;
+    --ok-soft: rgba(74, 222, 128, .12);
+    --ok-line: rgba(74, 222, 128, .35);
+    --bad-soft: rgba(248, 113, 113, .14);
+    --bad-line: rgba(248, 113, 113, .35);
+
+    --tile-1: #112a23;
+    --tile-2: #0c1e19;
+    --hole-shadow: rgba(0, 0, 0, .45);
+    --flip-1: #17453a;
+    --flip-2: #102b25;
+
+    --shadow-card: 0 12px 30px -12px rgba(0, 0, 0, .55);
+    --shadow-pop: 0 16px 40px -20px rgba(0, 0, 0, .7);
+}
+
+/* ---------- 页面底色：浅色也留一点柔和光晕 ---------- */
+body,
+body.game-page {
+    color: var(--text);
+    background:
+            radial-gradient(1200px 620px at 10% -10%, var(--glow-1) 0%, transparent 62%),
+            radial-gradient(900px 520px at 110% 0%, var(--glow-2) 0%, transparent 58%),
+            var(--bg);
+}
+
+/* ---------- 顶栏 ---------- */
+.navbar,
+.site-bar,
+.gbar {
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--line);
+}
+
+.nav-item:hover {
+    background: var(--surface);
+}
+
+.nav-btn {
+    background: var(--accent-soft);
+}
+
+.theme-toggle {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.pw-toggle:hover {
+    background: var(--accent-soft);
+    color: var(--text);
+}
+
+/* ---------- 控件 ---------- */
+.btn:not(.btn-primary):not(.btn-ghost) {
+    background: var(--surface);
+    border-color: var(--line);
+}
+
+.btn-ghost {
+    background: transparent;
+}
+
+.input,
+.input-like {
+    background: var(--field-bg);
+    border: 1px solid var(--line);
+    color: var(--text);
+}
+
+.input:focus,
+.input-like:focus {
+    box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+.opt {
+    background: var(--surface-2);
+    border-color: var(--line);
+}
+
+.opt.correct {
+    background: var(--ok-soft);
+}
+
+.opt.wrong {
+    background: var(--bad-soft);
+}
+
+.auth-msg.ok {
+    background: var(--ok-soft);
+    border-color: var(--ok-line);
+}
+
+.auth-msg.bad {
+    background: var(--bad-soft);
+    border-color: var(--bad-line);
+}
+
+/* ---------- 卡片 / 面板 ---------- */
+.card,
+.mod,
+.auth-card,
+.task-card,
+.panel-box,
+.pf-panel,
+.pf-user,
+.tpl,
+.pick-card,
+.mode-card {
+    background: linear-gradient(180deg, var(--card), var(--card-2));
+    border: 1px solid var(--line);
+}
+
+.card {
+    box-shadow: var(--shadow-card);
+}
+
+.panel-box,
+.pf-panel,
+.tpl {
+    box-shadow: var(--shadow-card);
+}
+
+.feedback {
+    background: var(--surface-2);
+}
+
+.qbar {
+    background: var(--accent-soft);
+}
+
+.code,
+.tag-cat,
+.qmeta,
+.gtag,
+.pill {
+    background: var(--accent-soft);
+}
+
+.rank-no,
+.bar,
+.dot {
+    background: var(--surface-strong);
+}
+
+.dot.now {
+    background: var(--accent);
+}
+
+/* 打地鼠 / 翻牌：把原来写死的深色渐变换成令牌 */
+.hole {
+    background: linear-gradient(180deg, var(--tile-1), var(--tile-2));
+}
+
+.hole::after {
+    background: var(--hole-shadow);
+}
+
+.mcard.flip {
+    background: linear-gradient(180deg, var(--flip-1), var(--flip-2));
+}
+
+.mcard.done,
+.state-chip.done {
+    background: var(--ok-soft);
+}
+
+.modal {
+    background: var(--overlay);
+}
+
+/* ---------- 表格分隔线 ---------- */
+table.kv td,
+table.dt td {
+    border-bottom: 1px solid var(--line-soft);
+}
+
+/* ---------- 次要文字 ---------- */
+.pf-line.dim,
+.pf-note,
+.auth-demo,
+.task-progress,
+.pending,
+footer {
+    color: var(--muted-2);
+}
+
+.pf-stat b {
+    color: var(--text);
+}
+
+.auth-demo code {
+    color: var(--accent);
+}
+
+.asset img {
+    background: var(--surface-2);
+}
+
+/* ---------- 渐变标题：浅色下不能再从白色过渡 ---------- */
+.hero h1,
+.wrap h1 {
+    background: linear-gradient(92deg, var(--ink-strong) 12%, var(--accent) 58%, var(--accent-2) 96%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* ---------- 首页自检面板 / 状态标签 ---------- */
+.panel {
+    background: linear-gradient(180deg, var(--card), var(--card-2));
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-card);
+}
+
+.state-chip {
+    background: var(--surface-strong);
+    color: var(--muted);
+}
+
+.mcard {
+    background: linear-gradient(180deg, var(--tile-1), var(--tile-2));
+}
+
+.pw-match {
+    color: var(--muted-2);
+}
+
+/* ---------- 主色填充件：字色跟着主题走（墨绿下用深字才够对比） ---------- */
+.btn-primary,
+.tab.on,
+.nav-item.on,
+.pf-avatar {
+    color: var(--on-accent);
+}
+
+.tab.on,
+.nav-item.on {
+    background: linear-gradient(96deg, var(--accent), var(--accent-2));
+    border-color: transparent;
+}
+
+.badge {
+    color: var(--accent);
+    border-color: var(--accent-line);
+    background: var(--accent-soft);
+}
+
+.pf-role,
+.gtag,
+.qmeta {
+    border-color: var(--accent-line);
+}
+
+.state-chip.done {
+    color: var(--ok);
+    border-color: var(--ok-line);
+}
+
+.opt.correct {
+    border-color: var(--ok-line);
+}
+
+.opt.wrong {
+    border-color: var(--bad-line);
+}
+
+/* ---------- 焦点可见性（键盘操作） ---------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
