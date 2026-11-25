@@ -1,18 +1,18 @@
 [
   {
     "category": "computer",
-    "question": "Spring Boot 应用内嵌的 Servlet 容器，默认是哪一个？",
-    "options": ["Tomcat", "Jetty", "Undertow", "Netty"],
+    "question": "Servlet 中用于获取浏览器提交参数的方法是？",
+    "options": ["getParameter()", "getAttribute()", "getSession()", "getContextPath()"],
     "answerIndex": 0,
-    "explanation": "spring-boot-starter-web 默认内嵌 Tomcat；换 Jetty 或 Undertow 需要排除默认依赖再引入对应 starter。",
+    "explanation": "getParameter() 读取请求参数；getAttribute() 读取请求域属性，getSession() 获取会话对象。",
     "difficulty": 1
   },
   {
     "category": "computer",
-    "question": "MyBatis-Plus 中提供单表 CRUD 通用方法的接口是？",
-    "options": ["JpaRepository", "BaseMapper", "CrudRepository", "MapperTemplate"],
+    "question": "JDBC 中用于执行参数化 SQL 的对象是？",
+    "options": ["ResultSet", "PreparedStatement", "Connection", "DriverManager"],
     "answerIndex": 1,
-    "explanation": "继承 BaseMapper 就自带 selectById、selectList、insert、updateById 等方法，不用手写 XML。",
+    "explanation": "PreparedStatement 使用占位符绑定参数，避免拼接 SQL，是防止 SQL 注入的常见做法。",
     "difficulty": 1
   },
   {
@@ -33,10 +33,10 @@
   },
   {
     "category": "computer",
-    "question": "把一个普通类交给 Spring 容器管理，最常用的注解是？",
-    "options": ["@Entity", "@Table", "@Component", "@Mapper"],
-    "answerIndex": 2,
-    "explanation": "@Component 及其派生注解（@Service / @Controller / @Repository）用于声明 Bean。",
+    "question": "JavaEE 中用于声明 Web 监听器的注解是？",
+    "options": ["@WebListener", "@WebServlet", "@WebFilter", "@Resource"],
+    "answerIndex": 0,
+    "explanation": "@WebListener 注册监听器；@WebServlet 声明 Servlet，@WebFilter 声明过滤器。",
     "difficulty": 1
   },
   {

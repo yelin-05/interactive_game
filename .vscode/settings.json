@@ -1,30 +1,16 @@
 {
-  // 让 VS Code 的 Java 工具链认识本机的 JDK 25（pom.xml 的 java.version=25）
-  "java.jdt.ls.java.home": "D:\\java\\JDK_25",
-  "java.configuration.runtimes": [
-    {
-      "name": "JavaSE-25",
-      "path": "D:\\java\\JDK_25",
-      "default": true
-    }
-  ],
-  // 改代码后自动同步 Maven 依赖（pom.xml 一改就生效）
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.compile.nullAnalysis.mode": "automatic",
-  // 构建统一走项目里的 Maven Wrapper，不依赖本机装没装 Maven
   "maven.executable.preferMavenWrapper": true,
   "maven.terminal.useJavaHome": true,
-  // 保存自动格式化 + 收尾空格
   "editor.formatOnSave": true,
   "editor.insertSpaces": true,
   "editor.tabSize": 4,
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
   "files.eol": "\n",
-  // 统一按 UTF-8 读写，禁止自动猜测编码（猜错就会整篇乱码）
   "files.encoding": "utf8",
   "files.autoGuessEncoding": false,
-  // 集成终端强制 UTF-8 代码页 65001，否则 glob/git 输出的中文会乱码
   "terminal.integrated.profiles.windows": {
     "PowerShell UTF-8": {
       "source": "PowerShell",
@@ -32,19 +18,18 @@
     }
   },
   "terminal.integrated.defaultProfile.windows": "PowerShell UTF-8",
-  // 别让 IDE 在大目录里瞎搜
   "files.exclude": {
     "**/target": true,
-    "**/.git": true
+    "**/.git": true,
+    "**/.tools": true
   },
   "search.exclude": {
-    "**/target": true
+    "**/target": true,
+    "**/.tools": true
   },
   "java.saveActions.organizeImports": true,
-  // SQL 脚本语法高亮
   "files.associations": {
     "*.sql": "sql"
   },
-  "thymeleaf.validation.enable": true,
   "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms100m -Xlog:disable"
 }

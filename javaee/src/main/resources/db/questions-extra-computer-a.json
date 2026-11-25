@@ -1,6 +1,6 @@
 [
   { "category": "computer", "question": "Java 中用于声明常量的关键字是？", "options": ["static", "const", "final", "abstract"], "answerIndex": 2, "explanation": "final 修饰的变量只能赋值一次；static 表示类级共享，与能不能改无关。", "difficulty": 1 },
-  { "category": "computer", "question": "Spring Boot 启动类上的核心注解是？", "options": ["@EnableScheduling", "@SpringBootApplication", "@MapperScan", "@RestController"], "answerIndex": 1, "explanation": "@SpringBootApplication 等价于 @Configuration + @EnableAutoConfiguration + @ComponentScan。", "difficulty": 1 },
+  { "category": "computer", "question": "JavaEE 中用于声明 Servlet 映射路径的注解是？", "options": ["@WebServlet", "@RequestMapping", "@WebFilter", "@Resource"], "answerIndex": 0, "explanation": "@WebServlet 的 urlPatterns 指定 Servlet 映射路径；@WebFilter 用于声明过滤器。", "difficulty": 1 },
   { "category": "computer", "question": "HTML 中用于创建超链接的标签是？", "options": ["<p>", "<img>", "<form>", "<a>"], "answerIndex": 3, "explanation": "href 属性指定跳转地址，<a> 取自 anchor（锚点）。", "difficulty": 1 },
   { "category": "computer", "question": "Java 中表示「真 / 假」两种取值的基本类型是？", "options": ["boolean", "char", "byte", "int"], "answerIndex": 0, "explanation": "boolean 只有 true 与 false，不能和 0 / 1 直接互换。", "difficulty": 1 },
   { "category": "computer", "question": "HTTP 中向服务器提交表单数据最常用的方法是？", "options": ["GET", "HEAD", "POST", "OPTIONS"], "answerIndex": 2, "explanation": "POST 把数据放在请求体里，适合提交；GET 的数据拼在 URL 上，长度有限且会留在日志里。", "difficulty": 1 },
@@ -13,7 +13,7 @@
   { "category": "computer", "question": "JSON 中用来表示「对象」的符号是？", "options": ["方括号 []", "花括号 {}", "圆括号 ()", "尖括号 <>"], "answerIndex": 1, "explanation": "对象是键值对集合，用 {}；数组用 []。", "difficulty": 1 },
   { "category": "computer", "question": "HTTP 协议的默认端口号是？", "options": ["443", "8080", "80", "21"], "answerIndex": 2, "explanation": "HTTP 默认 80，HTTPS 默认 443，FTP 是 21；8080 只是常见的本地开发端口。", "difficulty": 1 },
   { "category": "computer", "question": "Java 中读取键盘输入最常用的类是？", "options": ["Timer", "Scanner", "Random", "Thread"], "answerIndex": 1, "explanation": "new Scanner(System.in).nextLine() 可以读一整行输入。", "difficulty": 1 },
-  { "category": "computer", "question": "Spring 中声明 REST 风格控制器的注解是？", "options": ["@Service", "@Repository", "@Configuration", "@RestController"], "answerIndex": 3, "explanation": "@RestController = @Controller + @ResponseBody，方法返回值直接作为响应体写出。", "difficulty": 2 },
+  { "category": "computer", "question": "Servlet 中用于向请求域保存属性的方法是？", "options": ["setAttribute()", "getParameter()", "sendRedirect()", "getWriter()"], "answerIndex": 0, "explanation": "setAttribute() 保存请求域属性；getParameter() 读取参数，sendRedirect() 重定向，getWriter() 获取输出流。", "difficulty": 2 },
   { "category": "computer", "question": "MySQL 中给查询结果排序的子句是？", "options": ["ORDER BY", "GROUP BY", "HAVING", "LIMIT"], "answerIndex": 0, "explanation": "ORDER BY 列名 ASC/DESC 排序；GROUP BY 是分组，LIMIT 是截断条数。", "difficulty": 2 },
   { "category": "computer", "question": "MySQL InnoDB 引擎默认使用的索引结构是？", "options": ["哈希表", "红黑树", "B+ 树", "跳表"], "answerIndex": 2, "explanation": "B+ 树叶子节点有序且用链表相连，范围查询和排序都友好，因此成了 InnoDB 的默认选择。", "difficulty": 2 },
   { "category": "computer", "question": "数据库事务的四大特性简称是什么？", "options": ["BASE", "ACID", "CAP", "SOLID"], "answerIndex": 1, "explanation": "ACID 指原子性、一致性、隔离性、持久性；BASE 是柔性事务思路，CAP 是分布式权衡理论。", "difficulty": 2 },

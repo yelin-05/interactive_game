@@ -2,7 +2,7 @@
 
 Java EE 期末大作业课程主工程位于 [`javaee/`](javaee/)。技术栈为 **JDK 11 + JavaEE 8（`javax.servlet.*`）+ Tomcat 9 + JSP/JSTL + Service + 原生 JDBC + MySQL 8+**，构建产物是 `javaee/target/moshi.war`。
 
-根目录 Spring Boot 3 工程保留为扩展参考，**不属于课程主交付**。课程评分、部署截图和实验报告均以 `javaee/` 为准。
+课程评分、部署截图和实验报告均以 `javaee/` 为准；仓库只保留这一套 JavaEE 8 课程主工程。
 
 ## 功能
 

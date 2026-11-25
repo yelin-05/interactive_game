@@ -1,6 +1,6 @@
 # 魔识 JavaEE 8 部署说明
 
-课程主项目是 `javaee/`：Servlet + JSP/JSTL + Service + 原生 JDBC，打包为 `moshi.war`，部署到外置 Tomcat 9。根目录 Spring Boot 项目仅作为扩展参考，不是课程评分主工程。
+课程主项目是 `javaee/`：Servlet + JSP/JSTL + Service + 原生 JDBC，打包为 `moshi.war`，部署到外置 Tomcat 9。仓库不保留其他 Web 框架工程。
 
 ## 1. 环境要求
 

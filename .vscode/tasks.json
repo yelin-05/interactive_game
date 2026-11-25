@@ -5,44 +5,28 @@
   },
   "tasks": [
     {
-      "label": "mvn: 编译",
+      "label": "mvn: 编译 JavaEE",
       "type": "shell",
       "command": "${workspaceFolder}\\mvnw.cmd",
-      "args": ["-B", "-ntp", "compile"],
+      "args": ["-B", "-ntp", "-f", "javaee/pom.xml", "compile"],
       "problemMatcher": ["$javac"],
       "group": "build"
     },
     {
-      "label": "mvn: 打包",
+      "label": "mvn: 打包 WAR",
       "type": "shell",
       "command": "${workspaceFolder}\\mvnw.cmd",
-      "args": ["-B", "-ntp", "clean", "package"],
+      "args": ["-B", "-ntp", "-f", "javaee/pom.xml", "package"],
       "problemMatcher": ["$javac"],
       "group": "build"
     },
     {
-      "label": "mvn: 跑测试",
+      "label": "mvn: 跑 JavaEE 测试",
       "type": "shell",
       "command": "${workspaceFolder}\\mvnw.cmd",
-      "args": ["-B", "-ntp", "test"],
+      "args": ["-B", "-ntp", "-f", "javaee/pom.xml", "test"],
       "problemMatcher": ["$javac"],
       "group": { "kind": "test", "isDefault": true }
-    },
-    {
-      "label": "run: H2 演示档",
-      "type": "shell",
-      "command": "${workspaceFolder}\\mvnw.cmd",
-      "args": ["-B", "spring-boot:run", "-Dspring-boot.run.profiles=h2"],
-      "isBackground": true,
-      "problemMatcher": []
-    },
-    {
-      "label": "run: MySQL 正式档",
-      "type": "shell",
-      "command": "${workspaceFolder}\\mvnw.cmd",
-      "args": ["-B", "spring-boot:run"],
-      "isBackground": true,
-      "problemMatcher": []
     }
   ]
 }

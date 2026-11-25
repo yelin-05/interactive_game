@@ -53,7 +53,7 @@
             <version>0.4</version>
         </dependency>
 
-        <!-- 只在解析 t_question.options_json 时用，不引入 Spring -->
+        <!-- 只在解析 t_question.options_json 时用，不引入其他 Web 框架 -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
